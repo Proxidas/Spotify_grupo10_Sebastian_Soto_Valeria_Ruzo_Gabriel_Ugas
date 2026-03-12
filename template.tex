@@ -1,0 +1,148 @@
+% --- INICIO DE PLANTILLA PERSONALIZADA ---
+\documentclass[oneside,11pt]{Latex/Classes/PhDthesisPSnPDF}
+
+% --- Paquetes Originales ---
+\usepackage{blindtext}
+\usepackage{actuarialangle} 
+\usepackage{tabularx}
+\usepackage{float}
+\usepackage{multirow, array}
+\usepackage[usenames,dvipsnames,svgnames,table]{xcolor}
+\usepackage{longtable}
+\usepackage{latexsym,amsmath,amssymb,amsfonts}
+\usepackage{enumitem}
+\usepackage{xparse}
+\usepackage{booktabs}
+\usepackage[round, sort, numbers]{natbib}  
+\usepackage{adjustbox}
+\usepackage[utf8]{inputenc}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{cleveref}
+
+% Definición de colores
+\definecolor{miblue}{RGB}{68, 114, 196}
+
+% --- CAMBIO CRÍTICO 1: Usar \input para macros en el preámbulo ---
+% \include da problemas antes del begin document. \input es seguro.
+\input{Latex/Macros/MacroFile1}
+
+% --- Definiciones de seguridad (por si la clase falla al cargar alguna variable) ---
+\providecommand{\facultad}[1]{\def\lafacultad{#1}}
+\providecommand{\escudofacultad}[1]{\def\elescudo{#1}}
+\providecommand{\degree}[1]{\def\elgrado{#1}}
+\providecommand{\director}[1]{\def\eldirector{#1}}
+\providecommand{\lugar}[1]{\def\ellugar{#1}}
+\providecommand{\degreedate}[1]{\def\lafecha{#1}}
+
+% --- Configuración para bloques de código de R (Pandoc) ---
+$if(highlighting-macros)$
+$highlighting-macros$
+$endif$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                         DATOS (Conectados a RMarkdown)                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title{$title$}
+\author{$for(author)$$author$$sep$ \\ $endfor$}
+
+% Lógica para Facultad: Si la defines en el YAML la usa, si no, usa la default
+
+\facultad{$for(facultad)$$facultad$$sep$ \\ $endfor$}
+$if(escudo)$
+  \escudofacultad{$escudo$}
+$else$
+  \escudofacultad{Latex/Classes/Escudos/faces}
+$endif$
+
+\degree{$degree$}
+\director{$for(director)$$director$$sep$ \\ $endfor$}
+\degreedate{$date$} 
+\lugar{$lugar$}
+
+\portadatrue 
+
+% Metadatos PDF
+\keywords{$if(keywords)$$keywords$$endif$}
+\subject{$if(subject)$$subject$$endif$}
+
+% --- CORRECCIÓN PARA PANDOC NUEVO (Imágenes) ---
+\makeatletter
+\providecommand{\pandocbounded}[1]{#1}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   DOCUMENTO                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                  PRÓLOGO                          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\frontmatter
+
+% Puedes agregar dedicatorias desde el YAML si quieres, o dejarlas fijas aquí
+$if(dedicatoria)$
+\include{$dedicatoria$}
+$endif$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   ÍNDICES                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+
+$if(toc)$
+\tableofcontents
+$endif$
+
+$if(lof)$
+\listoffigures
+$endif$
+
+$if(lot)$
+\listoftables
+$endif$
+
+\cleardoublepage
+
+$if(abstract)$
+  \cleardoublepage       % Empieza en página derecha (estándar en tesis)
+  \chapter*{Resumen}     % Crea el título "Resumen" sin numeración (Capítulo *)
+  \addcontentsline{toc}{chapter}{Resumen} % (Opcional) Lo añade al índice
+  
+  $abstract$             % Aquí se pega el texto que escribiste en el YAML
+  
+  \cleardoublepage
+$endif$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   CONTENIDO (El Corazón)          %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\mainmatter
+\def\baselinestretch{1.5}
+
+% --- CAMBIO CRÍTICO 2: Aquí RMarkdown inyecta todo tu texto ---
+$body$
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   REFERENCIAS                     %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Mantenemos la estructura natbib de tu plantilla
+\renewcommand{\bibname}{Lista de Referencias}
+\bibliographystyle{apalike} 
+\bibliography{$bibliography$} 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                   APÉNDICES                       %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+$if(appendix)$
+\appendix
+$appendix$
+$endif$
+
+\end{document}
