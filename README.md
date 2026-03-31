@@ -1,4 +1,4 @@
-# Spotify-grupo10-subgrupo-Sebastian.Soto-Valeria.Ruzo-Gabriel.Ugas
+# Spotify grupo 10 Sebastian Soto, Valeria Ruza, Gabriel Ugas 
 
 ## Planteamiento del Problema':'
 
