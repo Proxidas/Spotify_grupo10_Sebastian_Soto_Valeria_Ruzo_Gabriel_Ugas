@@ -71,7 +71,7 @@ library(scales)
 
   ""También, la industria musical es posiblemente uno de los mercados más competitivos. Los sellos discográficos son empresas que contratan artistas, financian grabaciones, comercializan la música y coordinan la distribución. Según una investigación presentada por Juan Francisco Peñaloza Cubillos, de la Pontificia Universidad Javeriana, concluye que el mercado musical es un oligopolio entre las grandes compañías discográficas"".
 
-“actualmente la industria de la música es controlada por tres grandes compañías discográficas multinacionales también llamadas majors, tanto a nivel internacional como a nivel nacional, siendo Sony Music, Universal Music Group y Warner Music Group los que lideran el mercado mundial de la industria de la música, como también a la gran mayoría de sus artistas.”
+“Actualmente la industria de la música es controlada por tres grandes compañías discográficas multinacionales también llamadas majors, tanto a nivel internacional como a nivel nacional, siendo Sony Music, Universal Music Group y Warner Music Group los que lideran el mercado mundial de la industria de la música, como también a la gran mayoría de sus artistas.”
     
   Entonces tomando en cuenta el hecho que el género Pop influencia en la manera de pensar de los jóvenes y que las discográficas dominan el mercado, Podemos decir que las canciones con sellos de grandes discográficas pueden controlar la forma de pensar de los Jóvenes y por consiguiente si las grandes discográficas tienden a estandarizar las características sonoras y métricas de las canciones, están imponiendo al público Juvenil un modelo único de consumo, lo que los lleva a tener limitaciones en el acceso a la diversidad musical y a la imitación pasiva.\
 
@@ -117,25 +117,25 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 
   La cobertura vertical abarca los 85.000 datos del dataset, que son las canciones, y las caracterísitcas de todas las canciones, de 2015 a 2025.
 
-\begin{table}[ht]
+\begin{table}[h!]
 \centering
 \caption{Variables consideradas} 
-\resizebox{20cm}{!} {
-\begin{tabular}{cll}
+\resizebox{14cm}{!} {
+\begin{tabular}{llp{9cm}}
   \hline
 \textbf{Tipo} &\textbf{Variable} &\textbf{Definición} \\ 
   \hline
-  Cualitativa Nominal & Label &  sello discográfico de cada canción \\
-  Cuantitativa Discreta & Stream\_count & visualizaciones en la plataforma \\
-  Cuantitativa Continua & Loudness & Es la medida de presión sonora \\
-  Cuantitativa Continua & Energy & la intensidad perceptiva, el ruido espectral y la tasa de entropía \\
-  Cuantitativa Discreta & Duration & Duración de la canción \\
-  Cuantitativa Continua & instrumentallness & Mide la relación entre señal de voz y ruido/instrumentos. \\
+  Categórica & Label &  Sello discográfico de cada canción \\
+  Numérica  & Stream\_count & visualizaciones en la plataforma \\
+  Numérica  & Loudness &  Medida de presión sonora \\
+  Numérica & Energy & Intensidad perceptiva, el ruido espectral y la tasa de entropía \\
+  Numérica  & Duration & Duración de la canción \\
+  Numérica  & Instrumentallness & Mide la relación entre señal de voz y ruido/instrumentos. \\
   Dicotómica & Explicit & Contenido explícito \\
-  Cuantitativa Continua & Tempo & Es la velocidad del pulso \\
-  Cuantitativa Continua & Danceability & Regularidad del ritmo y la fuerza del pulso \\
-  Cualitativa Nominal & Key & Define la escala musical principal de la canción \\
-  Dicotómica & Mode &  Define si la escala es Mayor (brillante/feliz) o Menor (oscura/tensa) \\
+  Numérica  & Tempo & Velocidad del pulso \\
+  Numérica  & Danceability & Regularidad del ritmo y la fuerza del pulso \\
+  Categórica & Key &  Escala musical principal de la canción \\
+  Dicotómica & Mode &  Define si la escala es Mayor o Menor  \\
    \hline
 \end{tabular}
 }
@@ -146,48 +146,50 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 
 Usando el Dataset Spotify  2015-2025, se toma en cuenta desde el 2015 al 2025.
 
-\section{Variables}
-
-\textbf{Variables que determinan la muestra del experimento:}
-
-\begin{enumerate}
-  \item \textbf{Label (Sello Discográfico):} Categórica Nominal (Cualitativa). Muestra el sello discográfico de cada canción.
-  \item \textbf{Stream\_count (Número de visualizaciones):} Cuantitativa Discreta de Escala de Razón (Ratio). Muestra la cantidad de visualizaciones en la plataforma.
-\end{enumerate}
-
-\textbf{Variables Sonoras:} Miden la estructura musical (Composición y Estética).
-
-\begin{enumerate}
-  \item \textbf{Tempo (BPM):} (Numérica Continua). Es la velocidad del pulso.
-  \item \textbf{Danceability (Bailabilidad):} (Numérica Continua). Mide la regularidad del ritmo y la fuerza del pulso.
-  \item \textbf{Key (Tonalidad):} (Categórica Ordinal). Define la escala musical principal de la canción.
-  \item \textbf{Mode (Modo):} (Booleana / Binaria). Define si la escala es Mayor (brillante/feliz) o Menor (oscura/tensa).
-\end{enumerate}
-
-\textbf{Variables Técnicas:} Estas variables miden el acabado industrial. No dependen de las notas, sino del procesamiento digital en el estudio.
-
-\begin{enumerate}
-  \item \textbf{Loudness (Sonoridad):} (Numérica Continua). Medida de presión sonora en dB.
-  \item \textbf{Energy (Energía):} (Numérica Continua). Mide la intensidad perceptiva y el ruido espectral.
-  \item \textbf{Duration\_ms (Duración):} (Numérica Discreta). Duración de la canción en ms.
-  \item \textbf{Instrumentalness (Instrumentalidad):} (Numérica Continua). Relación entre voz e instrumentos.
-  \item \textbf{Explicit (Contenido explícito):} (Booleana / Binaria). Variable de etiquetado técnico.
-\end{enumerate}
 
 \chapter{Marco Teórico}
 
-
 \section{Bases Teóricas}
 
-Resumen de las bases teoricas explicadas en el capitulo y su importancia\
 
-\subsection{Definición 1}
+El marco teórico de esta investigación se construye sobre tres pilares fundamentales que vinculan la industria musical con el comportamiento social:
 
-Descripción de la definición 1\
+  **1.	Naturaleza del Pop y Control Social:** Se define el Pop no solo como género, sino como un producto de consumo rápido diseñado para la masa juvenil. Su capacidad de absorción y repetición melódica actúa como un mecanismo que influye en la forma de pensar y sentir de los adolescentes, fomentando la imitación pasiva.
+  
+  **2.	Estructura de Mercado (Oligopolio):** La industria no es un campo diverso, sino un oligopolio dominado por tres grandes sellos (majors): Sony Music, Universal Music Group y Warner Music Group. Estas corporaciones controlan la producción, distribución y el éxito comercial a nivel global.
+  
+  **3.	Estandarización y Limitación Cultural:** La relación entre el dominio de las majors y las características del Pop sugiere una estandarización sonora. Al imponer modelos métricos y rítmicos uniformes, las discográficas limitan el acceso a la diversidad musical, condicionando al público a un modelo único de consumo.
+  
+  Para el análisis estadístico, esta base es crucial porque transforma conceptos abstractos (influencia y control) en variables medibles. Lo que permite justificar por qué una baja dispersión o una alta correlación en los datos no son coincidencias técnicas, sino evidencia de una estrategia comercial dirigida a homogeneizar el gusto juvenil.
+ \
 
-\subsection{Definición 2}
+\subsection{Variables Sonoras de una canción}
 
-Descripción de la definición 2\
+Describen qué se siente o cómo suena la música y se definen por cuatro cualidades fundamentales del sonido:
+
+* **Tempo (BPM):** Es la medida de la velocidad de la pieza musical, expresada en pulsaciones por minuto (Beats Per Minute). Representa la frecuencia del "pulso" constante que el oyente percibe como referencia temporal básica de la obra.
+
+* **Danceability (Bailabilidad):** Es una métrica compuesta que describe qué tan adecuada es una pista para bailar basándose en una combinación de elementos musicales. 
+
+* **Key (Tonalidad):** Es la organización jerárquica de las notas y acordes en torno a una nota central llamada tónica. Indica el conjunto de sonidos que conforman la estructura armónica principal de la canción.
+
+* **Mode (Modo):** Es un clasificador binario que indica el tipo de escala (la modalidad) de la cual se deriva el contenido melódico y armónico. El modo Mayor suele asociarse con sonoridades abiertas o alegres, mientras que el Menor se vincula con estructuras más complejas, melancólicas o tensas.\
+
+\subsection{Variables Técnicas de una canción.}
+
+Se refieren a los datos crudos, la calidad del archivo y los parámetros de producción.
+
+* **Loudness (Sonoridad):** Magnitud que cuantifica la presión sonora promedio de una señal de audio, expresada en decibelios (dB). Refleja la amplitud física del sonido y su nivel de volumen relativo dentro de una escala técnica.
+
+* **Energy (Energía):** Medida de la intensidad perceptiva y la actividad dinámica de una pieza musical. Se fundamenta en atributos como el rango dinámico, la tasa de ruido espectral y el entusiasmo auditivo que transmite la composición.
+
+*  **Duration (Duración):** Extensión temporal total de una pista de audio, contabilizada con precisión desde el inicio hasta la finalización de la señal sonora, generalmente expresada en milisegundos.
+
+* **Instrumentalness (Instrumentalidad):** Índice que determina la presencia de componentes exclusivamente instrumentales frente a los vocales. Representa la probabilidad de que una obra carezca de voz humana o contenido lírico relevante.
+
+* **Explicit (Contenido Explícito):** Clasificación de seguridad que identifica grabaciones que contienen lenguaje soez, temáticas adultas o referencias sensibles, de acuerdo con los criterios de etiquetado de la industria fonográfica.
+
+\
 
 \subsection{Definición n}
 
