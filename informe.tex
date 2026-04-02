@@ -41,7 +41,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %                         DATOS (Conectados a RMarkdown)                       %
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title{Estandarización en las caciones con sellos de grandes
+\title{Estandarización en las canciones con sellos de grandes
 discográficas en el género Pop}
 \author{Sebastian Soto \\ Valeria Ruza \\ Gabriel Ugas}
 
@@ -107,7 +107,7 @@ Pop usando como referencia el dataset (Spotify 2015-2025)
 El objetivo es comprobar que existe las estandarización en las
 características musicales y sonoras de las canciones con sello de
 grandes discográficas del género Pop. Y para ello hay que Observar
-mediante las variables stream counts y label las dsicográficas más
+mediante las variables stream counts y label las discográficas más
 exitosas, para tratar los datos en torno a las 3 primeras Discográficas,
 luego se toman en cuenta varias variables en este caso:(loudness,
 energy, duration ms, instrumentales, explicit, tempo, danceability, key
@@ -115,7 +115,7 @@ y mode), se dividen en dos categorías sonoras y musicales, se analizan
 las variables de cada categoría aparte usando métodos de dispersión,
 distribución y correlación y se explican en histogramas de frecuencias
 para las variables dicotómicas, histogramas con curvas de KDE para la
-curtosis y ver si se asemejan a una campana de gauss y por último
+curtosis y ver si se asemejan a una campana de Gauss y por último
 gráficas de calor para contemplar la correlación y ver si es alta o
 baja. Por último se analizan todos los resultados y se determinaría si
 son o no estandarizadas las canciones, luego en caso de ser así se
@@ -333,7 +333,7 @@ fuentes de datos.
 
 Desarrollo\\
 
-\subsection{Item 1}
+\subsection{Enfoque y tipo de investigación}
 
 Descripción\\
 
@@ -345,7 +345,52 @@ Descripción\\
 
 Descripción\\
 
-\subsection{Item n}
+\subsection{Procesamiento y limpieza de datos}
+
+Estos procesos se realizaran en \textbf{R} y la librería
+\textbf{tidyverse}. Primero se carga el Dataset, se verifica si contiene
+datos no validos. Se aplicará un filtrado para seleccionar solo las
+canciones del género Pop. Luego se limpiarán los datos eliminando
+valores faltantes y atípicos, y se categorizarán las variables en
+técnicas y sonoras para su análisis posterior.
+
+\begin{verbatim}
+##   track_id       track_name      artist_name     album_name     
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:85000     FALSE:85000     FALSE:85000     FALSE:85000    
+##  release_date      genre         duration_ms     popularity     
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:85000     FALSE:85000     FALSE:85000     FALSE:85000    
+##  danceability      energy           key           loudness      
+##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:85000     FALSE:85000     FALSE:85000     FALSE:85000    
+##     mode         instrumentalness   tempo         stream_count   
+##  Mode :logical   Mode :logical    Mode :logical   Mode :logical  
+##  FALSE:85000     FALSE:85000      FALSE:85000     FALSE:85000    
+##   country         explicit         label        
+##  Mode :logical   Mode :logical   Mode :logical  
+##  FALSE:85000     FALSE:85000     FALSE:85000
+\end{verbatim}
+
+\begin{verbatim}
+## # A tibble: 12 x 2
+##    genre     cantidad
+##    <chr>        <int>
+##  1 Classical     7158
+##  2 Country       7030
+##  3 EDM           6894
+##  4 Folk          7080
+##  5 Hip-Hop       7160
+##  6 Indie         7007
+##  7 Jazz          7177
+##  8 Metal         7200
+##  9 Pop           7096
+## 10 R&B           7084
+## 11 Reggaeton     7001
+## 12 Rock          7113
+\end{verbatim}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
 Descripción\\
 

@@ -1,6 +1,6 @@
 ---
 # --- Metadatos Básicos ---
-title: "Estandarización en las caciones con sellos de grandes discográficas en el género Pop"
+title: "Estandarización en las canciones con sellos de grandes discográficas en el género Pop"
 author:
    - Sebastian Soto
    - Valeria Ruza
@@ -35,7 +35,7 @@ output:
 abstract: |
     El proyecto pretende atender al problema de la estandarización en las canciones con sello de grandes discográficas del género Pop, que afectan negativamente a la nueva generación, enfocados en la parte estadística del mismo, analizando las características de las canciones del género Pop usando como referencia el dataset (Spotify 2015-2025)
 
-    El objetivo es comprobar que existe las estandarización en las características musicales y sonoras de las canciones con sello de grandes discográficas del género Pop. Y para ello hay que Observar mediante las variables stream counts y label las dsicográficas más exitosas, para tratar los datos en torno a las 3 primeras Discográficas, luego se toman en cuenta varias variables en este caso:(loudness, energy, duration ms, instrumentales, explicit, tempo, danceability, key y mode), se dividen en dos categorías sonoras y musicales, se analizan las variables de cada categoría aparte usando métodos de dispersión, distribución y correlación y se explican en histogramas de frecuencias para las variables dicotómicas, histogramas con curvas de KDE para la curtosis y ver si se asemejan a una campana de gauss y por último gráficas de calor para contemplar la correlación y ver si es alta o baja. Por último se analizan todos los resultados y se determinaría si son o no estandarizadas las canciones, luego en caso de ser así se contemplaría el comportamiento estándar.
+    El objetivo es comprobar que existe las estandarización en las características musicales y sonoras de las canciones con sello de grandes discográficas del género Pop. Y para ello hay que Observar mediante las variables stream counts y label las discográficas más exitosas, para tratar los datos en torno a las 3 primeras Discográficas, luego se toman en cuenta varias variables en este caso:(loudness, energy, duration ms, instrumentales, explicit, tempo, danceability, key y mode), se dividen en dos categorías sonoras y musicales, se analizan las variables de cada categoría aparte usando métodos de dispersión, distribución y correlación y se explican en histogramas de frecuencias para las variables dicotómicas, histogramas con curvas de KDE para la curtosis y ver si se asemejan a una campana de Gauss y por último gráficas de calor para contemplar la correlación y ver si es alta o baja. Por último se analizan todos los resultados y se determinaría si son o no estandarizadas las canciones, luego en caso de ser así se contemplaría el comportamiento estándar.
 
 ---
 
@@ -201,7 +201,7 @@ En esta sección se presentan las metodologías y/o test necesarios relacionados
 
 Desarrollo\
 
-\subsection{Item 1}
+\subsection{Enfoque y tipo de investigación}
 
 Descripción\
 
@@ -213,7 +213,43 @@ Descripción\
 
 Descripción\
 
-\subsection{Item n}
+\subsection{Procesamiento y limpieza de datos}
+Estos procesos se realizaran en **R** y la librería **tidyverse**. Primero se carga el Dataset, se verifica si contiene datos no validos. Se aplicará un filtrado para seleccionar solo las canciones del género Pop. Luego se limpiarán los datos eliminando valores faltantes y atípicos, y se categorizarán las variables en técnicas y sonoras para su análisis posterior.
+
+```{r}
+spotify<-read_csv("18. Spotify 2015-2025.csv") # carga del dataset
+ summary(is.na(spotify)) # Verifique si hay datos no validos 
+ 
+ spotify %>%
+   group_by(genre) %>%
+   summarise(cantidad = n()) # Agrupamos para seleccionar solo las canciones del género Pop
+ 
+pop<- spotify %>%
+  filter(genre == "Pop") %>%
+  select(genre, label, stream_count)
+
+pop_label<-pop %>%
+  group_by(label) %>%
+  summarise(total_streams = sum(stream_count)) %>%
+  slice_max(total_streams, n=3) # Verifique la cantidad de streams total por discografica
+
+
+ggplot(pop_label,
+       aes(x=label))+
+  geom_col(
+    aes(y=total_streams),
+    fill="lightgreen",
+    color="black")+
+  scale_y_continuous(labels = label_number(suffix= "M", scale=1e-6))+
+  labs(
+    x="Discográfica",
+    y="Cantidad de streams",
+    tittle= "Top 3 Discograficas con mayores reproducciones"
+  )
+
+
+```
+
 
 Descripción\
 
