@@ -36,26 +36,26 @@ df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
 ### Tipos de datos
 tipos_df = df.dtypes.astype(str).reset_index()
 tipos_df.columns = ["columna", "tipo de dato"]
-st.table(tipos_df)
+#st.table(tipos_df)
 
 ### Corregir fecha de object a date
 df['release_date'] = pd.to_datetime(df['release_date'], errors='coerce')
 
 ### Corregir Duplicados
 duplicados_totales = df.duplicated().sum()
-st.write(f"hay un total de: {duplicados_totales} duplicados")
+#st.write(f"hay un total de: {duplicados_totales} duplicados")
 
 df = df.drop_duplicates(subset=['track_name', 'artist_name'], keep='first') # borro los track name y artist name que se dupliquen
 
 ### Contar y corregir NA
 conteo_na = df.isna().sum()
-st.table(conteo_na)
+#st.table(conteo_na)
 
 df = df.dropna(subset=['track_name', 'album_name']) # borro los track name y artist name que tengan NA
 
 ### contar y corregir negativos
 conteo_negativos = (df[['duration_ms', 'popularity', 'danceability', 'energy', 'key', 'mode', 'stream_count', 'explicit', 'loudness', 'instrumentalness', 'tempo']] < 0).sum()
-st.table(conteo_negativos)
+#st.table(conteo_negativos)
 
 ## Filtrar por género pop
 df_pop = df[df['genre'] == 'Pop']  
@@ -167,5 +167,57 @@ fig1.update_layout(
     )
 )
 st.plotly_chart(fig1, use_container_width=True)
+
+#Seccion del Analisis de las Variables Tecnicas y de Produción 
+st.markdown("### Análisis de las Características Técnicas y de  Poducción")
+
+#Filtrado de dataset para las variables tecnicas de las 3 discograficas mas exitosas 
+
+top3_nombres= df_final['label'].tolist()  #tomo los nommbres de las discograficas 
+
+df_solo_majors= df_filtrado[df_filtrado['label'].isin(top3_nombres)] #tomo los registros de las tres discograficas mas exitosas 
+
+
+#Agrupación por discografica y por la variable explicit y  cambio el formato de la columna  
+
+df_comp_explicit = df_solo_majors.groupby(['label', 'explicit']).size().reset_index(name='conteo')
+df_comp_explicit['explicit'] = df_comp_explicit['explicit'].astype(str)
+df_comp_explicit['explicit'] = df_comp_explicit['explicit'].replace({'1': 'Explícita', '0': 'No Explícita'})
+
+colores_nuevos= {'Explícita':"#B91D82",'No Explicíta': "#1DB954"}
+
+#Grafico 
+
+fig_sep = px.bar(
+    df_comp_explicit,
+    x='explicit',
+    y='conteo',
+    title='Frecuencia del Contenido Explicito',
+    color='explicit',
+    facet_col='label', # ESTO crea un gráfico separado para cada discográfica
+    labels={'explicit': 'Tipo de letra', 'conteo': 'Cantidad de Canciones'},
+    color_discrete_map= colores_nuevos,
+    template='plotly_dark',
+    text_auto=True
+)
+
+# Ajustes visuales del grafico
+
+fig_sep.for_each_annotation(lambda a: a.update(text= a.text.split("=")[-1])) # quitar los labels
+
+fig_sep.update_layout(showlegend=False) #ocultar leyenda
+
+fig_sep.update_xaxes(type= 'category')
+st.plotly_chart(fig_sep, use_container_width=True)#  variable tipo categorica
+
+# Proporcion detallada de cada discografica %
+st.write("**Proporción Detallada:**")
+for label in top3_nombres:
+    df_aux = df_solo_majors[df_solo_majors['label'] == label]
+    perc = (df_aux['explicit'].sum() / len(df_aux)) * 100
+    st.write(f"- En **{label}**, el **{perc:.1f}%** de las canciones son explícitas.")
+
+
+
 
 
