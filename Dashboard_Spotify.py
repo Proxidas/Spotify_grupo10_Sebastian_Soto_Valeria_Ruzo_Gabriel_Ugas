@@ -97,7 +97,7 @@ st.markdown("Se presenta Gráficamente el estudio del Dataset de Spotify")
 
 ## Graficar
 discográficas = df['label'].unique()
-st.table(discográficas)
+#st.table(discográficas)
 ## Gráfico 1 
 st.markdown("### Análisis de exito de las discográficas")
 
@@ -184,8 +184,11 @@ df_comp_explicit = df_solo_majors.groupby(['label', 'explicit']).size().reset_in
 df_comp_explicit['explicit'] = df_comp_explicit['explicit'].astype(str)
 df_comp_explicit['explicit'] = df_comp_explicit['explicit'].replace({'1': 'Explícita', '0': 'No Explícita'})
 
-colores_nuevos= {'Explícita':"#B91D82",'No Explicíta': "#1DB954"}
-
+### visualización colores
+SPOTIFY_GREEN = '#1DB954'
+SPOTIFY_BLACK = '#191414'
+WHITE = '#FFFFFF'
+SPOTIFY_FUCHSIA = '#B91D82'
 #Grafico 
 
 fig_sep = px.bar(
@@ -194,21 +197,41 @@ fig_sep = px.bar(
     y='conteo',
     title='Frecuencia del Contenido Explicito',
     color='explicit',
-    facet_col='label', # ESTO crea un gráfico separado para cada discográfica
+    facet_col='label', 
     labels={'explicit': 'Tipo de letra', 'conteo': 'Cantidad de Canciones'},
-    color_discrete_map= colores_nuevos,
+    color_discrete_map={'Explícita': SPOTIFY_FUCHSIA, 'No Explícita':SPOTIFY_GREEN},
     template='plotly_dark',
     text_auto=True
 )
 
+
 # Ajustes visuales del grafico
 
-fig_sep.for_each_annotation(lambda a: a.update(text= a.text.split("=")[-1])) # quitar los labels
+fig_sep.for_each_annotation(lambda a: a.update(text= a.text.split("=")[-1],
+                                               font= dict(family= 'Arial Black, sans-serif',
+                                                          size=13,
+                                                          color=WHITE))) #nombre de las discograficas de cada grafico
+fig_sep.update_xaxes(type= 'category')#  variable tipo categorica
 
-fig_sep.update_layout(showlegend=False) #ocultar leyenda
+fig_sep.update_traces(
+    width=0.5
+) #ancho de las barras
 
-fig_sep.update_xaxes(type= 'category')
-st.plotly_chart(fig_sep, use_container_width=True)#  variable tipo categorica
+fig_sep.update_layout(
+    showlegend=False,
+    bargap=0.3,
+    font= dict(color=WHITE),
+    xaxis=dict(
+        showgrid=True,
+        categoryorder= 'trace'
+        ),
+    yaxis=dict(
+            showgrid=True,
+            title="Cantidad de Canciones"
+    )
+    )# Ajustes en el eje X y Y
+
+st.plotly_chart(fig_sep, use_container_width=True)
 
 # Proporcion detallada de cada discografica %
 st.write("**Proporción Detallada:**")
