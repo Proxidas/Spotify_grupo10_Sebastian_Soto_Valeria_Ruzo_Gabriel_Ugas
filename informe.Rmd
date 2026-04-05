@@ -119,17 +119,15 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 \section{Cobertura}
 
 \subsection{Horizontal}
-
   La cobertura horizontal abarca las características musicales que componene cada canción\
   
 \subsection{Vertical}
-
   La cobertura vertical abarca los 85.000 datos del dataset, que son las canciones, y las caracterísitcas de todas las canciones, de 2015 a 2025.
 
 \begin{table}[h!]
 \centering
 \caption{Variables consideradas} 
-\resizebox{14cm}{!} {
+\resizebox{12cm}{!} {
 \begin{tabular}{llp{9cm}}
   \hline
 \textbf{Tipo} &\textbf{Variable} &\textbf{Definición} \\ 
