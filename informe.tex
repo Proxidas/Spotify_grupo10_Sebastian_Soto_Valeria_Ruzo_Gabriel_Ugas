@@ -224,9 +224,9 @@ realidad.\\
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{Analizar qué discográficas son más exitosas: Con la variable Label y Stream count.}
+  \item{Identificar las discográficas más exitosas del genero pop segun su cantidad de Stream count.}
   \item{Adaptar el dataset con los datos de las tres primeras discográficas más exitosas.}
-  \item{Categorizar las variables: Para intuir con qué método analizar cada variable, se diferencian por categorías.(Técnicas y sonoras)}
+  \item{Clasificar las variables en categorías técnicas y sonoras según el método de análisis correspondiente.}
   \item{Analizar las variables técnicas y de producción: Mediante una gráfica de frecuencias para la variable explicit, mediante el coeficiente de variación y un histograma con curva KDE  para loudness, energy, duration, instrumentalness y un mapa de calor para ver la correlación entre todas.}
   \item{Analizar las variables de estructura musical(sonoras): Mediante una gráfica de frecuencias para la variable mode y key, mediante el coeficiente de variación y un histograma con curva KDE  para tempo y danceability y un mapa de calor para ver la correlación entre todas.}
   \item{Analizar los resultados obtenidos y ver si son variables estandarizadas o no y el comportamiento que siguen.}
@@ -399,49 +399,9 @@ Descripción\\
 Estos procesos se realizaran en \textbf{R} y la librería
 \textbf{tidyverse}. Primero se carga el Dataset, se verifica si contiene
 datos no validos. Se aplicará un filtrado para seleccionar solo las
-canciones del género Pop. Luego se limpiarán los datos eliminando
-valores faltantes y atípicos, y se categorizarán las variables en
-técnicas y sonoras para su análisis posterior.
-
-\begin{verbatim}
-##   track_id       track_name      artist_name     album_name     
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:85000     FALSE:85000     FALSE:85000     FALSE:85000    
-##  release_date      genre         duration_ms     popularity     
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:85000     FALSE:85000     FALSE:85000     FALSE:85000    
-##  danceability      energy           key           loudness      
-##  Mode :logical   Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:85000     FALSE:85000     FALSE:85000     FALSE:85000    
-##     mode         instrumentalness   tempo         stream_count   
-##  Mode :logical   Mode :logical    Mode :logical   Mode :logical  
-##  FALSE:85000     FALSE:85000      FALSE:85000     FALSE:85000    
-##   country         explicit         label        
-##  Mode :logical   Mode :logical   Mode :logical  
-##  FALSE:85000     FALSE:85000     FALSE:85000
-\end{verbatim}
-
-\begin{verbatim}
-## # A tibble: 12 x 2
-##    genre     cantidad
-##    <chr>        <int>
-##  1 Classical     7158
-##  2 Country       7030
-##  3 EDM           6894
-##  4 Folk          7080
-##  5 Hip-Hop       7160
-##  6 Indie         7007
-##  7 Jazz          7177
-##  8 Metal         7200
-##  9 Pop           7096
-## 10 R&B           7084
-## 11 Reggaeton     7001
-## 12 Rock          7113
-\end{verbatim}
-
-\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-1-1} \end{center}
-
-Descripción\\
+canciones del género Pop. Luego se verificara si existen valores
+faltantes y atípicos. Ademas se categorizarán las variables en técnicas
+y sonoras para su análisis posterior.\\
 
 \chapter{Análisis de Resultados}
 
@@ -450,13 +410,42 @@ metodologías descritas en el capítulo anterior, así como del análisis
 estadístico descriptivo de las variables estudiadas y las ventajas y
 desventajas al aplicar dichos tests.\}
 
-\section{Presentación de resultados 1}
+\section{Cantidad de Streams por discográfica}
 
-Descripción\\
+Se examina la distribucion general de los datos, se filtra por el genero
+pop y se seleccionan las columnas \emph{genre}, \emph{label},
+\emph{stream\_count}. Luego se agrupan por la variable \emph{label}, se
+crea \emph{total\_streams} donde se suman la cantidad de reproducciones
+por discografica y al final se seleccionan las 3 con mayor cantidad~
 
-\section{Presentación de resultados 2}
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Streams por discográfica-1} \end{center}
 
-Descripción\\
+\emph{analisis} Se observa que las discográficas más exitosas en
+términos de cantidad de reproducciones por canciones de geero pop del
+2015 al 2025 son EMI, Sony Music e Indepent.\\
+
+\section{Clasificación de variables}
+
+Se crea una tabla para clasificar las variables\\
+
+\begin{verbatim}
+##           Variable Categoria
+## 1     Danceability    sonora
+## 2              Key    sonora
+## 3             Mode    sonora
+## 4            Tempo    sonora
+## 5         Duration   técnica
+## 6           Energy   técnica
+## 7         Loudness   técnica
+## 8 Instrumentalness   técnica
+## 9         Explicit   técnica
+\end{verbatim}
+
+\emph{analisis} Se observa que las variables técnicas son: Duration,
+Energy, Loudness, Instrumentalness y Explicit. Mientras que las
+variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se
+puede analizar cada categoría por separado y aplicar los métodos de
+análisis correspondientes a cada una.~
 
 \section{Presentación de resultados n}
 

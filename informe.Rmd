@@ -56,6 +56,12 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+
+theme_set(theme_gray(base_size = 14) + 
+          theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 18),
+                plot.subtitle = element_text(hjust = 0.5),
+                plot.caption = element_text(color = "#1DB954", hjust = 0),
+                axis.text.x = element_text(angle = 0, vjust = 0.5)))
 ```
 
 \chapter*{Introducción}
@@ -98,9 +104,9 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{Analizar qué discográficas son más exitosas: Con la variable Label y Stream count.}
+  \item{Identificar las discográficas más exitosas del genero pop segun su cantidad de Stream count.}
   \item{Adaptar el dataset con los datos de las tres primeras discográficas más exitosas.}
-  \item{Categorizar las variables: Para intuir con qué método analizar cada variable, se diferencian por categorías.(Técnicas y sonoras)}
+  \item{Clasificar las variables en categorías técnicas y sonoras según el método de análisis correspondiente.}
   \item{Analizar las variables técnicas y de producción: Mediante una gráfica de frecuencias para la variable explicit, mediante el coeficiente de variación y un histograma con curva KDE  para loudness, energy, duration, instrumentalness y un mapa de calor para ver la correlación entre todas.}
   \item{Analizar las variables de estructura musical(sonoras): Mediante una gráfica de frecuencias para la variable mode y key, mediante el coeficiente de variación y un histograma con curva KDE  para tempo y danceability y un mapa de calor para ver la correlación entre todas.}
   \item{Analizar los resultados obtenidos y ver si son variables estandarizadas o no y el comportamiento que siguen.}
@@ -216,9 +222,10 @@ Descripción\
 Descripción\
 
 \subsection{Procesamiento y limpieza de datos}
-Estos procesos se realizaran en **R** y la librería **tidyverse**. Primero se carga el Dataset, se verifica si contiene datos no validos. Se aplicará un filtrado para seleccionar solo las canciones del género Pop. Luego se limpiarán los datos eliminando valores faltantes y atípicos, y se categorizarán las variables en técnicas y sonoras para su análisis posterior.
 
-```{r}
+Estos procesos se realizaran en **R** y la librería **tidyverse**. Primero se carga el Dataset, se verifica si contiene datos no validos. Se aplicará un filtrado para seleccionar solo las canciones del género Pop. Luego se verificara si existen valores faltantes y atípicos. Ademas se categorizarán las variables en técnicas y sonoras para su análisis posterior.\
+
+```{r Carga de datos, include=FALSE}
 spotify<-read_csv("18. Spotify 2015-2025.csv") # carga del dataset
  summary(is.na(spotify)) # Verifique si hay datos no validos 
  
@@ -230,42 +237,53 @@ pop<- spotify %>%
   filter(genre == "Pop") %>%
   select(genre, label, stream_count)
 
-pop_label<-pop %>%
-  group_by(label) %>%
-  summarise(total_streams = sum(stream_count)) %>%
-  slice_max(total_streams, n=3) # Verifique la cantidad de streams total por discografica
-
-
-ggplot(pop_label,
-       aes(x=label))+
-  geom_col(
-    aes(y=total_streams),
-    fill="lightgreen",
-    color="black")+
-  scale_y_continuous(labels = label_number(suffix= "M", scale=1e-6))+
-  labs(
-    x="Discográfica",
-    y="Cantidad de streams",
-    tittle= "Top 3 Discograficas con mayores reproducciones"
-  )
-
-
 ```
 
-
-Descripción\
 
 \chapter{Análisis de Resultados}
 
 {\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.}
 
-\section{Presentación de resultados 1}
+\section{Cantidad de Streams por discográfica}
 
-Descripción\
+Se examina la distribucion general de los datos, se filtra por el genero pop y se seleccionan las columnas *genre*, *label*, *stream_count*. Luego se agrupan por la variable *label*, se crea *total_streams* donde se suman la cantidad de reproducciones por discografica y al final se seleccionan las 3 con mayor cantidad\  
 
-\section{Presentación de resultados 2}
+```{r Streams por discográfica}
 
-Descripción\
+pop_label<-pop %>%
+  group_by(label) %>%
+  summarise(total_streams = sum(stream_count)) #se agrupa por label y creo nueva columna total de streams
+
+ggplot(pop_label,
+       aes(x=label))+
+  geom_col(
+    aes(y=total_streams),
+    fill="#2ecc71",
+    color="black")+
+  scale_y_continuous(labels = label_number(suffix= "M", scale=1e-6))+
+  labs(
+    x="Discográficas",
+    y="Cantidad de streams",
+    title= "Top 3 Discograficas con mayores reproducciones")+
+  slice_max(pop_label, total_streams, n = 3)
+```
+*analisis* Se observa que las discográficas más exitosas en términos de cantidad de reproducciones por canciones de geero pop del 2015 al 2025 son EMI, Sony Music e Indepent.\
+
+
+\section{Clasificación de variables}
+
+Se crea una tabla para clasificar las variables\
+
+```{r Clasificación de variables}
+variables<- data.frame(
+  Variable= c("Duration","Danceability","Energy","Key","Loudness","Mode","Instrumentalness","Tempo","Explicit"),
+  Categoria= c("técnica","sonora","técnica","sonora","técnica","sonora","técnica","sonora","técnica")) %>%
+  arrange(Categoria)
+print(variables)
+
+```
+*analisis* Se observa que las variables técnicas son: Duration, Energy, Loudness, Instrumentalness y Explicit. Mientras que las variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.\ 
+
 
 \section{Presentación de resultados n}
 
