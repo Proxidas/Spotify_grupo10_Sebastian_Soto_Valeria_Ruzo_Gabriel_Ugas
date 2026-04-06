@@ -445,24 +445,35 @@ términos de cantidad de reproducciones por canciones de geero pop del
 
 Se crea una tabla para clasificar las variables\\
 
-\begin{verbatim}
-##           Variable Categoria
-## 1     Danceability    sonora
-## 2              Key    sonora
-## 3             Mode    sonora
-## 4            Tempo    sonora
-## 5         Duration   técnica
-## 6           Energy   técnica
-## 7         Loudness   técnica
-## 8 Instrumentalness   técnica
-## 9         Explicit   técnica
-\end{verbatim}
+\begin{table}[!h]
+\centering
+\caption{\label{tab:Clasificación de variables}Estadisticas Descriptivas de las variables numéricas}
+\centering
+\fontsize{10}{12}\selectfont
+\begin{tabular}[t]{lrrrr}
+\toprule
+Variables & Valor Minimo & Valor Maximo & Media & Desviación Est.\\
+\midrule
+\cellcolor{gray!10}{loudness} & \cellcolor{gray!10}{-55.00} & \cellcolor{gray!10}{-1.00} & \cellcolor{gray!10}{-28.00} & \cellcolor{gray!10}{15.60}\\
+energy & 0.02 & 0.99 & 0.51 & 0.28\\
+\cellcolor{gray!10}{duration\_ms} & \cellcolor{gray!10}{90004.00} & \cellcolor{gray!10}{420000.00} & \cellcolor{gray!10}{254913.82} & \cellcolor{gray!10}{95300.23}\\
+instrumentalness & 0.00 & 0.80 & 0.40 & 0.23\\
+\cellcolor{gray!10}{tempo} & \cellcolor{gray!10}{60.00} & \cellcolor{gray!10}{200.00} & \cellcolor{gray!10}{129.95} & \cellcolor{gray!10}{40.44}\\
+\addlinespace
+danceability & 0.05 & 0.99 & 0.52 & 0.27\\
+\bottomrule
+\end{tabular}
+\end{table}
 
 \emph{analisis} Se observa que las variables técnicas son: Duration,
 Energy, Loudness, Instrumentalness y Explicit. Mientras que las
 variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se
 puede analizar cada categoría por separado y aplicar los métodos de
 análisis correspondientes a cada una.~
+
+\section{Presentación de resultados n}
+
+\section{Presentación de resultados n}
 
 \section{Presentación de resultados n}
 

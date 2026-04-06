@@ -300,15 +300,42 @@ ggplot(pop_label,
 Se crea una tabla para clasificar las variables\
 
 ```{r Clasificación de variables}
-variables<- data.frame(
-  Variable= c("Duration","Danceability","Energy","Key","Loudness","Mode","Instrumentalness","Tempo","Explicit"),
-  Categoria= c("técnica","sonora","técnica","sonora","técnica","sonora","técnica","sonora","técnica")) %>%
-  arrange(Categoria)
-print(variables)
 
+a<-spotify %>%
+    select(loudness, energy, duration_ms, instrumentalness, tempo, danceability,)
+  
+dist_num<-spotify %>%
+    select(loudness, energy, duration_ms, instrumentalness, tempo, danceability,)
+
+
+lista <- c("loudness", "energy", "duration_ms", "instrumentalness", "tempo", "danceability")
+
+dist_num <- data.frame(
+  Variables     = lista,
+  Min           = sapply(spotify[lista], min),
+  Max           = sapply(spotify[lista], max),
+  Promedio      = sapply(spotify[lista], mean),
+  Desv_Estandar = sapply(spotify[lista], sd)
+)
+rownames(dist_num) <- NULL
+
+
+options(scipen = 999)
+kable(dist_num,
+      format = "latex",
+      booktabs = TRUE,
+      digits = 2,
+      col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desviación Est."),
+      caption = "Estadisticas Descriptivas de las variables numéricas") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 10, full_width = FALSE)
+  
 ```
 *analisis* Se observa que las variables técnicas son: Duration, Energy, Loudness, Instrumentalness y Explicit. Mientras que las variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.\ 
 
+
+\section{Presentación de resultados n}
+
+\section{Presentación de resultados n}
 
 \section{Presentación de resultados n}
 
