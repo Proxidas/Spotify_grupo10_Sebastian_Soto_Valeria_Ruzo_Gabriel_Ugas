@@ -411,14 +411,37 @@ Descripción\\
 
 Descripción\\
 
-\subsection{Procesamiento y limpieza de datos}
+\subsection{Procesamiento y Limpieza de Datos (ETL)}
 
-Estos procesos se realizaran en \textbf{R} y la librería
-\textbf{tidyverse}. Primero se carga el Dataset, se verifica si contiene
-datos no validos. Se aplicará un filtrado para seleccionar solo las
-canciones del género Pop. Luego se verificara si existen valores
-faltantes y atípicos. Ademas se categorizarán las variables en técnicas
-y sonoras para su análisis posterior.\\
+La calidad de los resultados depende directamente de la entrada de datos
+de la manera más integra. Estos procesos se basa en la carga de los
+datos y la detección de los valores nulos, de la cual no se encontraron
+ningún de estos.\\
+Adicionalmene, se filtraron los datos para el género pop y se
+seleccionaron las columnas de interés.También los registros
+\textbf{Independent} de la columna \textbf{label} se eliminarán, ya que
+no se consideran una discográfica en esta investigación dado\ldots.\\
+
+\begin{verbatim}
+## [1] "Registros totales: 85000 | Cantidad de variables: 19"
+\end{verbatim}
+
+\begin{verbatim}
+## [1] "Valores nulos por variable:"
+\end{verbatim}
+
+\begin{verbatim}
+##         track_id       track_name      artist_name       album_name 
+##                0                0                0                0 
+##     release_date            genre      duration_ms       popularity 
+##                0                0                0                0 
+##     danceability           energy              key         loudness 
+##                0                0                0                0 
+##             mode instrumentalness            tempo     stream_count 
+##                0                0                0                0 
+##          country         explicit            label 
+##                0                0                0
+\end{verbatim}
 
 \chapter{Análisis de Resultados}
 
@@ -429,17 +452,18 @@ desventajas al aplicar dichos tests.\}
 
 \section{Cantidad de Streams por discográfica}
 
-Se examina la distribucion general de los datos, se filtra por el genero
-pop y se seleccionan las columnas \emph{genre}, \emph{label},
-\emph{stream\_count}. Luego se agrupan por la variable \emph{label}, se
-crea \emph{total\_streams} donde se suman la cantidad de reproducciones
-por discografica y al final se seleccionan las 3 con mayor cantidad~
+En el análisis se observa como al agrupar las Discográficas y calcular
+su total de reproducciones se demuestra quienes gestionan los
+principales ecosistemas musicales\\
+A continuación, se presenta el gráfico con las siete Discograficas y sus
+reproducciones totales.\\
 
 \begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Streams por discográfica-1} \end{center}
 
-\emph{analisis} Se observa que las discográficas más exitosas en
-términos de cantidad de reproducciones por canciones de geero pop del
-2015 al 2025 son EMI, Sony Music e Indepent.\\
+Se aprecia como todas las discograficas sobrepasan los 100 Millones de
+reproducciones entre 2015 y 2025. Sin embargo, se observa que EMI superá
+los 200 Millones, lo que demuestra su relevancia en cantidad de
+reproducciones de las canciones del género Pop.\\
 
 \section{Clasificación de variables}
 
@@ -452,7 +476,7 @@ Se crea una tabla para clasificar las variables\\
 \fontsize{10}{12}\selectfont
 \begin{tabular}[t]{lrrrr}
 \toprule
-Variables & Valor Minimo & Valor Maximo & Media & Desviación Est.\\
+Variables & Valor Minimo & Valor Maximo & Media & Desv. Estandar\\
 \midrule
 \cellcolor{gray!10}{loudness} & \cellcolor{gray!10}{-55.00} & \cellcolor{gray!10}{-1.00} & \cellcolor{gray!10}{-28.00} & \cellcolor{gray!10}{15.60}\\
 energy & 0.02 & 0.99 & 0.51 & 0.28\\

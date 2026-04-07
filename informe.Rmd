@@ -64,7 +64,7 @@ theme_set(theme_gray(base_size = 14) +
           theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 18),
                 plot.subtitle = element_text(hjust = 0.5),
                 plot.caption = element_text(color = "#1DB954", hjust = 0),
-                axis.text.x = element_text(angle = 0, vjust = 0.5)))
+                axis.text.x = element_text(angle = 45, vjust = 0.5)))
 ```
 
 \chapter*{Introducción}
@@ -246,21 +246,32 @@ Descripción\
 
 Descripción\
 
-\subsection{Procesamiento y limpieza de datos}
+\subsection{Procesamiento y Limpieza de Datos (ETL)}
 
-Estos procesos se realizaran en **R** y la librería **tidyverse**. Primero se carga el Dataset, se verifica si contiene datos no validos. Se aplicará un filtrado para seleccionar solo las canciones del género Pop. Luego se verificara si existen valores faltantes y atípicos. Ademas se categorizarán las variables en técnicas y sonoras para su análisis posterior.\
+La calidad de los resultados depende directamente de la entrada de datos de la manera más integra. Estos procesos se basa en la carga de los datos y la detección de los valores nulos, de la cual no se encontraron ningún de estos.\
+Adicionalmene, se filtraron los datos para el género pop y se seleccionaron las columnas de interés.También los registros **Independent** de la columna **label** se eliminarán, ya que no se consideran una discográfica en esta investigación dado....\
 
-```{r Carga de datos, include=FALSE}
+```{r Carga de datos}
 spotify<-read_csv("18. Spotify 2015-2025.csv") # carga del dataset
- summary(is.na(spotify)) # Verifique si hay datos no validos 
- 
- spotify %>%
-   group_by(genre) %>%
-   summarise(cantidad = n()) # Agrupamos para seleccionar solo las canciones del género Pop
- 
-pop<- spotify %>%
+
+sp_clean <- spotify %>%
+  mutate(
+    genre = as.factor(genre),
+    artist_name = as.factor(artist_name) #variables categoricas a factores
+  )
+
+datos_sp<- paste("Registros totales:", nrow(sp_clean), 
+      "| Cantidad de variables:", ncol(sp_clean))
+print(datos_sp)
+print("Valores nulos por variable:")
+colSums(is.na(sp_clean)) # vericacion de valores nulos
+      
+
+pop<- sp_clean %>%
   filter(genre == "Pop") %>%
-  select(genre, label, stream_count)
+  select(genre, label, stream_count,loudness, energy, duration_ms, instrumentalness, tempo, danceability, key, mode, explicit) %>%
+  filter(label != "Independent")
+
 
 ```
 
@@ -271,13 +282,14 @@ pop<- spotify %>%
 
 \section{Cantidad de Streams por discográfica}
 
-Se examina la distribucion general de los datos, se filtra por el genero pop y se seleccionan las columnas *genre*, *label*, *stream_count*. Luego se agrupan por la variable *label*, se crea *total_streams* donde se suman la cantidad de reproducciones por discografica y al final se seleccionan las 3 con mayor cantidad\  
+En el análisis se observa como al agrupar las Discográficas y calcular su total de reproducciones se demuestra quienes gestionan los principales ecosistemas musicales\
+A continuación, se presenta el gráfico con las siete Discograficas y sus reproducciones totales.\
 
 ```{r Streams por discográfica}
 
 pop_label<-pop %>%
   group_by(label) %>%
-  summarise(total_streams = sum(stream_count)) #se agrupa por label y creo nueva columna total de streams
+  summarise(total_streams = sum(stream_count)) #agrupar label y sumar total de streams
 
 ggplot(pop_label,
        aes(x=label))+
@@ -289,43 +301,40 @@ ggplot(pop_label,
   labs(
     x="Discográficas",
     y="Cantidad de streams",
-    title= "Top 3 Discograficas con mayores reproducciones")+
-  slice_max(pop_label, total_streams, n = 3)
+    title= "Total de streams por discográfica")
 ```
-*analisis* Se observa que las discográficas más exitosas en términos de cantidad de reproducciones por canciones de geero pop del 2015 al 2025 son EMI, Sony Music e Indepent.\
+
+Se aprecia como todas las discograficas sobrepasan los 100 Millones de reproducciones entre 2015 y 2025. Sin embargo, se observa que EMI superá los 200 Millones, lo que demuestra su relevancia en cantidad de reproducciones de las canciones del género Pop.\
 
 
 \section{Clasificación de variables}
+
 
 Se crea una tabla para clasificar las variables\
 
 ```{r Clasificación de variables}
 
-a<-spotify %>%
-    select(loudness, energy, duration_ms, instrumentalness, tempo, danceability,)
+v_numericas<-pop %>%
+    select(loudness, energy, duration_ms, instrumentalness, tempo, danceability) #variables numéricas
   
-dist_num<-spotify %>%
-    select(loudness, energy, duration_ms, instrumentalness, tempo, danceability,)
+lista <- c("loudness", "energy", "duration_ms", "instrumentalness", "tempo", "danceability") #agregamos nueva columna
 
-
-lista <- c("loudness", "energy", "duration_ms", "instrumentalness", "tempo", "danceability")
-
-dist_num <- data.frame(
+v_numericas <- data.frame(
   Variables     = lista,
   Min           = sapply(spotify[lista], min),
   Max           = sapply(spotify[lista], max),
   Promedio      = sapply(spotify[lista], mean),
   Desv_Estandar = sapply(spotify[lista], sd)
-)
-rownames(dist_num) <- NULL
+ )
+rownames(v_numericas) <- NULL
 
 
 options(scipen = 999)
-kable(dist_num,
+kable(v_numericas,
       format = "latex",
       booktabs = TRUE,
       digits = 2,
-      col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desviación Est."),
+      col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desv. Estandar"),
       caption = "Estadisticas Descriptivas de las variables numéricas") %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 10, full_width = FALSE)
   
