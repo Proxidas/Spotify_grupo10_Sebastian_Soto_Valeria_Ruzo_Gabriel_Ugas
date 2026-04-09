@@ -464,25 +464,23 @@ reproducciones de las canciones del género Pop.\\
 
 Se crea una tabla para clasificar las variables\\
 
-\begin{table}[!h]
-\centering
-\caption{\label{tab:Clasificación de variables}Estadisticas Descriptivas de las variables numéricas}
-\centering
-\fontsize{10}{12}\selectfont
-\begin{tabular}[t]{lrrrr}
+\begingroup\fontsize{10}{12}\selectfont
+
+\begin{longtable}[t]{lrrrr}
+\caption{\label{tab:Clasificación de variables}Estadisticas Descriptivas de las variables numéricas}\\
 \toprule
 Variables & Valor Minimo & Valor Maximo & Media & Desv. Estandar\\
 \midrule
-\cellcolor{gray!10}{loudness} & \cellcolor{gray!10}{-55.00} & \cellcolor{gray!10}{-1.00} & \cellcolor{gray!10}{-28.00} & \cellcolor{gray!10}{15.60}\\
-energy & 0.02 & 0.99 & 0.51 & 0.28\\
-\cellcolor{gray!10}{duration\_ms} & \cellcolor{gray!10}{90004.00} & \cellcolor{gray!10}{420000.00} & \cellcolor{gray!10}{254913.82} & \cellcolor{gray!10}{95300.23}\\
+\cellcolor{gray!10}{loudness} & \cellcolor{gray!10}{-54.99} & \cellcolor{gray!10}{-1.00} & \cellcolor{gray!10}{-27.92} & \cellcolor{gray!10}{15.53}\\
+energy & 0.02 & 0.99 & 0.50 & 0.28\\
+\cellcolor{gray!10}{duration\_ms} & \cellcolor{gray!10}{90150.00} & \cellcolor{gray!10}{419984.00} & \cellcolor{gray!10}{255551.15} & \cellcolor{gray!10}{95023.29}\\
 instrumentalness & 0.00 & 0.80 & 0.40 & 0.23\\
-\cellcolor{gray!10}{tempo} & \cellcolor{gray!10}{60.00} & \cellcolor{gray!10}{200.00} & \cellcolor{gray!10}{129.95} & \cellcolor{gray!10}{40.44}\\
+\cellcolor{gray!10}{tempo} & \cellcolor{gray!10}{60.00} & \cellcolor{gray!10}{199.98} & \cellcolor{gray!10}{130.57} & \cellcolor{gray!10}{40.73}\\
 \addlinespace
 danceability & 0.05 & 0.99 & 0.52 & 0.27\\
 \bottomrule
-\end{tabular}
-\end{table}
+\end{longtable}
+\endgroup{}
 
 \emph{analisis} Se observa que las variables técnicas son: Duration,
 Energy, Loudness, Instrumentalness y Explicit. Mientras que las
@@ -490,7 +488,9 @@ variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se
 puede analizar cada categoría por separado y aplicar los métodos de
 análisis correspondientes a cada una.~
 
-\section{Presentación de resultados n}
+\section{Mapa de calor de correlación}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-1-1} \end{center}
 
 \section{Presentación de resultados n}
 

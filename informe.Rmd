@@ -267,9 +267,12 @@ colSums(is.na(sp_clean)) # vericacion de valores nulos
       
 
 pop<- sp_clean %>%
+  filter(genre == "Pop" &  label != "Independent") %>%
+  select(genre, label, stream_count,loudness, energy, duration_ms, instrumentalness, tempo, danceability, key, mode, explicit)
+
+pop_prueba<- sp_clean %>%
   filter(genre == "Pop") %>%
-  select(genre, label, stream_count,loudness, energy, duration_ms, instrumentalness, tempo, danceability, key, mode, explicit) %>%
-  filter(label != "Independent")
+  select(genre, label, stream_count,loudness, energy, duration_ms, instrumentalness, tempo, danceability, key, mode, explicit)
 
 
 ```
@@ -313,35 +316,69 @@ Se crea una tabla para clasificar las variables\
 
 ```{r Clasificación de variables}
 
+
 v_numericas<-pop %>%
     select(loudness, energy, duration_ms, instrumentalness, tempo, danceability) #variables numéricas
   
 lista <- c("loudness", "energy", "duration_ms", "instrumentalness", "tempo", "danceability") #agregamos nueva columna
 
-v_numericas <- data.frame(
+tabla_variable <- data.frame(
   Variables     = lista,
-  Min           = sapply(spotify[lista], min),
-  Max           = sapply(spotify[lista], max),
-  Promedio      = sapply(spotify[lista], mean),
-  Desv_Estandar = sapply(spotify[lista], sd)
+  Min           = sapply(pop[lista], min),
+  Max           = sapply(pop[lista], max),
+  Promedio      = sapply(pop[lista], mean),
+  Desv_Estandar = sapply(pop[lista], sd)
  )
-rownames(v_numericas) <- NULL
+rownames(tabla_variable) <- NULL
 
 
 options(scipen = 999)
-kable(v_numericas,
-      format = "latex",
+kable(tabla_variable,
       booktabs = TRUE,
       digits = 2,
       col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desv. Estandar"),
       caption = "Estadisticas Descriptivas de las variables numéricas") %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 10, full_width = FALSE)
-  
+
+
 ```
 *analisis* Se observa que las variables técnicas son: Duration, Energy, Loudness, Instrumentalness y Explicit. Mientras que las variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.\ 
 
 
-\section{Presentación de resultados n}
+\section{Mapa de calor de correlación}
+
+
+```{r}
+correlacion<- as.data.frame(
+  cor(v_numericas[lista])) %>%
+  mutate(Var1 = rownames(.)) #pasarlo a dataframe
+
+cor_long <- correlacion %>%
+  pivot_longer(cols = -Var1, names_to = "Variable2", values_to = "Correlacion") #de ancho a formato largo
+
+ggplot(cor_long,
+       aes(x = Var1, 
+           y = Variable2, 
+           fill = Correlacion)) +
+  geom_tile(color = "black") +
+  scale_fill_gradient2(
+    low = "white", 
+    high = "#1DB954", 
+    mid = "#B3B3B3", 
+    midpoint = 0, 
+    limit = c(-1, 1), 
+    space = "Lab", 
+    name="Correlación") +
+  geom_text(aes(
+    label = round(Correlacion, 2))) +
+      labs(
+        title = "Mapa de calor de correlación entre variables numéricas",
+        x = "Variables",
+        y = "Variables") 
+
+
+```
+
 
 \section{Presentación de resultados n}
 
