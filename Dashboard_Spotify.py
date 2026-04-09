@@ -6,8 +6,9 @@ from plotly.subplots import make_subplots
 import numpy as np
 import seaborn as sns
 import plotly.figure_factory as ff
-import scipy.stats as stats
 import os
+
+
 
 # Configuración de la página 
 st.set_page_config(
@@ -15,7 +16,7 @@ st.set_page_config(
     page_icon="🎵",
     layout="wide"  
 )
-    
+
 carpeta_del_proyecto = os.path.dirname(os.path.abspath(__file__))
 ruta_al_csv = os.path.join(carpeta_del_proyecto, '18. Spotify 2015-2025.csv')
 
@@ -61,7 +62,7 @@ conteo_negativos = (df[['duration_ms', 'popularity', 'danceability', 'energy', '
 #st.table(conteo_negativos)
 
 ### DATASET FILTRADO POR GENERO POP Y DISCOGRÁFICAS QUE ESTAN EN SPOTIFY (SIN INDEPENDENT)
-df_pop_discograficas= df[(df['label'] != 'Independent') & (df['genre'] == 'Pop')]
+df_pop_discograficas = df[(df['label'] != 'Independent') & (df['genre'] == 'Pop')]
 
  
 # Para Logo spotify
@@ -100,170 +101,285 @@ st.markdown(f"<h1 style='display: flex; align-items: center;'>\
             {logo_spotify} Estandarización en las Características de las Canciones del Género Pop de Spotify  (2015 - 2025)</h1>", unsafe_allow_html=True) # La fila arriba es la configuración del título.
 st.markdown("Se presenta Gráficamente el estudio del Dataset de Spotify")
 
-#Pestañas de análisis de las discográficas, características técnicas y características sonoras
-
-tab1, tab2, tab3 = st.tabs(["🏢 Sellos Discográficos", "⚙️ Análisis de Características Técnicas y Producción", "🔊 Análisis de Características Sonoras"])
-
-with tab1:
-
-    ## Graficar
-    discográficas = df_pop_discograficas['label'].unique()
-    #st.table(discográficas)
-    ## Gráfico 1 
-    st.markdown("### Top 7 de Discográficas en Spotify que producen música del género Pop")
-
-    ### crear un selector de cantidad de discográficas a mostrar
-    top_discograficas = st.selectbox("Cantidad de discográficas a ver",
-                                     options=["3", "5", "Todas"],
-                                     index=0)
-
-    ### filtramos por label y contamos stream_count
-    label_streams = df_filtrado.groupby('label')['stream_count'].sum().reset_index()
-
-    ### quitámos los datos independent pues no son una discográfica
-    label_streams = label_streams[label_streams['label'] != 'Independent']
-
-    ### ordenamos por roden alfabético
-    label_streams = label_streams.sort_values(by='label', ascending=True)
 
 
-    ### aplicamos el filtro
-    if top_discograficas == "Todas":
-        df_final = label_streams
-    else:
-        n = int(top_discograficas) 
-        df_final = label_streams.sort_values(by= 'stream_count', ascending=False).head(n) #ordenamos segun exito temporalmente
+## Gráfico 1 
 
-    df_final = df_final.sort_values(by='stream_count', ascending=False) #ordenamos por cantidad de streams para que el grafico quede ordenado de mayor a menor 
+### crear un selector de cantidad de discográficas a mostrar
+top_discograficas = st.selectbox("Cantidad de discográficas a ver",
+                                    options=["3", "5", "Todas"],
+                                    index=0)
+
+### filtramos por label y contamos stream_count
+df_count_musicas = df_filtrado['label'].value_counts().reset_index()
+df_count_musicas.columns = ['Discográfica', 'Cantidad de Canciones']
 
 
-    ### visualización colores
-    SPOTIFY_GREEN = '#1DB954'
-    SPOTIFY_BLACK = '#191414'
-    WHITE = '#FFFFFF'
+### quitámos los datos independent pues no son una discográfica
+condicion_indie = df_count_musicas['Discográfica'].str.contains('Independent|Indie', case=False, na=False)
 
-    ### creación del gráfico
-    fig1 = px.bar(
-        df_final,
-        x='label',
-        y='stream_count',
-        title='Cantidad de streams por discográfica',
-        labels={'label': 'Discográfica', 'stream_count': 'Cantidad de streams'},
-        template='plotly_dark',
-    )
-    ### personalizar
-    fig1.update_traces(
-        marker_color=SPOTIFY_GREEN,
-        marker_line_color=WHITE,
-        marker_line_width=0.5
+# Creamos el dataframe SIN esas filas
+df_count_musicas_sin_indie = df_count_musicas[~condicion_indie].copy()
+
+### Lógica para el Top (3, 5 o Todas)
+if top_discograficas == "Todas":
+    df_final = df_count_musicas_sin_indie.sort_values(by='Cantidad de Canciones', ascending=False)
+else:
+    # Convertimos el texto "3" o "5" a número entero para filtrar
+    n = int(top_discograficas)
+    df_final = df_count_musicas_sin_indie.sort_values(by='Cantidad de Canciones', ascending=False).head(n)
+
+SPOTIFY_GREEN = '#1DB954'
+SPOTIFY_BLACK = '#191414'
+SPOTIFY_FUCHSIA = '#B91D82'
+WHITE = '#FFFFFF'
+
+### creación del gráfico
+st.subheader(f"Top {top_discograficas} Discográficas en Spotify que producen música del género Pop")
+
+fig_label = px.bar(
+    df_final,
+    x='Discográfica',
+    y='Cantidad de Canciones',
+    labels={'Discográfica': 'Discográfica', 'Cantidad de Canciones': 'Cantidad de Canciones'},
+    template='plotly_dark'
     )
 
-    fig1.update_layout(
-        font=dict(color=WHITE),
-        bargap=0.8 ,
-        xaxis=dict(
-            gridcolor=SPOTIFY_GREEN,
-            showgrid=True,
-            categoryorder='trace',
-            tickfont=dict(
-                family= 'Arial Black, sans-serif',
-                size=12,
-                color=WHITE
+### personalizar
+fig_label.update_traces(
+    marker_color=SPOTIFY_GREEN,
+    marker_line_color=WHITE,
+    marker_line_width=0.5
+    )
+
+fig_label.update_layout(
+    font=dict(color=WHITE),
+    bargap=0.8 ,
+    xaxis=dict(
+        gridcolor=SPOTIFY_GREEN,
+        showgrid=True,
+        categoryorder='trace',
+        tickfont=dict(
+            family= 'Arial Black, sans-serif',
+            size=12,
+            color=WHITE
             )
         ),
-        yaxis=dict(
-            gridcolor=SPOTIFY_GREEN,
-            showgrid=True,
-            title="Suma de Streams"
+    yaxis=dict(
+        gridcolor=SPOTIFY_GREEN,
+        showgrid=True,
         )
     )
-    st.plotly_chart(fig1, use_container_width=True)
-    
-with tab2:
+st.plotly_chart(fig_label, use_container_width=True)
 
-    #Seccion del Analisis de las Variables Tecnicas y de Produción 
-    st.markdown("### Análisis de las Características Técnicas y de  Poducción")
+total_con_indies = df_count_musicas['Cantidad de Canciones'].sum()
+total_sin_indies = df_count_musicas_sin_indie['Cantidad de Canciones'].sum()
 
-    #Filtrado de dataset para las variables tecnicas de las 3 discograficas mas exitosas 
+porc_discograficas = ((total_sin_indies / total_con_indies) * 100).round(2)
 
-    top3_nombres= df_pop_discograficas['label'].tolist()  #tomo los nommbres de las discograficas  
+col1, col2 = st.columns(2)
+with col1:
+    st.metric("Cantidad Total de Canciones con Sellos Discográficos", f"{total_sin_indies}")
+with col2:
+        st.metric("Porcentaje de Canciones con Sellos Discográficos en Spotify", f"{porc_discograficas}%")
+if total_con_indies == total_sin_indies:
+    st.error(f"⚠️ Sigue dando 100%. Nombres encontrados: {df_count_musicas['Discográfica'].unique()[:5]}")
 
-    df_solo_majors= df_filtrado[df_filtrado['label'].isin(top3_nombres)] #tomo los registros de las tres discograficas mas exitosas 
-
-
-    #Agrupación , contando los datos de las discograficas de la variable explicit y  cambio el formato de la columna para que sea mas entendible en el grafico (1 y 0 a explicita y no explicita) 
-
-    df_explicit = df_filtrado.groupby(['explicit']).size().reset_index(name='conteo')
-    df_explicit['explicit'] = df_explicit['explicit'].astype(str)
-    df_explicit['explicit'] = df_explicit['explicit'].replace({'1': 'Explícita', '0': 'No Explícita'})
 
     
-    ### visualización colores
-    SPOTIFY_GREEN = '#1DB954'
-    SPOTIFY_BLACK = '#191414'
-    WHITE = '#FFFFFF'
-    SPOTIFY_FUCHSIA = '#B91D82'
-    #Grafico 
 
-    fig_sep = px.bar(
-        df_explicit,
-        x='explicit',
-        y='conteo',
-        title='Frecuencia Global del Contenido Explicito en las Canciones ',
-        color='explicit',
-        labels={'explicit': 'Tipo de letra', 'conteo': 'Cantidad de Canciones'},
-        color_discrete_map={'Explícita': SPOTIFY_FUCHSIA, 'No Explícita':SPOTIFY_GREEN},
-        template='plotly_dark',
-        text_auto=True
+#Seccion del Analisis de las Variables Tecnicas y de Produción 
+st.markdown("### Análisis de las Características Técnicas y de  Poducción")
+
+# variables tecnicas
+var_tecnicas = {
+    "Energía": "energy",
+    "Volumen (dB)": "loudness",
+    "Instrumentalidad": "instrumentalness",
+    "Duración (ms)": "duration_ms"
+}
+
+#crea las pestñas para seleccionar la variable
+tabs = st.tabs(list(var_tecnicas.keys()))
+for i, (nombre_visual, columna ) in enumerate(var_tecnicas.items()):
+    with tabs[i]:
+
+        st.subheader(f"Análisis de {nombre_visual}")
+
+        fig_tecnicas = px.violin(df_filtrado,
+                        y=columna,
+                        box=True,
+                        hover_data=df_filtrado.columns,
+                        color_discrete_sequence=[SPOTIFY_GREEN],
+        )
+        fig_tecnicas.update_layout(
+            template="plotly_dark",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            yaxis_title=nombre_visual,
+            xaxis_title="Frecuencia en el Pop",
+            height=600
+        )
+
+        st.plotly_chart(fig_tecnicas, use_container_width=True)
+
+        # 7. Estadísticas de soporte
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Media", f"{df_filtrado[columna].mean():.2f}")
+        with col2:
+            st.metric("Desviación Estándar", f"{df_filtrado[columna].std():.2f}")
+        with col3:
+            st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
+
+# Variable Explicit
+
+#Agrupación , contando los datos de las discograficas de la variable explicit y  cambio el formato de la columna para que sea mas entendible en el grafico (1 y 0 a explicita y no explicita) 
+
+df_explicit = df_filtrado.groupby(['explicit']).size().reset_index(name='conteo')
+df_explicit['explicit'] = df_explicit['explicit'].astype(str)
+df_explicit['explicit'] = df_explicit['explicit'].replace({'1': 'Explícita', '0': 'No Explícita'})
+
+#Grafico 
+st.subheader("Análisis de contenido explicito")
+
+fig_exp = px.bar(
+    df_explicit,
+    x='explicit',
+    y='conteo',
+    color='explicit',
+    labels={'explicit': 'Tipo de letra', 'conteo': 'Cantidad de Canciones'},
+    color_discrete_map={'Explícita': SPOTIFY_FUCHSIA, 'No Explícita':SPOTIFY_GREEN},
+    template='plotly_dark',
+    text_auto=True
     )
 
-    # Ajustes visuales del grafico
+# Ajustes visuales del grafico
 
-    fig_sep.update_traces(
+fig_exp.update_traces(
         width=0.4
-    ) #ancho de las barras
+) #ancho de las barras
 
-    fig_sep.update_layout(
-        showlegend=False,
-        bargap=0.1,
-        font= dict(color=WHITE),
-        xaxis=dict( showgrid=True),
-        yaxis=dict(showgrid=True),
-        )# Ajustes en el eje X y Y
+fig_exp.update_layout(
+    showlegend=False,
+    bargap=0.1,
+    font= dict(color=WHITE),
+    xaxis=dict( showgrid=True),
+    yaxis=dict(showgrid=True),
+)# Ajustes en el eje X y Y
 
-    st.plotly_chart(fig_sep, use_container_width=True)
+st.plotly_chart(fig_exp, use_container_width=True)
     
-    #Porcentajes de canciones explicitas y no explicitas
-    total = df_explicit['conteo'].sum()
-    cant_si = df_explicit[df_explicit['explicit'] == 'Explícita']['conteo'].sum() #cuenta cuantas canciones son explicitas
-    cant_no = df_explicit[df_explicit['explicit'] == 'No Explícita']['conteo'].sum() #cuenta cuantas canciones no son explicitas
+#Porcentajes de canciones explicitas y no explicitas
+total = df_explicit['conteo'].sum()
+cant_si = df_explicit[df_explicit['explicit'] == 'Explícita']['conteo'].sum() #cuenta cuantas canciones son explicitas
+cant_no = df_explicit[df_explicit['explicit'] == 'No Explícita']['conteo'].sum() #cuenta cuantas canciones no son explicitas
     
-    porc_si = (cant_si / total * 100).round(2)
-    porc_no = (cant_no / total * 100).round(2)
+porc_si = (cant_si / total * 100).round(2)
+porc_no = (cant_no / total * 100).round(2)
 
-    st.write(f"🔎 El **{porc_si}%** de las canciones  tienen contenido **Explícito** 🔞.")
-    st.write(f"🎵 El **{porc_no}%** de las canciones  son aptas para todo público.")
-    
+col1, col2 = st.columns(2)
+with col1:
+    st.metric("El porcentaje de Canciones Explícitas", f"{porc_si}%")
+with col2:
+    st.metric("El porcentaje de Canciones No Explícitas", f"{porc_no}%")
 
-    
-    ### Variable Loudness
-    df_loudness = df_filtrado['loudness']
-    group_labels_loudness = ['Distribución de Loudness'] 
-    
-    
-    # Grafico de curva de densidad (KDE)
-    fig = ff.create_distplot([df_loudness], group_labels_loudness, show_hist=True, show_rug=False)
-    
-    #  Personaliza las barras  
-    fig.update_traces(opacity=0.5, selector=dict(type='bar'))
-    
-    # Personalizar la línea (Curva KDE)
-    fig.update_traces(line=dict(color='red', width=3), selector=dict(type='scatter'))
-    
-    # Ajustes estéticos generales
-    fig.update_layout(
-    title_text='Histograma con Curva de Densidad de Loudness',
-    bargap=0.01, 
-    template="plotly_dark" 
+#Analisis de las caracteristicas sonoras
+
+st.markdown("### Análisis de las Características Sonoras")
+
+#variables sonoras
+var_sonoras = {
+    "Clave Musical": "key",
+    "Bailabilidad": "danceability",
+    "Tempo (BPM)": "tempo"
+}
+
+#crea pestañas para seleccionar la variable
+tabs_sonoras = st.tabs(list(var_sonoras.keys())) 
+for i, (nombre_visual, columna) in enumerate(var_sonoras.items()):
+    with tabs_sonoras[i]:
+
+        st.subheader(f"Análisis de {nombre_visual}")
+
+#creación del gráfico
+        fig_sonoras = px.violin(df_filtrado,
+                        y=columna,
+                        box=True,
+                        hover_data=df_filtrado.columns,
+                        color_discrete_sequence=[SPOTIFY_GREEN],
+        )
+
+    #diseño del gráfico
+        fig_sonoras.update_layout(
+            template="plotly_dark",
+            plot_bgcolor='rgba(0,0,0,0)',
+            paper_bgcolor='rgba(0,0,0,0)',
+            yaxis_title=nombre_visual,
+            xaxis_title="Frecuencia en el Pop",
+            height=600
+        )
+
+        st.plotly_chart(fig_sonoras, use_container_width=True)
+
+        # 7. Estadísticas de soporte
+        col1, col2, col3 = st.columns(3)
+        with col1:
+            st.metric("Media", f"{df_filtrado[columna].mean():.2f}")
+        with col2:
+            st.metric("Desviación Estándar", f"{df_filtrado[columna].std():.2f}")
+        with col3:
+            st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
+
+# Analisis de la var mode
+
+st.subheader("Análisis de la Modalidad Musical")
+
+# Agrupación por modalidad musical y conteo
+df_mode = df_filtrado.groupby(['mode']).size().reset_index(name='conteo')  
+df_mode['mode'] = df_mode['mode'].astype(str)
+df_mode['mode'] = df_mode['mode'].replace({'1': 'Mayor', '0': 'Menor'})
+
+# Gráfico
+fig_mode = px.bar(
+    df_mode,
+    x='mode',
+    y='conteo',
+    color='mode',
+    labels={'mode': 'Modalidad Musical', 'conteo': 'Cantidad de Canciones'},
+    color_discrete_map={'Mayor': SPOTIFY_GREEN, 'Menor': SPOTIFY_FUCHSIA},
+    template='plotly_dark',
+    text_auto=True
 )
-    st.plotly_chart(fig, use_container_width=True)
+
+# Ajustes visuales del gráfico
+fig_mode.update_traces(
+        width=0.4
+)
+
+fig_mode.update_layout(
+    showlegend=False,
+    bargap=0.1,
+    font= dict(color=WHITE),
+    xaxis=dict( showgrid=True),
+    yaxis=dict(showgrid=True),
+)
+
+st.plotly_chart(fig_mode, use_container_width=True)
+
+#porcentajes de canciones en modo mayor y menor
+total_mode = df_mode['conteo'].sum()
+cant_mayor = df_mode[df_mode['mode'] == 'Mayor']['conteo'].sum()
+cant_menor = df_mode[df_mode['mode'] == 'Menor']['conteo'].sum()
+
+porc_mayor = (cant_mayor / total_mode * 100).round(2)
+porc_menor = (cant_menor / total_mode * 100).round(2)  
+
+col1, col2 = st.columns(2)
+with col1:
+    st.metric("El porcentaje de Canciones en Modo Mayor", f"{porc_mayor}%")
+with col2:
+    st.metric("El porcentaje de Canciones en Modo Menor", f"{porc_menor}%")
+
+
+

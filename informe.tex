@@ -106,20 +106,17 @@ Pop usando como referencia el dataset (Spotify 2015-2025)
 
 El objetivo es comprobar que existe las estandarización en las
 características musicales y sonoras de las canciones con sello de
-grandes discográficas del género Pop. Y para ello hay que Observar
-mediante las variables stream counts y label las discográficas más
-exitosas, para tratar los datos en torno a las 3 primeras Discográficas,
-luego se toman en cuenta varias variables en este caso:(loudness,
-energy, duration ms, instrumentales, explicit, tempo, danceability, key
-y mode), se dividen en dos categorías sonoras y musicales, se analizan
-las variables de cada categoría aparte usando métodos de dispersión,
-distribución y correlación y se explican en histogramas de frecuencias
-para las variables dicotómicas, histogramas con curvas de KDE para la
-curtosis y ver si se asemejan a una campana de Gauss y por último
-gráficas de calor para contemplar la correlación y ver si es alta o
-baja. Por último se analizan todos los resultados y se determinaría si
-son o no estandarizadas las canciones, luego en caso de ser así se
-contemplaría el comportamiento
+discográficas del género Pop. Se toman en cuenta varias variables en
+este caso:(loudness, energy, duration ms, instrumentales, explicit,
+tempo, danceability, key y mode), se dividen en dos categorías sonoras y
+técnicas, se analizan las variables de cada categoría aparte usando
+métodos de dispersión, distribución y correlación y se explican en
+histogramas de frecuencias para las variables dicotómicas, histogramas
+con curvas de KDE para la curtosis y ver si se asemejan a una campana de
+Gauss y por último gráficas de calor para contemplar la correlación y
+ver si es alta o baja. Por último se analizan todos los resultados y se
+determinaría si son o no estandarizadas las canciones, luego en caso de
+ser así se contemplaría el comportamiento
 estándar.             % Aquí se pega el texto que escribiste en el YAML
   
   \cleardoublepage
@@ -142,12 +139,12 @@ juvenil.
 
 A través del análisis estadístico descriptivo del dataset
 \textbf{\emph{Spotify 2015-2025}}, se examinan variables técnicas
-(loudness, energy, duration) y estructurales (tempo, danceability, key,
-mode) de canciones pop con sello de estas discográficas. El objetivo es
-determinar, mediante análisis de dispersión, distribución y correlación,
-si existe una homogeneización sistemática en las producciones
-comerciales que pudiera condicionar los patrones de consumo y la
-creatividad musical actual.
+(loudness, energy, duration) y sonoras (tempo, danceability, key, mode)
+de canciones pop con sello de discográficas. El objetivo es determinar,
+mediante análisis de dispersión, distribución y correlación, si existe
+una homogeneización sistemática en las producciones comerciales que
+pudiera condicionar los patrones de consumo y la creatividad musical
+actual.
 
 \chapter{Planteamiento del Problema}
 
@@ -167,13 +164,13 @@ comportarse de gran parte de la población y los adolescentes, a menudo
 fomentando la imitación, según apuntan International Journal of Arts \&
 Education Research.
 
-``\,``También, la industria musical es posiblemente uno de los mercados
-más competitivos. Los sellos discográficos son empresas que contratan
+También, la industria musical es posiblemente uno de los mercados más
+competitivos. Los sellos discográficos son empresas que contratan
 artistas, financian grabaciones, comercializan la música y coordinan la
 distribución. Según una investigación presentada por Juan Francisco
 Peñaloza Cubillos, de la Pontificia Universidad Javeriana, concluye que
 el mercado musical es un oligopolio entre las grandes compañías
-discográficas''\,``.
+discográficas.
 
 ``Actualmente la industria de la música es controlada por tres grandes
 compañías discográficas multinacionales también llamadas majors, tanto a
@@ -184,22 +181,21 @@ artistas.''
 
 Entonces tomando en cuenta el hecho que el género Pop influencia en la
 manera de pensar de los jóvenes y que las discográficas dominan el
-mercado, Podemos decir que las canciones con sellos de grandes
-discográficas pueden controlar la forma de pensar de los Jóvenes y por
-consiguiente si las grandes discográficas tienden a estandarizar las
-características sonoras y métricas de las canciones, están imponiendo al
-público Juvenil un modelo único de consumo, lo que los lleva a tener
-limitaciones en el acceso a la diversidad musical y a la imitación
-pasiva.\\
+mercado, Podemos decir que las canciones con sellos de discográficas
+pueden controlar la forma de pensar de los Jóvenes y por consiguiente si
+las discográficas tienden a estandarizar las características sonoras y
+métricas de las canciones, están imponiendo al público Juvenil un modelo
+único de consumo, lo que los lleva a tener limitaciones en el acceso a
+la diversidad musical y a la imitación pasiva.\\
 
 Argumento final. Debido a esto, se plantea las siguientes preguntas de
 investigación:\\
 
-\textbf{1.} ¿Qué discográficas son más exitosas según el dataset?\\
+\textbf{1.} ¿Cuantas canciones hay por discográfica?\\
 
 \textbf{2.} ¿Las variables analizadas demuestran un comportamiento
 similar a lo largo del tiempo, con lo que podemos determinar que las
-grandes disqueras musicales comercializan canciones estandarizadas?\\
+disqueras musicales comercializan canciones estandarizadas?\\
 
 \textbf{3.} ¿Qué comportamiento demuestran las variables
 estandarizadas?\\
@@ -219,17 +215,16 @@ realidad.\\
 
 \subsection{Objetivo General}
 \begin{itemize}
-  \item{ Estudiar si las canciones con sellos de grandes discográficas tienden a unas características musicales estandarizadas. (Mediante análisis de dispersión, de distribución y correlación)}
+  \item{ Observar si las canciones con sellos discográficas tienden a unas características musicales estandarizadas.}
 \end{itemize}
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{Identificar las discográficas más exitosas del genero pop segun su cantidad de Stream count.}
-  \item{Adaptar el dataset con los datos de las tres primeras discográficas más exitosas.}
-  \item{Clasificar las variables en categorías técnicas y sonoras según el método de análisis correspondiente.}
-  \item{Analizar las variables técnicas y de producción: Mediante una gráfica de frecuencias para la variable explicit, mediante el coeficiente de variación y un histograma con curva KDE  para loudness, energy, duration, instrumentalness y un mapa de calor para ver la correlación entre todas.}
-  \item{Analizar las variables de estructura musical(sonoras): Mediante una gráfica de frecuencias para la variable mode y key, mediante el coeficiente de variación y un histograma con curva KDE  para tempo y danceability y un mapa de calor para ver la correlación entre todas.}
-  \item{Analizar los resultados obtenidos y ver si son variables estandarizadas o no y el comportamiento que siguen.}
+  \item{Identificar cuantas canciones hay por discográfica.}
+  \item{Clasificar las variables en categorías técnicas y sonoras.}
+  \item{Analizar las variables técnicas y de producción: Mediante una gráfica de frecuencias para la variable cualitativa y mediante el coeficiente de variación y un gráfico de violin para las cuantitativas.}
+  \item{Analizar las variables sonoras: Mediante una gráfica de frecuencias para la variable cualitativa, mediante el coeficiente de variación y un gráfico de violin para las variables cuantitativas}
+  \item{Analizar los resultados obtenidos y realizar un para de correlaciones dentre las variables.}
 \end{itemize}
 
 \section{Cobertura}
