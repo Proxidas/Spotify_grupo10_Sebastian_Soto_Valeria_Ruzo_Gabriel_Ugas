@@ -99,25 +99,21 @@ Estadistica y Ciencias Actuariales}
   \addcontentsline{toc}{chapter}{Resumen} % (Opcional) Lo añade al índice
   
   El proyecto pretende atender al problema de la estandarización en las
-canciones con sello de grandes discográficas del género Pop, que afectan
+canciones con sello de discográficas del género Pop, que afectan
 negativamente a la nueva generación, enfocados en la parte estadística
 del mismo, analizando las características de las canciones del género
-Pop usando como referencia el dataset (Spotify 2015-2025)
-
-El objetivo es comprobar que existe las estandarización en las
-características musicales y sonoras de las canciones con sello de
-discográficas del género Pop. Se toman en cuenta varias variables en
-este caso:(loudness, energy, duration ms, instrumentales, explicit,
-tempo, danceability, key y mode), se dividen en dos categorías sonoras y
-técnicas, se analizan las variables de cada categoría aparte usando
-métodos de dispersión, distribución y correlación y se explican en
-histogramas de frecuencias para las variables dicotómicas, histogramas
-con curvas de KDE para la curtosis y ver si se asemejan a una campana de
-Gauss y por último gráficas de calor para contemplar la correlación y
+Pop usando como referencia el dataset (Spotify 2015-2025) El objetivo es
+comprobar que existe las estandarización en las características tecnicas
+y sonoras de las canciones con sello de grandes discográficas del género
+Pop. Se toman en cuenta varias variables en este caso:(loudness, energy,
+duration\_ms, instrumentales, explicit, tempo, danceability, key y
+mode), se dividen en dos categorías sonoras y tecnicas, se analizan las
+variables de cada categoría aparte usando cuadros que muestren su
+coeficiente de variacion, media y curtos, se refelja en un grafico de
+violin y por último gráficas de calor para contemplar la correlación y
 ver si es alta o baja. Por último se analizan todos los resultados y se
-determinaría si son o no estandarizadas las canciones, luego en caso de
-ser así se contemplaría el comportamiento
-estándar.             % Aquí se pega el texto que escribiste en el YAML
+determinaría si son o no estandarizadas las
+canciones.             % Aquí se pega el texto que escribiste en el YAML
   
   \cleardoublepage
 
@@ -418,7 +414,7 @@ seleccionaron las columnas de interés.También los registros
 no se consideran una discográfica en esta investigación dado\ldots.\\
 
 \begin{verbatim}
-## [1] "Registros totales: 85000 | Cantidad de variables: 19"
+## [1] "Registros totales: 84997 | Cantidad de variables: 19"
 \end{verbatim}
 
 \begin{verbatim}
@@ -488,9 +484,136 @@ variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se
 puede analizar cada categoría por separado y aplicar los métodos de
 análisis correspondientes a cada una.~
 
+\section{Análisis de las variables Técnicas}
+
+\subsection{Explicit}
+
+\subsection{Loudness}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:Cuadro Análisis 1}Análisis de Estandarización}
+\centering
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
+\toprule
+Métrica & Valor & Interpretación\\
+\midrule
+\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{-27.92} & \cellcolor{gray!10}{El valor central es -27.92 . Es el punto de referencia industrial.}\\
+Coef. Variación (CV) & 55.61\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
+\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.19} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Energy}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:cuadro análsis 2}Análisis de Estandarización}
+\centering
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
+\toprule
+Métrica & Valor & Interpretación\\
+\midrule
+\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{0.5} & \cellcolor{gray!10}{El valor central es 0.5 . Es el punto de referencia industrial.}\\
+Coef. Variación (CV) & 55.08\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
+\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.18} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Instrumentalness}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:cuadro análsis 3}Análisis de Estandarización}
+\centering
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
+\toprule
+Métrica & Valor & Interpretación\\
+\midrule
+\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{0.4} & \cellcolor{gray!10}{El valor central es 0.4 . Es el punto de referencia industrial.}\\
+Coef. Variación (CV) & 58.71\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
+\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.2} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Duration}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:cuadro análsis 4}Análisis de Estandarización}
+\centering
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
+\toprule
+Métrica & Valor & Interpretación\\
+\midrule
+\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{255551.15} & \cellcolor{gray!10}{El valor central es 255551.15 . Es el punto de referencia industrial.}\\
+Coef. Variación (CV) & 37.18\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
+\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.19} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Análisis de variables sonoras}
+
+\subsection{Mode}
+
+\subsection{Tempo}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:cuadro análsis 5}Análisis de Estandarización}
+\centering
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
+\toprule
+Métrica & Valor & Interpretación\\
+\midrule
+\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{130.57} & \cellcolor{gray!10}{El valor central es 130.57 . Es el punto de referencia industrial.}\\
+Coef. Variación (CV) & 31.19\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
+\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.22} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Danceability}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:cuadro análsis 6}Análisis de Estandarización}
+\centering
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
+\toprule
+Métrica & Valor & Interpretación\\
+\midrule
+\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{0.52} & \cellcolor{gray!10}{El valor central es 0.52 . Es el punto de referencia industrial.}\\
+Coef. Variación (CV) & 52.27\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
+\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.19} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Key}
+
+\begin{table}[H]
+\centering
+\caption{\label{tab:cuadro análsis 7}Análisis de Estandarización}
+\centering
+\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
+\toprule
+Métrica & Valor & Interpretación\\
+\midrule
+\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{5.49} & \cellcolor{gray!10}{El valor central es 5.49 . Es el punto de referencia industrial.}\\
+Coef. Variación (CV) & 62.67\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
+\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.22} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
 \section{Mapa de calor de correlación}
 
-\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-1-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 \section{Presentación de resultados n}
 

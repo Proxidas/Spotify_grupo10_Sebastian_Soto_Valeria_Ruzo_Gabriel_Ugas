@@ -1,44 +1,35 @@
 ---
-# --- Metadatos Básicos ---
-title: "Estandarización en las canciones con sellos de grandes discográficas en el género Pop"
+title: Estandarización en las canciones con sellos de grandes discográficas en el
+  género Pop
 author:
-   - Sebastian Soto
-   - Valeria Ruza
-   - Gabriel Ugas
+- Sebastian Soto
+- Valeria Ruza
+- Gabriel Ugas
 date: "Marzo 2026"
-
-# --- Metadatos Específicos de Plantilla ---
-degree: "Computación I"
-director: 
-  - Jesus Ochoa 
-  - Oliver Triveño
-lugar: "Caracas"
-facultad: 
-  - Facultad de Ciencias Económicas y Sociales
-  - Escuela de Estadistica y Ciencias Actuariales
-# Ruta al escudo (relativa al archivo .Rmd)
-escudo: "Latex/Classes/Escudos/faces"
-
-# --- Bibliografía ---
-bibliography: bibliografia.bib
-
-# --- Configuración de Salida ---
-header-includes:
-   - \newcommand{\tightlist}{}
-output: 
+output:
   pdf_document:
-    template: template.tex  # Llamamos al archivo de plantilla
-    keep_tex: true                 # Útil para ver errores si ocurren
-    toc: true                      # Generar índice
+    template: template.tex
+    keep_tex: true
+    toc: true
     number_sections: true
-    citation_package: natbib       # Importante: forzar natbib porque tu plantilla lo usa
-    
+    citation_package: natbib
+  word_document:
+    toc: true
+director:
+- Jesus Ochoa
+- Oliver Triveño
+lugar: Caracas
+facultad:
+- Facultad de Ciencias Económicas y Sociales
+- Escuela de Estadistica y Ciencias Actuariales
+escudo: Latex/Classes/Escudos/faces
+bibliography: bibliografia.bib
+header-includes: \newcommand{\tightlist}{}
+degree: Computación I
+abstract: "El proyecto pretende atender al problema de la estandarización en las canciones con sello de  discográficas del género Pop, que afectan negativamente a la nueva generación, enfocados en la parte estadística del mismo, analizando las características de las canciones del género Pop usando como referencia el dataset (Spotify 2015-2025)
 
-# --- Resumen (Abstract) ---
-abstract: |
-    El proyecto pretende atender al problema de la estandarización en las canciones con sello de grandes discográficas del género Pop, que afectan negativamente a la nueva generación, enfocados en la parte estadística del mismo, analizando las características de las canciones del género Pop usando como referencia el dataset (Spotify 2015-2025)
+    El objetivo es comprobar que existe las estandarización en las características tecnicas y sonoras de las canciones con sello de grandes discográficas del género Pop. Se toman en cuenta varias variables en este caso:(loudness, energy, duration_ms, instrumentales, explicit, tempo, danceability, key y mode), se dividen en dos categorías sonoras y tecnicas, se analizan las variables de cada categoría aparte usando cuadros que muestren su coeficiente de variacion, media y curtos, se refelja en un grafico de violin y por último gráficas de calor para contemplar la correlación y ver si es alta o baja. Por último se analizan todos los resultados y se determinaría si son o no estandarizadas las canciones."
 
-    El objetivo es comprobar que existe las estandarización en las características musicales y sonoras de las canciones con sello de discográficas del género Pop. Se toman en cuenta varias variables en este caso:(loudness, energy, duration ms, instrumentales, explicit, tempo, danceability, key y mode), se dividen en dos categorías sonoras y técnicas, se analizan las variables de cada categoría aparte usando métodos de dispersión, distribución y correlación y se explican en histogramas de frecuencias para las variables dicotómicas, histogramas con curvas de KDE para la curtosis y ver si se asemejan a una campana de Gauss y por último gráficas de calor para contemplar la correlación y ver si es alta o baja. Por último se analizan todos los resultados y se determinaría si son o no estandarizadas las canciones, luego en caso de ser así se contemplaría el comportamiento estándar.
 
 ---
 
@@ -59,6 +50,11 @@ library(tidyverse)
 library(knitr)
 library(kableExtra)
 library(scales)
+library(janitor)
+library(lubridate)
+library(dplyr)
+library(moments)
+library(kableExtra)
 
 theme_set(theme_gray(base_size = 14) + 
           theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 18),
@@ -251,29 +247,33 @@ La calidad de los resultados depende directamente de la entrada de datos de la m
 Adicionalmene, se filtraron los datos para el género pop y se seleccionaron las columnas de interés.También los registros **Independent** de la columna **label** se eliminarán, ya que no se consideran una discográfica en esta investigación dado....\
 
 ```{r Carga de datos}
-spotify<-read_csv("18. Spotify 2015-2025.csv") # carga del dataset
+df <- read_csv("18. Spotify 2015-2025.csv") # carga del dataset
 
-sp_clean <- spotify %>%
+df_clean <- df %>%
+  clean_names() %>% 
   mutate(
     genre = as.factor(genre),
-    artist_name = as.factor(artist_name) #variables categoricas a factores
-  )
-
-datos_sp<- paste("Registros totales:", nrow(sp_clean), 
-      "| Cantidad de variables:", ncol(sp_clean))
-print(datos_sp)
+    artist_name = as.factor(artist_name),
+    label = as.factor(label),
+    release_date = ymd(release_date, quiet = TRUE),  
+    across(c(duration_ms, popularity, danceability, energy, key, mode, instrumentalness, tempo, stream_count, explicit), 
+           ~ ifelse(. < 0, NA, .))
+  ) %>%              
+  distinct(track_name, artist_name, .keep_all = TRUE) %>%  
+  drop_na()
+  
+  
+lista_datos <- paste("Registros totales:", nrow(df_clean), 
+      "| Cantidad de variables:", ncol(df_clean))
+print(lista_datos)
 print("Valores nulos por variable:")
-colSums(is.na(sp_clean)) # vericacion de valores nulos
+colSums(is.na(df_clean))# vericacion de valores nulos
+
       
 
-pop<- sp_clean %>%
+pop <- df_clean %>%
   filter(genre == "Pop" &  label != "Independent") %>%
   select(genre, label, stream_count,loudness, energy, duration_ms, instrumentalness, tempo, danceability, key, mode, explicit)
-
-pop_prueba<- sp_clean %>%
-  filter(genre == "Pop") %>%
-  select(genre, label, stream_count,loudness, energy, duration_ms, instrumentalness, tempo, danceability, key, mode, explicit)
-
 
 ```
 
@@ -311,23 +311,21 @@ Se aprecia como todas las discograficas sobrepasan los 100 Millones de reproducc
 
 \section{Clasificación de variables}
 
-
 Se crea una tabla para clasificar las variables\
 
 ```{r Clasificación de variables}
 
-
 v_numericas<-pop %>%
     select(loudness, energy, duration_ms, instrumentalness, tempo, danceability) #variables numéricas
   
-lista <- c("loudness", "energy", "duration_ms", "instrumentalness", "tempo", "danceability") #agregamos nueva columna
+lista_numericas <- c("loudness", "energy", "duration_ms", "instrumentalness", "tempo", "danceability") #agregamos nueva columna
 
 tabla_variable <- data.frame(
-  Variables     = lista,
-  Min           = sapply(pop[lista], min),
-  Max           = sapply(pop[lista], max),
-  Promedio      = sapply(pop[lista], mean),
-  Desv_Estandar = sapply(pop[lista], sd)
+  Variables     = lista_numericas,
+  Min           = sapply(pop[lista_numericas], min),
+  Max           = sapply(pop[lista_numericas], max),
+  Promedio      = sapply(pop[lista_numericas], mean),
+  Desv_Estandar = sapply(pop[lista_numericas], sd)
  )
 rownames(tabla_variable) <- NULL
 
@@ -345,12 +343,307 @@ kable(tabla_variable,
 *analisis* Se observa que las variables técnicas son: Duration, Energy, Loudness, Instrumentalness y Explicit. Mientras que las variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.\ 
 
 
+\section{Análisis de las variables Técnicas}
+
+```{r}
+var_tecnicas <- c("explicit", "energy", "loudness", "instrumentalness", "duration_ms")
+```
+\subsection{Explicit}
+
+\subsection{Loudness}
+
+```{r Cuadro Análisis 1}
+var_objetivo <- "loudness"
+
+resumen <- pop %>%
+  summarise(
+    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
+    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
+  )
+
+#mensajes de interpretación
+msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
+
+msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
+
+if (resumen$Curtosis > 0.5) {
+  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
+} else if (resumen$Curtosis < -0.5) {
+  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
+} else {
+  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
+}
+
+tabla_loudnes <- data.frame(
+  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
+  Valor = c(round(resumen$Media, 2), 
+            paste0(round(resumen$CV, 2), "%"), 
+            round(resumen$Curtosis, 2)),
+  Interpretación = c(msg_media, msg_cv, msg_curtosis)
+)
+
+kable(tabla_loudnes, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
+  column_spec(3, width = "8cm")
+
+```
+
+\subsection{Energy}
+
+```{r cuadro análsis 2}
+
+var_objetivo <- "energy"
+
+resumen <- pop %>%
+  summarise(
+    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
+    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
+  )
+
+#mensajes de interpretación
+msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
+
+msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
+
+if (resumen$Curtosis > 0.5) {
+  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
+} else if (resumen$Curtosis < -0.5) {
+  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
+} else {
+  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
+}
+
+tabla_energy <- data.frame(
+  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
+  Valor = c(round(resumen$Media, 2), 
+            paste0(round(resumen$CV, 2), "%"), 
+            round(resumen$Curtosis, 2)),
+  Interpretación = c(msg_media, msg_cv, msg_curtosis)
+)
+
+kable(tabla_energy, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
+  column_spec(3, width = "8cm")
+```
+
+\subsection{Instrumentalness}
+
+```{r cuadro análsis 3}
+
+var_objetivo <- "instrumentalness"
+
+resumen <- pop %>%
+  summarise(
+    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
+    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
+  )
+
+#mensajes de interpretación
+msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
+
+msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
+
+if (resumen$Curtosis > 0.5) {
+  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
+} else if (resumen$Curtosis < -0.5) {
+  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
+} else {
+  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
+}
+
+tabla_instrumentalness <- data.frame(
+  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
+  Valor = c(round(resumen$Media, 2), 
+            paste0(round(resumen$CV, 2), "%"), 
+            round(resumen$Curtosis, 2)),
+  Interpretación = c(msg_media, msg_cv, msg_curtosis)
+)
+
+kable(tabla_instrumentalness, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
+  column_spec(3, width = "8cm")
+```
+
+\subsection{Duration}
+
+```{r cuadro análsis 4}
+
+var_objetivo <- "duration_ms"
+
+resumen <- pop %>%
+  summarise(
+    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
+    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
+  )
+
+#mensajes de interpretación
+msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
+
+msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
+
+if (resumen$Curtosis > 0.5) {
+  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
+} else if (resumen$Curtosis < -0.5) {
+  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
+} else {
+  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
+}
+
+tabla_duration_ms <- data.frame(
+  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
+  Valor = c(round(resumen$Media, 2), 
+            paste0(round(resumen$CV, 2), "%"), 
+            round(resumen$Curtosis, 2)),
+  Interpretación = c(msg_media, msg_cv, msg_curtosis)
+)
+
+kable(tabla_duration_ms, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
+  column_spec(3, width = "8cm")
+```
+
+\section{Análisis de variables sonoras}
+
+```{r}
+var_sonoras <- c("tempo", "danceability", "key", "mode")
+```
+
+\subsection{Mode}
+
+\subsection{Tempo}
+
+```{r cuadro análsis 5}
+
+var_objetivo <- "tempo"
+
+resumen <- pop %>%
+  summarise(
+    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
+    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
+  )
+
+#mensajes de interpretación
+msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
+
+msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
+
+if (resumen$Curtosis > 0.5) {
+  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
+} else if (resumen$Curtosis < -0.5) {
+  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
+} else {
+  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
+}
+
+tabla_tempo <- data.frame(
+  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
+  Valor = c(round(resumen$Media, 2), 
+            paste0(round(resumen$CV, 2), "%"), 
+            round(resumen$Curtosis, 2)),
+  Interpretación = c(msg_media, msg_cv, msg_curtosis)
+)
+
+kable(tabla_tempo, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
+  column_spec(3, width = "8cm")
+```
+
+\subsection{Danceability}
+
+```{r cuadro análsis 6}
+
+var_objetivo <- "danceability"
+
+resumen <- pop %>%
+  summarise(
+    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
+    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
+  )
+
+#mensajes de interpretación
+msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
+
+msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
+
+if (resumen$Curtosis > 0.5) {
+  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
+} else if (resumen$Curtosis < -0.5) {
+  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
+} else {
+  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
+}
+
+tabla_danceability <- data.frame(
+  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
+  Valor = c(round(resumen$Media, 2), 
+            paste0(round(resumen$CV, 2), "%"), 
+            round(resumen$Curtosis, 2)),
+  Interpretación = c(msg_media, msg_cv, msg_curtosis)
+)
+
+kable(tabla_danceability, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
+  column_spec(3, width = "8cm")
+```
+
+\subsection{Key}
+
+```{r cuadro análsis 7}
+
+var_objetivo <- "key"
+
+resumen <- pop %>%
+  summarise(
+    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
+    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
+  )
+
+#mensajes de interpretación
+msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
+
+msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
+
+if (resumen$Curtosis > 0.5) {
+  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
+} else if (resumen$Curtosis < -0.5) {
+  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
+} else {
+  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
+}
+
+tabla_key <- data.frame(
+  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
+  Valor = c(round(resumen$Media, 2), 
+            paste0(round(resumen$CV, 2), "%"), 
+            round(resumen$Curtosis, 2)),
+  Interpretación = c(msg_media, msg_cv, msg_curtosis)
+)
+
+kable(tabla_key, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
+  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
+  column_spec(3, width = "8cm")
+```
+
 \section{Mapa de calor de correlación}
 
 
 ```{r}
-correlacion<- as.data.frame(
-  cor(v_numericas[lista])) %>%
+correlacion <- as.data.frame(
+  cor(v_numericas[lista_numericas])) %>%
   mutate(Var1 = rownames(.)) #pasarlo a dataframe
 
 cor_long <- correlacion %>%
