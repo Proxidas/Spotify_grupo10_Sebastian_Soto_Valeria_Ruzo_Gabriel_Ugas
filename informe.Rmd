@@ -105,8 +105,7 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 \begin{itemize}
   \item{Identificar cuantas canciones hay por discográfica.}
   \item{Clasificar las variables en categorías técnicas y sonoras.}
-  \item{Analizar las variables técnicas y de producción: Mediante una gráfica de frecuencias para la variable cualitativa y mediante el coeficiente de variación y un gráfico de violin para las cuantitativas.}
-  \item{Analizar las variables sonoras: Mediante una gráfica de frecuencias para la variable cualitativa, mediante el coeficiente de variación y un gráfico de violin para las variables cuantitativas}
+  \item{Analizar las variables tecnicas y sonoras de las canciones pop con sellos discograficos }
   \item{Analizar los resultados obtenidos y realizar un para de correlaciones dentre las variables.}
 \end{itemize}
 
@@ -191,32 +190,30 @@ Se refieren a los datos crudos, la calidad del archivo y los parámetros de prod
 
 \subsection{Estadística Descriptiva}
 
-La presente investigación se basa en la estadística descriptiva para resumir, analizar y caracterizar un conjunto de datos con el objetivo de describir las características de este conjunto de manera informativa. Se estará empleando los siguientes cálculos estadísticos:
+La presente investigación emplea la estadística descriptiva para resumir, analizar y caracterizar un conjunto de datos, permitiendo una interpretacion detallada y estructurada de su comportamiento. Para ello de aplicararn los siguientes indicadores :
 
 \begin{enumerate}
-  \item \textbf{Medidas de Tendencia Central:} Se utilizan para identificar el perfil promedio de las canciones de éxito. En las características técnicas (como loudness y duration), permiten establecer la duración y potencia estándar que la industria considera óptimas para la radiofusión. En las características sonoras (como tempo y danceability), definen el ritmo y la estructura melódica predominante, permitiendo observar si las discográficas convergen un modelo único diseñado para maximizar la aceptación del público juvenil.
+  \item \textbf{Medidas de Tendencia Central:} Se utiliza para identificar el perfil promedio de las canciones pop. En las características técnicas (como loudness y duration), permiten establecer la duración y potencia estándar que la industria considera óptimas para la radiofusión. En las características sonoras (como tempo y danceability), definen el ritmo y la estructura melódica predominante, permitiendo observar si las discográficas convergen un modelo único diseñado para maximizar la aceptación del público juvenil.
   
   \textbf{Media Muestral}
     $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
     \bigskip
  
- \item  \textbf{Medidas de Dispersión:} Mediante el coeficiente de variación, se analiza la dispersión en las características técnicas y sonoras, lo que facilita la  identificación de cambios en la estructura musical del pop.
+ \item  \textbf{Medidas de Dispersión:} Mediante el coeficiente de variación, se analiza la dispersión en las características técnicas y sonoras, permitiendo analizar si los datos son homogéneos o heterogéneos en la estructura musical del pop.
  
  
  \textbf{Coeficiente de Variación}
 $$CV = \frac{\sigma}{\bar{x}} \times 100$$
 \bigskip
  
-\item \textbf{Medidas de la Forma (Distribución):} A partir del coeficiente de asimetría de Fisher y la curtosis, se evalúa el grado de concentración de cada una de las características técnicas y sonoras. Esto resulta fundamental para identificar si existe una homogeneización sistemática en las producciones comerciales.
+\item \textbf{Medidas de la Forma (Distribución):} A partir de la curtosis, se evalúa el grado de concentración de cada una de las características técnicas y sonoras. Esto resulta fundamental para identificar si existe una homogeneización sistemática en las producciones comerciales.
 
-\textbf{Coeficiente de Asimetría de Fisher}
-$$g_1 = \frac{\sum (x_i - \bar{x})^3}{n \cdot s^3}$$
 
 \textbf{Curtosis}
 $$g_2 = \frac{\sum (x_i - \bar{x})^4}{n \cdot s^4} - 3$$
  \bigskip
  
- Para representar de forma gráfica la asimetría y curtosis de los tados se utiliza el Histograma con Estimación de Densidad de Kernel (KDE). Esta herramient a permite visualizar de forma directa, la estructura que adoptan los datos en la distribución, facilitando la identificación de sesgos y niveles de concentración en las características analizadas.
+ Para representar de forma gráfica la  curtosis de los tados se utiliza el Histograma con Estimación de Densidad de Kernel (KDE). Esta herramienta permite visualizar de forma directa, la estructura que adoptan los datos en la distribución, facilitando la identificación de niveles de concentración en las características analizadas.
 \end{enumerate}
 
 
