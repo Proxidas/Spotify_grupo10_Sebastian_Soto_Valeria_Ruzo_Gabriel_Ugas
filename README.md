@@ -30,3 +30,5 @@ Estudiar si las canciones con sellos de grandes discográficas tienden a unas ca
 4. Analizar las variables técnicas y de producción: Mediante una gráfica de frecuencias para la variable explicit, mediante el coeficiente de variación y un histograma con curva KDE  para loudness, energy, duration, instrumentalness y un mapa de calor para ver la correlación entre todas.
 5. Analizar las variables de estructura musical(sonoras): Mediante una gráfica de frecuencias para la variable mode y key, mediante el coeficiente de variación y un histograma con curva KDE  para tempo y danceability y un mapa de calor para ver la correlación entre todas.
 6. Analizar los resultados obtenidos y ver si son variables estandarizadas o no y el comportamiento que siguen.
+
+Enlace de Dashboard https://dashboard-spotify-grupo10.onrender.com
