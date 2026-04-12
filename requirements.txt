@@ -1,0 +1,10 @@
+streamlit 
+pandas 
+plotly.express 
+plotly.graph_objects 
+plotly.subplots 
+numpy
+seaborn
+plotly.figure_factory 
+os
+
