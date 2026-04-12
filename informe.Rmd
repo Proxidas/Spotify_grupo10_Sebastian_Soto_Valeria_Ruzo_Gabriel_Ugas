@@ -60,7 +60,7 @@ theme_set(theme_gray(base_size = 14) +
           theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 18),
                 plot.subtitle = element_text(hjust = 0.5),
                 plot.caption = element_text(color = "#1DB954", hjust = 0),
-                axis.text.x = element_text(angle = 45, vjust = 0.5)))
+                axis.text.x = element_text(angle = 0, vjust = 0.5)))
 ```
 
 \chapter*{Introducción}
@@ -254,14 +254,7 @@ df_clean <- df %>%
   mutate(
     genre = as.factor(genre),
     artist_name = as.factor(artist_name),
-    label = as.factor(label),
-    release_date = ymd(release_date, quiet = TRUE),  
-    across(c(duration_ms, popularity, danceability, energy, key, mode, instrumentalness, tempo, stream_count, explicit), 
-           ~ ifelse(. < 0, NA, .))
-  ) %>%              
-  distinct(track_name, artist_name, .keep_all = TRUE) %>%  
-  drop_na()
-  
+    label = as.factor(label))# cambio a factor para mejor analisis
   
 lista_datos <- paste("Registros totales:", nrow(df_clean), 
       "| Cantidad de variables:", ncol(df_clean))
@@ -270,10 +263,11 @@ print("Valores nulos por variable:")
 colSums(is.na(df_clean))# vericacion de valores nulos
 
       
-
 pop <- df_clean %>%
-  filter(genre == "Pop" &  label != "Independent") %>%
-  select(genre, label, stream_count,loudness, energy, duration_ms, instrumentalness, tempo, danceability, key, mode, explicit)
+  filter(genre == "Pop" & label != "Independent") %>%
+  select(genre, label, loudness, energy, tempo, danceability)
+
+write_csv(pop, "pop.csv") #guardado del dataset limpio
 
 ```
 
@@ -284,54 +278,58 @@ pop <- df_clean %>%
 
 \section{Cantidad de Streams por discográfica}
 
-En el análisis se observa como al agrupar las Discográficas y calcular su total de reproducciones se demuestra quienes gestionan los principales ecosistemas musicales\
+En el análisis se observa como al enfocarnos con las Discográficas y calcular su total de canciones se observa quienes son los que producen mayor cantidad de canciones\
 A continuación, se presenta el gráfico con las siete Discograficas y sus reproducciones totales.\
 
-```{r Streams por discográfica}
+```{r Total de canciones por discograficas}
 
 pop_label<-pop %>%
   group_by(label) %>%
-  summarise(total_streams = sum(stream_count)) #agrupar label y sumar total de streams
+  summarise(
+    total_canciones = n()) %>% 
+  slice_max(total_canciones, n = 3) #ver las 3 discografias con mas canciones
 
 ggplot(pop_label,
        aes(x=label))+
   geom_col(
-    aes(y=total_streams),
+    aes(y=total_canciones),
     fill="#2ecc71",
     color="black")+
-  scale_y_continuous(labels = label_number(suffix= "M", scale=1e-6))+
-  labs(
+  scale_y_continuous(labels = )+
+   labs(
     x="Discográficas",
-    y="Cantidad de streams",
-    title= "Total de streams por discográfica")
+      y="Canciones",
+    title= "Total de Canciones por Discográfica")
 ```
 
-Se aprecia como todas las discograficas sobrepasan los 100 Millones de reproducciones entre 2015 y 2025. Sin embargo, se observa que EMI superá los 200 Millones, lo que demuestra su relevancia en cantidad de reproducciones de las canciones del género Pop.\
+Se observa como las discográficas con mayor cantidad de publicaciones del género Pop entre 2015 y 2025 son: Columbia, con un total de 934 canciones, seguida por XL Recordings, con 904 canciones y Sony Music con 900 canciones. Lo que muestra como estas discograficas al tener una mayor cantidad de datos nos permite identificar las caracteristicas con mayor precision.\
 
 
 \section{Clasificación de variables}
 
-Se crea una tabla para clasificar las variables\
+Para visualizar las estadisticas descriptivas de las variable se crea una tabla en base a las caracteristicas tecnicas y sonoras\
 
 ```{r Clasificación de variables}
 
-v_numericas<-pop %>%
-    select(loudness, energy, duration_ms, instrumentalness, tempo, danceability) #variables numéricas
+numericas<-pop %>%
+  filter(label == "Columbia" | label == "XL Recordings" | label == "Sony Music") %>%
+    select(label, loudness, energy, tempo, danceability) #variables numéricas
   
-lista_numericas <- c("loudness", "energy", "duration_ms", "instrumentalness", "tempo", "danceability") #agregamos nueva columna
+variable <- c("loudness", "energy", "tempo", "danceability") # nueva columna
 
 tabla_variable <- data.frame(
-  Variables     = lista_numericas,
-  Min           = sapply(pop[lista_numericas], min),
-  Max           = sapply(pop[lista_numericas], max),
-  Promedio      = sapply(pop[lista_numericas], mean),
-  Desv_Estandar = sapply(pop[lista_numericas], sd)
+  Variables     = variable,
+  Min           = sapply(numericas[variable], min),
+  Max           = sapply(numericas[variable], max),
+  Promedio      = sapply(numericas[variable], mean),
+  Desv_Estandar = sapply(numericas[variable], sd)
  )
 rownames(tabla_variable) <- NULL
 
 
-options(scipen = 999)
+options(scipen = 999)#tabulacion de datos
 kable(tabla_variable,
+      format = "latex",
       booktabs = TRUE,
       digits = 2,
       col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desv. Estandar"),
@@ -340,15 +338,14 @@ kable(tabla_variable,
 
 
 ```
-*analisis* Se observa que las variables técnicas son: Duration, Energy, Loudness, Instrumentalness y Explicit. Mientras que las variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.\ 
+*analisis* Se observa a las variables técnicas en este etudio, estas son: Energy, Loudness. Mientras que las variables sonoras en este estudio son: Danceability y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.\ 
 
 
 \section{Análisis de las variables Técnicas}
 
 ```{r}
-var_tecnicas <- c("explicit", "energy", "loudness", "instrumentalness", "duration_ms")
+var_tecnicas <- c("energy", "loudness")
 ```
-\subsection{Explicit}
 
 \subsection{Loudness}
 
@@ -430,97 +427,15 @@ kable(tabla_energy, format = "latex", booktabs = TRUE, caption = "Análisis de E
   column_spec(3, width = "8cm")
 ```
 
-\subsection{Instrumentalness}
-
-```{r cuadro análsis 3}
-
-var_objetivo <- "instrumentalness"
-
-resumen <- pop %>%
-  summarise(
-    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
-    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
-    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
-  )
-
-#mensajes de interpretación
-msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
-
-msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
-} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
-
-if (resumen$Curtosis > 0.5) {
-  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
-} else if (resumen$Curtosis < -0.5) {
-  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
-} else {
-  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
-}
-
-tabla_instrumentalness <- data.frame(
-  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
-  Valor = c(round(resumen$Media, 2), 
-            paste0(round(resumen$CV, 2), "%"), 
-            round(resumen$Curtosis, 2)),
-  Interpretación = c(msg_media, msg_cv, msg_curtosis)
-)
-
-kable(tabla_instrumentalness, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
-  column_spec(3, width = "8cm")
-```
-
-\subsection{Duration}
-
-```{r cuadro análsis 4}
-
-var_objetivo <- "duration_ms"
-
-resumen <- pop %>%
-  summarise(
-    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
-    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
-    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
-  )
-
-#mensajes de interpretación
-msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
-
-msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
-} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
-
-if (resumen$Curtosis > 0.5) {
-  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
-} else if (resumen$Curtosis < -0.5) {
-  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
-} else {
-  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
-}
-
-tabla_duration_ms <- data.frame(
-  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
-  Valor = c(round(resumen$Media, 2), 
-            paste0(round(resumen$CV, 2), "%"), 
-            round(resumen$Curtosis, 2)),
-  Interpretación = c(msg_media, msg_cv, msg_curtosis)
-)
-
-kable(tabla_duration_ms, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
-  column_spec(3, width = "8cm")
-```
-
 \section{Análisis de variables sonoras}
 
 ```{r}
-var_sonoras <- c("tempo", "danceability", "key", "mode")
+var_sonoras <- c("tempo", "danceability")
 ```
-
-\subsection{Mode}
 
 \subsection{Tempo}
 
-```{r cuadro análsis 5}
+```{r cuadro análsis 3}
 
 var_objetivo <- "tempo"
 
@@ -560,7 +475,7 @@ kable(tabla_tempo, format = "latex", booktabs = TRUE, caption = "Análisis de Es
 
 \subsection{Danceability}
 
-```{r cuadro análsis 6}
+```{r cuadro análsis 4}
 
 var_objetivo <- "danceability"
 
@@ -598,52 +513,13 @@ kable(tabla_danceability, format = "latex", booktabs = TRUE, caption = "Análisi
   column_spec(3, width = "8cm")
 ```
 
-\subsection{Key}
-
-```{r cuadro análsis 7}
-
-var_objetivo <- "key"
-
-resumen <- pop %>%
-  summarise(
-    Media = mean(.data[[var_objetivo]], na.rm = TRUE),
-    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
-    Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
-  )
-
-#mensajes de interpretación
-msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
-
-msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
-} else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
-
-if (resumen$Curtosis > 0.5) {
-  msg_curtosis <- "Leptocúrtica (Positiva): Existe un 'pico' que confirma la estandarización industrial."
-} else if (resumen$Curtosis < -0.5) {
-  msg_curtosis <- "Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido."
-} else {
-  msg_curtosis <- "Mesocúrtica (Cercana a 0): La variable se comporta como una distribución normal."
-}
-
-tabla_key <- data.frame(
-  Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
-  Valor = c(round(resumen$Media, 2), 
-            paste0(round(resumen$CV, 2), "%"), 
-            round(resumen$Curtosis, 2)),
-  Interpretación = c(msg_media, msg_cv, msg_curtosis)
-)
-
-kable(tabla_key, format = "latex", booktabs = TRUE, caption = "Análisis de Estandarización") %>%
-  kable_styling(latex_options = c("striped", "HOLD_position")) %>%
-  column_spec(3, width = "8cm")
-```
 
 \section{Mapa de calor de correlación}
 
 
 ```{r}
 correlacion <- as.data.frame(
-  cor(v_numericas[lista_numericas])) %>%
+  cor(numericas[variable])) %>%
   mutate(Var1 = rownames(.)) #pasarlo a dataframe
 
 cor_long <- correlacion %>%
@@ -665,7 +541,7 @@ ggplot(cor_long,
   geom_text(aes(
     label = round(Correlacion, 2))) +
       labs(
-        title = "Mapa de calor de correlación entre variables numéricas",
+        title = "Mapa de calor de correlación entre variables",
         x = "Variables",
         y = "Variables") 
 
@@ -673,7 +549,21 @@ ggplot(cor_long,
 ```
 
 
-\section{Presentación de resultados n}
+\section{Comportamiento de Danceability en cada discografica}
+
+```{r}
+ggplot(numericas, 
+       aes(
+         x = label,
+         y = danceability,
+         fill = label)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribución de Bailabilidad por Sello Discográfico",
+    x = "Discográficas",
+    y = "Índice de Bailabilidad (0 - 1)"
+  )
+```
 
 \section{Presentación de resultados n}
 

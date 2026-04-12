@@ -414,7 +414,7 @@ seleccionaron las columnas de interés.También los registros
 no se consideran una discográfica en esta investigación dado\ldots.\\
 
 \begin{verbatim}
-## [1] "Registros totales: 84997 | Cantidad de variables: 19"
+## [1] "Registros totales: 85000 | Cantidad de variables: 19"
 \end{verbatim}
 
 \begin{verbatim}
@@ -443,50 +443,50 @@ desventajas al aplicar dichos tests.\}
 
 \section{Cantidad de Streams por discográfica}
 
-En el análisis se observa como al agrupar las Discográficas y calcular
-su total de reproducciones se demuestra quienes gestionan los
-principales ecosistemas musicales\\
+En el análisis se observa como al enfocarnos con las Discográficas y
+calcular su total de canciones se observa quienes son los que producen
+mayor cantidad de canciones\\
 A continuación, se presenta el gráfico con las siete Discograficas y sus
 reproducciones totales.\\
 
-\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Streams por discográfica-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Total de canciones por discograficas-1} \end{center}
 
-Se aprecia como todas las discograficas sobrepasan los 100 Millones de
-reproducciones entre 2015 y 2025. Sin embargo, se observa que EMI superá
-los 200 Millones, lo que demuestra su relevancia en cantidad de
-reproducciones de las canciones del género Pop.\\
+Se observa como las discográficas con mayor cantidad de publicaciones
+del género Pop entre 2015 y 2025 son: Columbia, con un total de 934
+canciones, seguida por XL Recordings, con 904 canciones y Sony Music con
+900 canciones. Lo que muestra como estas discograficas al tener una
+mayor cantidad de datos nos permite identificar las caracteristicas con
+mayor precision.\\
 
 \section{Clasificación de variables}
 
-Se crea una tabla para clasificar las variables\\
+Para visualizar las estadisticas descriptivas de las variable se crea
+una tabla en base a las caracteristicas tecnicas y sonoras\\
 
-\begingroup\fontsize{10}{12}\selectfont
-
-\begin{longtable}[t]{lrrrr}
-\caption{\label{tab:Clasificación de variables}Estadisticas Descriptivas de las variables numéricas}\\
+\begin{table}[!h]
+\centering
+\caption{\label{tab:Clasificación de variables}Estadisticas Descriptivas de las variables numéricas}
+\centering
+\fontsize{10}{12}\selectfont
+\begin{tabular}[t]{lrrrr}
 \toprule
 Variables & Valor Minimo & Valor Maximo & Media & Desv. Estandar\\
 \midrule
-\cellcolor{gray!10}{loudness} & \cellcolor{gray!10}{-54.99} & \cellcolor{gray!10}{-1.00} & \cellcolor{gray!10}{-27.92} & \cellcolor{gray!10}{15.53}\\
+\cellcolor{gray!10}{loudness} & \cellcolor{gray!10}{-54.98} & \cellcolor{gray!10}{-1.01} & \cellcolor{gray!10}{-27.95} & \cellcolor{gray!10}{15.61}\\
 energy & 0.02 & 0.99 & 0.50 & 0.28\\
-\cellcolor{gray!10}{duration\_ms} & \cellcolor{gray!10}{90150.00} & \cellcolor{gray!10}{419984.00} & \cellcolor{gray!10}{255551.15} & \cellcolor{gray!10}{95023.29}\\
-instrumentalness & 0.00 & 0.80 & 0.40 & 0.23\\
-\cellcolor{gray!10}{tempo} & \cellcolor{gray!10}{60.00} & \cellcolor{gray!10}{199.98} & \cellcolor{gray!10}{130.57} & \cellcolor{gray!10}{40.73}\\
-\addlinespace
+\cellcolor{gray!10}{tempo} & \cellcolor{gray!10}{60.00} & \cellcolor{gray!10}{199.98} & \cellcolor{gray!10}{130.96} & \cellcolor{gray!10}{40.77}\\
 danceability & 0.05 & 0.99 & 0.52 & 0.27\\
 \bottomrule
-\end{longtable}
-\endgroup{}
+\end{tabular}
+\end{table}
 
-\emph{analisis} Se observa que las variables técnicas son: Duration,
-Energy, Loudness, Instrumentalness y Explicit. Mientras que las
-variables sonoras son: Danceability, Key, Mode y Tempo. Con esto se
-puede analizar cada categoría por separado y aplicar los métodos de
-análisis correspondientes a cada una.~
+\emph{analisis} Se observa a las variables técnicas en este etudio,
+estas son: Energy, Loudness. Mientras que las variables sonoras en este
+estudio son: Danceability y Tempo. Con esto se puede analizar cada
+categoría por separado y aplicar los métodos de análisis
+correspondientes a cada una.~
 
 \section{Análisis de las variables Técnicas}
-
-\subsection{Explicit}
 
 \subsection{Loudness}
 
@@ -522,49 +522,13 @@ Coef. Variación (CV) & 55.08\% & Variabilidad detectada: Existe diversidad en l
 \end{tabular}
 \end{table}
 
-\subsection{Instrumentalness}
-
-\begin{table}[H]
-\centering
-\caption{\label{tab:cuadro análsis 3}Análisis de Estandarización}
-\centering
-\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
-\toprule
-Métrica & Valor & Interpretación\\
-\midrule
-\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{0.4} & \cellcolor{gray!10}{El valor central es 0.4 . Es el punto de referencia industrial.}\\
-Coef. Variación (CV) & 58.71\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
-\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.2} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
-\bottomrule
-\end{tabular}
-\end{table}
-
-\subsection{Duration}
-
-\begin{table}[H]
-\centering
-\caption{\label{tab:cuadro análsis 4}Análisis de Estandarización}
-\centering
-\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
-\toprule
-Métrica & Valor & Interpretación\\
-\midrule
-\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{255551.15} & \cellcolor{gray!10}{El valor central es 255551.15 . Es el punto de referencia industrial.}\\
-Coef. Variación (CV) & 37.18\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
-\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.19} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \section{Análisis de variables sonoras}
-
-\subsection{Mode}
 
 \subsection{Tempo}
 
 \begin{table}[H]
 \centering
-\caption{\label{tab:cuadro análsis 5}Análisis de Estandarización}
+\caption{\label{tab:cuadro análsis 3}Análisis de Estandarización}
 \centering
 \begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
 \toprule
@@ -581,7 +545,7 @@ Coef. Variación (CV) & 31.19\% & Variabilidad detectada: Existe diversidad en l
 
 \begin{table}[H]
 \centering
-\caption{\label{tab:cuadro análsis 6}Análisis de Estandarización}
+\caption{\label{tab:cuadro análsis 4}Análisis de Estandarización}
 \centering
 \begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
 \toprule
@@ -594,28 +558,13 @@ Coef. Variación (CV) & 52.27\% & Variabilidad detectada: Existe diversidad en l
 \end{tabular}
 \end{table}
 
-\subsection{Key}
-
-\begin{table}[H]
-\centering
-\caption{\label{tab:cuadro análsis 7}Análisis de Estandarización}
-\centering
-\begin{tabular}[t]{ll>{\raggedright\arraybackslash}p{8cm}}
-\toprule
-Métrica & Valor & Interpretación\\
-\midrule
-\cellcolor{gray!10}{Media} & \cellcolor{gray!10}{5.49} & \cellcolor{gray!10}{El valor central es 5.49 . Es el punto de referencia industrial.}\\
-Coef. Variación (CV) & 62.67\% & Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones.\\
-\cellcolor{gray!10}{Curtosis} & \cellcolor{gray!10}{-1.22} & \cellcolor{gray!10}{Platicúrtica (Negativa): Los valores están dispersos, indicando falta de un estándar rígido.}\\
-\bottomrule
-\end{tabular}
-\end{table}
-
 \section{Mapa de calor de correlación}
 
 \begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
-\section{Presentación de resultados n}
+\section{Comportamiento de Danceability en cada discografica}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 \section{Presentación de resultados n}
 
