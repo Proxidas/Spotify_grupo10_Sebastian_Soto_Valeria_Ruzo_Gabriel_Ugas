@@ -1,10 +1,7 @@
 streamlit 
 pandas 
-plotly.express 
-plotly.graph_objects 
-plotly.subplots 
+plotly 
 numpy
 seaborn
-plotly.figure_factory 
 os
 
