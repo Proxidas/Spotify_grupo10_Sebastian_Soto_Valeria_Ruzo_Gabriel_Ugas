@@ -1,6 +1,5 @@
 ---
-title: Estandarización en las canciones con sellos de grandes discográficas en el
-  género Pop
+title: El comportamiento de las características musicales en las canciones del género pop de los sellos discográficos de la plataforma de Spotify en el período de 2015 a 2025.
 author:
 - Sebastian Soto
 - Valeria Ruza
@@ -52,9 +51,8 @@ library(kableExtra)
 library(scales)
 library(janitor)
 library(lubridate)
-library(dplyr)
 library(moments)
-library(kableExtra)
+library(dplyr)
 
 theme_set(theme_gray(base_size = 14) + 
           theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 18),
@@ -98,15 +96,15 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
  
 \subsection{Objetivo General}
 \begin{itemize}
-  \item{ Observar si las canciones con sellos discográficas tienden a unas características musicales estandarizadas.}
+  \item{ Determinar el comportamiento de las características musicales en las canciones del género pop de los sellos discográficos de la plataforma de Spotify en el período de 2015 a 2025.}
 \end{itemize}
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{Identificar cuantas canciones hay por discográfica.}
-  \item{Clasificar las variables en categorías técnicas y sonoras.}
-  \item{Analizar las variables tecnicas y sonoras de las canciones pop con sellos discograficos }
-  \item{Analizar los resultados obtenidos y realizar un para de correlaciones dentre las variables.}
+  \item{Identificar las discográficas con mayor cantidad de canciones publicadas del género Pop entre 2015 y 2025.}
+  \item{Describir la distribución de las variables técnicas y sonoras de las canciones pop del top 3 sellos discograficos con mayor cantidad de canciones publicadas.}
+  \item{Analizar si existe correlaciones entre las variables.}
+  \item{Comparar el comportamiento de las variables entre las discográficas.}
 \end{itemize}
 
 
@@ -145,7 +143,7 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 
 \section{Periodo de Referencia}
 
-Usando el Dataset Spotify  2015-2025, se toma en cuenta desde el 2015 al 2025.
+Usando el Dataset Spotify 2015-2025, se toma en cuenta desde el 2015 al 2025.
 
 
 \chapter{Marco Teórico}
@@ -349,7 +347,7 @@ var_tecnicas <- c("energy", "loudness")
 ```{r Cuadro Análisis 1}
 var_objetivo <- "loudness"
 
-resumen <- pop %>%
+resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
     CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
@@ -390,7 +388,7 @@ kable(tabla_loudnes, format = "latex", booktabs = TRUE, caption = "Análisis de 
 
 var_objetivo <- "energy"
 
-resumen <- pop %>%
+resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
     CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
@@ -436,7 +434,7 @@ var_sonoras <- c("tempo", "danceability")
 
 var_objetivo <- "tempo"
 
-resumen <- pop %>%
+resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
     CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
@@ -476,7 +474,7 @@ kable(tabla_tempo, format = "latex", booktabs = TRUE, caption = "Análisis de Es
 
 var_objetivo <- "danceability"
 
-resumen <- pop %>%
+resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
     CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
