@@ -217,10 +217,10 @@ realidad.\\
 
 \subsection{Objetivos Específicos}
 \begin{itemize}
-  \item{Identificar las discográficas con mayor cantidad de canciones publicadas del género Pop entre 2015 y 2025.}
-  \item{Describir la distribución de las variables técnicas y sonoras de las canciones pop del top 3 sellos discograficos con mayor cantidad de canciones publicadas.}
-  \item{Analizar si existe correlaciones entre las variables.}
-  \item{Comparar el comportamiento de las variables entre las discográficas.}
+  \item{Identificar las discográficas con mayor cantidad de canciones publicadas del género Pop por entre 2015 y 2025.}
+  \item{Describir la metricas de las variables técnicas y sonoras de las canciones pop de los sellos discograficos.}
+  \item{Observar el comportamiento de las características entre las discográficas.}
+  \item{Establecer las correlaciones entre las caracteristicas sonoras y técnicas de las canciones del género Pop.}
 \end{itemize}
 
 \section{Cobertura}
@@ -380,39 +380,39 @@ $$g_2 = \frac{\sum (x_i - \bar{x})^4}{n \cdot s^4} - 3$$
 
 \chapter{Marco Metódico}
 
-En esta sección se presentan las metodologías y/o test necesarios
-relacionados con la práctica divulgada en el marco teórico, así como las
-fuentes de datos.
+En esta sección se presentan las metodologías y las pruebas estadísticas
+implementadas para validar el planteamiento inicial.\\
+Se especifica el procesamiento de la fuente de datos 18. Spotify
+2015-2025.csv, las técnicas para verificar la presencia de datos nulos,
+de limpieza (de ser necesario) y los análisis de estadística
+descripitiva para las variables de interés en el estudio.\\
+El análisis se ha realizado utilizando el lenguaje de programación R
+(version 4.5.2) bajo el entorno de desarrollo RStudio, aplicando el
+paradigma ``Tidyverse'' para la manipulacion de los datos\\
 
 \section{Bases metódicas utilizadas en el trabajo de investigación}
 
-Desarrollo\\
+El diseño de la investigación es de cáracter \textbf{cuantitativo} y
+\textbf{descriptivo}, dado que se analizan las variables númericas de
+las características de las canciones del género Pop agrupadas por su
+Discográfica, en la plataforma de Spotify en el período de 2015 a 2025.
+A continuación, se describen las etapas del procesamiento\\
 
-\subsection{Enfoque y tipo de investigación}
-
-Descripción\\
-
-\subsection{Item 2}
-
-Descripción\\
-
-\subsubsection{Item 2.2}
-
-Descripción\\
-
-\subsection{Procesamiento y Limpieza de Datos (ETL)}
+\subsection{Procesamiento y Limpieza de Datos}
 
 La calidad de los resultados depende directamente de la entrada de datos
 de la manera más integra. Estos procesos se basa en la carga de los
-datos y la detección de los valores nulos, de la cual no se encontraron
-ningún de estos.\\
-Adicionalmene, se filtraron los datos para el género pop y se
-seleccionaron las columnas de interés.También los registros
-\textbf{Independent} de la columna \textbf{label} se eliminarán, ya que
-no se consideran una discográfica en esta investigación dado\ldots.\\
+datos del archivo \textbf{18. Spotify 2015-2025.csv} y la detección de
+los valores nulos.\\
+
+Adicionalmente, se filtran los datos para enfocarnos en el
+comportamiento de las características del género Pop y se seleccionaron
+las columnas de interés. También los registros \textbf{Independent} de
+la columna \textbf{label} se descartan, ya que en esta investigación no
+se consideran una discográfica.\\
 
 \begin{verbatim}
-## [1] "Registros totales: 85000 | Cantidad de variables: 19"
+## [1] "Registros totales del Dataset: 85000 | Cantidad de variables: 19"
 \end{verbatim}
 
 \begin{verbatim}
@@ -432,6 +432,54 @@ no se consideran una discográfica en esta investigación dado\ldots.\\
 ##                0                0                0
 \end{verbatim}
 
+\begin{verbatim}
+## [1] "Registros totales del Dataset filtrado: 6231 | Cantidad de variables: 6"
+\end{verbatim}
+
+Se puede observar cómo, inicialmente, el dataset cuenta con 85.000
+registros y 18 variables, luego de la limpieza y filtrado, se obtiene un
+dataset con 6 variables y 6231 datos. Adicionalmente, se observa que no
+existen valores nulos en el dataset, lo que garantiza la integridad de
+los datos para el análisis posterior.\\
+
+\subsection{Fuente de datos y Período de Referencia}
+
+Se utiliza el dataset \textbf{Spotify 2015-2025.csv}. En el análisis
+descriptivo de la investigación solo se hace uso de \textbf{loudness,
+energy, tempo, danceability} .Estas variables permiten observar de
+manera clara los estandarés y el comportamiento de las características
+de las canciones publicadas por las discograficas en la plataforma de
+Spotify en el período que abarca desde el año 2015 hasta el año 2025.\\
+
+\subsection{Operacionalización de Variables}
+
+A continuación se presenta el cuadro de operacionalización de variables,
+donde se especifican los objetivos específicos, junto con las variables
+utilizadas en cada una. Además, de los indicadores y su instrumento de
+análisis.
+
+\begin{table}[!h]
+\centering
+\caption{\label{tab:operacionalizacion de variable}Cuadro de Operacionalizacion de Variables}
+\centering
+\fontsize{10}{12}\selectfont
+\begin{tabular}[t]{llll}
+\toprule
+objetivo especifico & variable & Indicador & Instrumento de Analisis\\
+\midrule
+\cellcolor{gray!10}{identificar las discograficas con mayor cantidad de canciones publicadas del genero pop entre 2015 y 2025} & \cellcolor{gray!10}{label, total\_canciones} & \cellcolor{gray!10}{cantidad de canciones por discograficas} & \cellcolor{gray!10}{grafico de barras}\\
+Describir las metricas de las variables tecnicas y sonoras de las canciones Pop de los sellos discograficos & loudness, energy, tempo, danceability & estadisticas descriptivas & cuadro de analisis\\
+\cellcolor{gray!10}{Observar el comportamiento de las caracteristicas entre las discograficas} & \cellcolor{gray!10}{loudness, energy, tempo, danceability} & \cellcolor{gray!10}{media, coeficiente de variacion, curtosis} & \cellcolor{gray!10}{grafico de Boxplot}\\
+establecer las correlaciones entre las caracteristicas sonoras y tecnicas de las canciones del genero PoP & loudness, energy, tempo, danceability & correlacion entre variables & mapa de calor de correlacion\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Objetivo de estudio: Comparar el comportamiento de las variables entre
+las discográficas. Loudness,Medida que cuantifica la presión sonora
+promedio de una señal en decibelios (dB). Indica la amplitud física y el
+nivel de volumen relativo de la pista bajo una escala técnica.\\
+
 \chapter{Análisis de Resultados}
 
 \{\small Este capítulo presenta los resultados obtenidos al aplicar las
@@ -441,20 +489,20 @@ desventajas al aplicar dichos tests.\}
 
 \section{Cantidad de Streams por discográfica}
 
-En el análisis se observa como al enfocarnos con las Discográficas y
-calcular su total de canciones se observa quienes son los que producen
-mayor cantidad de canciones\\
+En el análisis nos enfocammos en calcular el total de canciones por
+discograficas, para saber si existe diferencia entre quienes son los que
+publican mayor cantidad de canciones y utilizarlos para ver el
+comportamiento de sus caracteristicas\\
 A continuación, se presenta el gráfico con las siete Discograficas y sus
 reproducciones totales.\\
 
 \begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Total de canciones por discograficas-1} \end{center}
 
-Se observa como las discográficas con mayor cantidad de publicaciones
-del género Pop entre 2015 y 2025 son: Columbia, con un total de 934
-canciones, seguida por XL Recordings, con 904 canciones y Sony Music con
-900 canciones. Lo que muestra como estas discograficas al tener una
-mayor cantidad de datos nos permite identificar las caracteristicas con
-mayor precision.\\
+Se observa como la cantidad de publicaciones de canciones de las
+discográficas del género Pop entre 2015 y 2025 estan entre las 855 y 934
+canciones. Lo que nos hace referencia de que no existe mucha diferencia
+entre ellas, y se utilizaran todas para verificar el comportamiento de
+sus caracteristicas.\\
 
 \section{Clasificación de variables}
 
