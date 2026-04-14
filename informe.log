@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.13)  13 APR 2026 14:42
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.4.13)  13 APR 2026 22:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -934,112 +934,107 @@ Underfull \hbox (badness 10000) in paragraph at lines 447--453
 
  []
 
-
-Overfull \hbox (558.46448pt too wide) in paragraph at lines 466--476
- [][] 
- []
-
-LaTeX Info: Redefining \. on input line 476.
-LaTeX Info: Redefining \% on input line 476.
+LaTeX Info: Redefining \. on input line 461.
+LaTeX Info: Redefining \% on input line 461.
 [9]
-Underfull \hbox (badness 10000) in paragraph at lines 478--482
+Underfull \hbox (badness 10000) in paragraph at lines 461--465
 
  []
 
-LaTeX Info: Redefining \. on input line 483.
-LaTeX Info: Redefining \% on input line 483.
+LaTeX Info: Redefining \. on input line 466.
+LaTeX Info: Redefining \% on input line 466.
 [10]
 Cap\'{\i }tulo 4.
-LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 485.
+LaTeX Font Info:    Trying to load font information for OMS+cmr on input line 468.
 (c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2024/11/19 v2.5n Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 485.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 468.
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 488.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 471.
 
-Underfull \hbox (badness 10000) in paragraph at lines 492--498
+Underfull \hbox (badness 10000) in paragraph at lines 475--481
 
  []
 
-<informe_files/figure-latex/Total de canciones por discograficas-1.pdf, id=271, 469.755pt x 325.215pt>
+<informe_files/figure-latex/Total de canciones por discograficas-1.pdf, id=270, 469.755pt x 325.215pt>
 File: informe_files/figure-latex/Total de canciones por discograficas-1.pdf Graphic file (type pdf)
 <use informe_files/figure-latex/Total de canciones por discograficas-1.pdf>
-Package pdftex.def Info: informe_files/figure-latex/Total de canciones por discograficas-1.pdf  used on input line 499.
+Package pdftex.def Info: informe_files/figure-latex/Total de canciones por discograficas-1.pdf  used on input line 482.
 (pdftex.def)             Requested size: 371.30594pt x 257.05597pt.
 [11
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 501--506
+Underfull \hbox (badness 10000) in paragraph at lines 484--489
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 509--511
+Underfull \hbox (badness 10000) in paragraph at lines 492--494
 
  []
 
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
+LaTeX Info: Redefining \. on input line 536.
+LaTeX Info: Redefining \% on input line 536.
+[12 <./informe_files/figure-latex/Total de canciones por discograficas-1.pdf>]
 LaTeX Info: Redefining \. on input line 553.
 LaTeX Info: Redefining \% on input line 553.
-[12 <./informe_files/figure-latex/Total de canciones por discograficas-1.pdf>]
-LaTeX Info: Redefining \. on input line 570.
-LaTeX Info: Redefining \% on input line 570.
 [13]
-LaTeX Info: Redefining \. on input line 606.
-LaTeX Info: Redefining \% on input line 606.
+LaTeX Info: Redefining \. on input line 589.
+LaTeX Info: Redefining \% on input line 589.
 [14]
-<informe_files/figure-latex/unnamed-chunk-3-1.pdf, id=300, 469.755pt x 325.215pt>
+<informe_files/figure-latex/unnamed-chunk-3-1.pdf, id=299, 469.755pt x 325.215pt>
 File: informe_files/figure-latex/unnamed-chunk-3-1.pdf Graphic file (type pdf)
 <use informe_files/figure-latex/unnamed-chunk-3-1.pdf>
-Package pdftex.def Info: informe_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 609.
+Package pdftex.def Info: informe_files/figure-latex/unnamed-chunk-3-1.pdf  used on input line 592.
 (pdftex.def)             Requested size: 371.30594pt x 257.05597pt.
-<informe_files/figure-latex/unnamed-chunk-4-1.pdf, id=301, 469.755pt x 325.215pt>
+<informe_files/figure-latex/unnamed-chunk-4-1.pdf, id=300, 469.755pt x 325.215pt>
 File: informe_files/figure-latex/unnamed-chunk-4-1.pdf Graphic file (type pdf)
 <use informe_files/figure-latex/unnamed-chunk-4-1.pdf>
-Package pdftex.def Info: informe_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 613.
+Package pdftex.def Info: informe_files/figure-latex/unnamed-chunk-4-1.pdf  used on input line 596.
 (pdftex.def)             Requested size: 371.30594pt x 257.05597pt.
-LaTeX Info: Redefining \. on input line 613.
-LaTeX Info: Redefining \% on input line 613.
+LaTeX Info: Redefining \. on input line 596.
+LaTeX Info: Redefining \% on input line 596.
 [15 <./informe_files/figure-latex/unnamed-chunk-3-1.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 617--618
+Underfull \hbox (badness 10000) in paragraph at lines 600--601
 
  []
 
-LaTeX Info: Redefining \. on input line 619.
-LaTeX Info: Redefining \% on input line 619.
+LaTeX Info: Redefining \. on input line 602.
+LaTeX Info: Redefining \% on input line 602.
 [16 <./informe_files/figure-latex/unnamed-chunk-4-1.pdf>]
 Cap\'{\i }tulo 5.
 
-Underfull \hbox (badness 10000) in paragraph at lines 621--622
+Underfull \hbox (badness 10000) in paragraph at lines 604--605
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 623--624
+Underfull \hbox (badness 10000) in paragraph at lines 606--607
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 625--626
+Underfull \hbox (badness 10000) in paragraph at lines 608--609
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 627--628
+Underfull \hbox (badness 10000) in paragraph at lines 610--611
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 629--630
+Underfull \hbox (badness 10000) in paragraph at lines 612--613
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 631--632
+Underfull \hbox (badness 10000) in paragraph at lines 614--615
 
  []
 
@@ -1073,18 +1068,18 @@ Package rerunfilecheck Info: File `informe.out' has not changed.
 (rerunfilecheck)             Checksum: B7D169F4D31ABA756C60C388BDAD0AAE;7073.
  ) 
 Here is how much of TeX's memory you used:
- 20593 strings out of 469321
- 348547 string characters out of 5463932
- 836265 words of memory out of 5000000
- 49015 multiletter control sequences out of 15000+600000
+ 20590 strings out of 469321
+ 348454 string characters out of 5463932
+ 834265 words of memory out of 5000000
+ 49013 multiletter control sequences out of 15000+600000
  639903 words of font info for 92 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  105i,13n,107p,605b,794s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><c:/Users/gabri/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on informe.pdf (24 pages, 503150 bytes).
+Output written on informe.pdf (24 pages, 502976 bytes).
 PDF statistics:
- 424 PDF objects out of 1000 (max. 8388607)
- 354 compressed objects within 4 object streams
- 75 named destinations out of 1000 (max. 500000)
+ 423 PDF objects out of 1000 (max. 8388607)
+ 353 compressed objects within 4 object streams
+ 74 named destinations out of 1000 (max. 500000)
  314 words of extra memory for PDF output out of 10000 (max. 10000000)
 

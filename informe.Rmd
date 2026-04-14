@@ -269,25 +269,6 @@ A continuación se presenta el cuadro de operacionalización de variables, donde
 
 ```{r operacionalizacion de variable}
 
-cuadro <- data.frame(
-  obj = c("identificar las discograficas con mayor cantidad de canciones publicadas del genero pop entre 2015 y 2025", "Describir las metricas de las variables tecnicas y sonoras de las canciones Pop de los sellos discograficos", "Observar el comportamiento de las caracteristicas entre las discograficas", "establecer las correlaciones entre las caracteristicas sonoras y tecnicas de las canciones del genero PoP"),
-  variable = c("label, total_canciones",
-               "loudness, energy, tempo, danceability",
-               "loudness, energy, tempo, danceability",
-               "loudness, energy, tempo, danceability"),
-  indicador = c("cantidad de canciones por discograficas", 
-                "estadisticas descriptivas", 
-                "media, coeficiente de variacion, curtosis",
-                "correlacion entre variables"),
-  instrumento = c("grafico de barras", "cuadro de analisis", "grafico de Boxplot", "mapa de calor de correlacion")
-)
-
-kable(cuadro,
-      format = "latex",
-      booktabs = TRUE,
-      col.names = c("objetivo especifico", "variable", "Indicador", "Instrumento de Analisis"),
-      caption = "Cuadro de Operacionalizacion de Variables") %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 10, full_width = TRUE)
 ```
 
 
@@ -336,8 +317,7 @@ Para visualizar las estadisticas descriptivas de las variable se crea una tabla 
 ```{r Clasificación de variables}
 
 numericas<-pop %>%
-  filter(label == "Columbia" | label == "XL Recordings" | label == "Sony Music") %>%
-    select(label, loudness, energy, tempo, danceability) #variables numéricas
+    select(label, loudness, energy, tempo, danceability) #variables
   
 variable <- c("loudness", "energy", "tempo", "danceability") # nueva columna
 
