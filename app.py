@@ -137,7 +137,7 @@ SPOTIFY_FUCHSIA = '#B91D82'
 WHITE = '#FFFFFF'
 
 ### creación del gráfico
-st.subheader(f"Top {top_discograficas} Discográficas en Spotify que producen música del género Pop")
+st.subheader("Top Discográficas en Spotify que producen música del género Pop")
 
 fig_label = px.bar(
     df_final,
