@@ -83,7 +83,7 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 
 \textbf{2.}	¿Las variables analizadas demuestran un comportamiento similar a lo largo del tiempo, con lo que podemos determinar que las disqueras musicales comercializan canciones estandarizadas?\
 
-\textbf{3.}	¿Qué comportamiento demuestran las variables estandarizadas?\
+\textbf{3.}	¿Qué comportamiento demuestran las características musicales?\
 
 
 \section{Justificación}
@@ -136,7 +136,7 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 \section{Periodo de Referencia}
 
 
-Se estaraá usando los datos del **Dataset Spotify 2015-2025** extraído del rerepositorio abierto de Kaggle, se toma en cuenta desde el 2015 al 2025.
+Al trabajar con los datos del **Dataset Spotify 2015-2025** extraído del Google Drive, se toma en cuenta desde el 2015 al 2025.
 
 
 \chapter{Marco Teórico}
@@ -210,7 +210,6 @@ En esta sección se presentan las metodologías y las pruebas estadísticas impl
 Se especifica el procesamiento de la fuente de datos 18. Spotify 2015-2025.csv, las técnicas para verificar la presencia de datos nulos, de limpieza (de ser necesario) y los análisis de estadística descripitiva para las variables de interés en el estudio.\
 El análisis se ha realizado utilizando el lenguaje de programación R (version 4.5.2) bajo el entorno de desarrollo RStudio, aplicando el paradigma “Tidyverse” para la manipulacion de los datos\
 
-
 \section{Bases metódicas utilizadas en el trabajo de investigación}
 
 El diseño de la investigación es de cáracter **cuantitativo** y **descriptivo**, dado que se analizan las variables númericas de las características de las canciones del género Pop agrupadas por su Discográfica, en la plataforma de Spotify en el período de 2015 a 2025. A continuación, se describen las etapas del procesamiento\
@@ -255,9 +254,15 @@ Se puede observar cómo, inicialmente, el dataset cuenta con `r nrow(df)` regist
 Se utiliza el dataset **Spotify 2015-2025.csv**. En el análisis descriptivo de la investigación solo se hace uso de **loudness, energy, tempo, danceability** .Estas variables permiten observar de manera clara los estandarés y el comportamiento de las características de las canciones publicadas por las discograficas en la plataforma de Spotify en el período que abarca desde el año 2015 hasta el año 2025.\
 
 \subsection{Operacionalización de Variables}
-A continuación se presenta el cuadro de operacionalización de variables, donde se especifican los objetivos específicos, junto con las variables utilizadas en cada una. Además, de los indicadores y su instrumento de análisis.
+A continuación se presenta las operacionalización de variables, donde se especifican los objetivos específicos, junto con las variables utilizadas en cada una. Además, de los indicadores y su instrumento de análisis.
 
-```{r operacionalizacion de variable}
+Identificar las discográficas con mayor cantidad de canciones publicadas del género Pop por entre 2015 y 2025. Se utilizaran las variables **label** y **total_canciones** Se enfoca en los indicadores de cantidad total de canciones y su instrumento será la gráfica de barra. En el caso de los objetivos: Describir la metricas de las variables técnicas y sonoras de las canciones pop de los sellos discograficos, Observar el comportamiento de las características entre las discográficas, establecer las correlaciones entre las caracteristicas sonoras y técnicas de las canciones del género Pop. Se utilizan las variables **loudness**, **energy**, **tempo**, **danceability** sus instrumentos son cuadro de análisis, gráficos de Boxplot y mapa de correlación.
+
+
+\subsection{Análisis de Varianza (ANOVA)}
+
+A continuacion se presenta el resumen estadístico de las características estudiadas para observar como se distribuyen sus datos
+```{r anova}
 
 numericas<-pop %>%
     select(label, loudness, energy, tempo, danceability) 
@@ -269,7 +274,10 @@ tabla_variable <- data.frame(
   Min           = sapply(numericas[variable], min),
   Max           = sapply(numericas[variable], max),
   Promedio      = sapply(numericas[variable], mean),
-  Desv_Estandar = sapply(numericas[variable], sd)
+  Desv_Estandar = sapply(numericas[variable], sd),
+  Q3 = sapply(numericas[variable], quantile, probs = 0.25),
+  Mediana = sapply(numericas[variable], median),
+  Q3 = sapply(numericas[variable], quantile, probs = 0.75)
  )
 rownames(tabla_variable) <- NULL
 
@@ -279,24 +287,22 @@ kable(tabla_variable,
       format = "latex",
       booktabs = TRUE,
       digits = 2,
-      col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desv. Estandar"),
+      col.names = c("Variables", "Valor Min", "Valor Max", "Media", "Desv. Estand", "Q1", "Mediana", "Q3"),
       caption = "Estadisticas Descriptivas de las variables numéricas") %>%
   kable_styling(latex_options = c("striped", "hold_position"), font_size = 10, full_width = FALSE)
 
 ```
-*analisis* Se observa a las variables técnicas en este etudio, estas son: Energy, Loudness. Mientras que las variables sonoras en este estudio son: Danceability y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.
-
-Objetivo de estudio: Comparar el comportamiento de las variables entre las discográficas. Loudness,Medida que cuantifica la presión sonora promedio de una señal en decibelios (dB). Indica la amplitud física y el nivel de volumen relativo de la pista bajo una escala técnica. \
+*Analisis* Se observa a las variables técnicas en este etudio, estas son: Energy, Loudness. Mientras que las variables sonoras en este estudio son: Danceability y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.
 
 
 \chapter{Análisis de Resultados}
 
-{\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.}
+\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.
 
 \section{Cantidad de Canciones por discográfica}
 
-En el análisis nos enfocammos en calcular el total de canciones por discograficas, para saber si diferencia entre quienes son los que publican mayor cantidad de canciones y utilizarlos para ver el comportamiento de sus caracteristicas\
-A continuación, se presenta el gráfico con las siete Discograficas y sus reproducciones totales.\
+En el análisis nos enfocammos en calcular el total de canciones por discográficas, para saber si diferencia entre quienes son los que publican mayor cantidad de canciones y utilizarlos para ver el comportamiento de sus caracteristicas\
+A continuación, se presenta el gráfico con las siete Discográficas y sus reproducciones totales.\
 
 ```{r Total de canciones por discograficas}
 
@@ -327,7 +333,6 @@ min <- min(pop_label$total_canciones)
 
 Se observa como la cantidad de publicaciones de canciones de las discográficas del género Pop entre 2015 y 2025 estan entre las `r min` y `r max` canciones. Lo que nos hace referencia de que no existe mucha diferencia entre ellas, y se utilizaran todas para verificar el comportamiento de sus caracteristicas.\
 
-\section{Clasificación de variables}
 
 \section{Análisis de las variables Técnicas}
 
@@ -407,7 +412,7 @@ ggplot(numericas,
 ```
 
 
-```{r cuadro análsis 2}
+```{r cuadro análisis 2}
 
 var_objetivo <- "energy"
 
@@ -452,7 +457,7 @@ var_sonoras <- c("tempo", "danceability")
 
 \subsection{Tempo}
 
-```{r Grfico de tempo}
+```{r Grafico de tempo}
 ggplot(numericas, 
        aes(
          x = label,
@@ -467,7 +472,7 @@ ggplot(numericas,
 ```
 
 
-```{r cuadro análsis 3}
+```{r cuadro análisis 3}
 
 var_objetivo <- "tempo"
 
@@ -521,7 +526,7 @@ ggplot(numericas,
 ```
 
 
-```{r cuadro análsis 4}
+```{r cuadro análisis 4}
 
 var_objetivo <- "danceability"
 
@@ -570,7 +575,7 @@ correlacion <- as.data.frame(
 cor_long <- correlacion %>%
   pivot_longer(cols = -Var1, names_to = "Variable2", values_to = "Correlacion") #de ancho a formato largo
 
-ggplot(cor_long,
+ggplot(cor_long, 
        aes(x = Var1, 
            y = Variable2, 
            fill = Correlacion)) +
@@ -582,17 +587,17 @@ ggplot(cor_long,
     midpoint = 0, 
     limit = c(-1, 1), 
     space = "Lab", 
-    name="Correlación") +
-  geom_text(aes(
-    label = round(Correlacion, 2))) +
-      labs(
-        title = "Mapa de calor de correlación entre variables",
-        x = "Variables",
-        y = "Variables") 
-
+    name = "Correlación") +
+  geom_text(aes(label = round(Correlacion, 2))) +
+  labs(
+    title = "Mapa de Calor de Correlación entre Variables",
+    x = "Variables",
+    y = "Variables"
+  )
 
 ```
 
+Se observa que en general no se encuentra ninguna relación entre las características de las canciones del género Pop en total de las discográficas
 
 \section{Presentación de resultados}
 
@@ -610,7 +615,7 @@ ggplot(cor_long,
 
 \textbf{2.-} La segunda conclusión que sacamos es que al tener una alta variabilidad al analizar las características de las canciones como demuestra el coeficiente de variación y la forma de la gráfica platocúrtica, son datos que no tienen ninguna tendencia significativa, aparte de que no tienen correlaciones las variables, osea que no depende una de otra, se puede decir que no hay una característica en común y no hay estandarización.\
 
-\textbf{n.-} La última conclusión es que al no haber estandarización visible y un comportamiento de los datos tan variado no se puede determinar con exactitud el comportamiento de las características de las canciones de las discográficas.\
+\textbf{3.-} La última conclusión es que al no haber estandarización visible y un comportamiento de los datos tan variado no se puede determinar con exactitud el comportamiento de las características de las canciones de las discográficas.\
 
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}
@@ -618,9 +623,8 @@ ggplot(cor_long,
 \chapter{Anexo A}
 
 ```{r}
-
-
-evolucion_temporal <- df_clean %>%
+evolucion_temporal <- pop %>%
+  select(release_date, label) %>%
   mutate(release_year = as.numeric(format(as.Date(release_date), "%Y"))) %>% 
   group_by(release_year, label) %>% 
   summarise(total_canciones = n(), .groups = 'drop')
@@ -629,20 +633,10 @@ ggplot(evolucion_temporal, aes(x = release_year, y = total_canciones, color = la
   geom_line(size = 1) +
   geom_point() +
   labs(
-    title = "Evolución de Lanzamientos por Sello Discográfico (2015-2025)",
-    x = "Año de Lanzamiento",
+    title = "Evolucion de Lanzamientos por Discografica",
+    x = "fecha de Lanzamiento",
     y = "Cantidad de Canciones",
-    color = "Discográfica"
-  ) +
-  theme_minimal() +
-  theme(
-    plot.title = element_text(face = "bold"),
-    legend.position = "bottom"
-  )
+    color = "Discografica"
+  ) 
 ```
-
-
-\chapter{Anexo B}
-
-\chapter{Anexo C}
 
