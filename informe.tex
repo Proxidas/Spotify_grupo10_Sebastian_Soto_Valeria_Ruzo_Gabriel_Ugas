@@ -210,7 +210,7 @@ realidad.\\
 
 \subsection{Objetivo General}
 \begin{itemize}
-  \item{ Determinar el comportamiento de las características musicales en las canciones del género pop de los sellos discográficos de la plataforma de Spotify en el período de 2015 a 2025.}
+  \item{ Analizar el comportamiento de las características musicales en las canciones del género pop de los sellos discográficos de la plataforma de Spotify en el período de 2015 a 2025.}
 \end{itemize}
 
 \subsection{Objetivos Específicos}
@@ -253,8 +253,9 @@ canciones, y las caracterísitcas de todas las canciones, de 2015 a 2025.
 
 \section{Periodo de Referencia}
 
-Usando el Dataset Spotify 2015-2025, se toma en cuenta desde el 2015 al
-2025.
+Se estaraá usando los datos del \textbf{Dataset Spotify 2015-2025}
+extraído del rerepositorio abierto de Kaggle, se toma en cuenta desde el
+2015 al 2025.
 
 \chapter{Marco Teórico}
 
@@ -267,9 +268,8 @@ social:
 \begin{enumerate}
 \item \textbf{Naturaleza del Pop y Control Social:}Se define el Pop no solo como género, sino como un producto de consumo rápido diseñado para la masa juvenil. Su capacidad de absorción y repetición melódica actúa como un mecanismo que influye en la forma de pensar y sentir de los adolescentes, fomentando la imitación pasiva.
   
-  \item \textbf{Estructura de Mercado (Oligopolio):}La industria no es un campo diverso, sino un oligopolio dominado por tres grandes sellos (majors): Sony Music, Universal Music Group y Warner Music Group. Estas corporaciones controlan la producción, distribución y el éxito comercial a nivel global.
-  
-   \item \textbf{Estandarización y Limitación Cultural:} La relación entre el dominio de las majors y las características del Pop sugiere una estandarización sonora. Al imponer modelos métricos y rítmicos uniformes, las discográficas limitan el acceso a la diversidad musical, condicionando al público a un modelo único de consumo.
+  \item \textbf{Estructura de Mercado (Oligopolio):}La industria no es un campo diverso, sino un oligopolio dominado por tres grandes sellos (majors): Sony Music, Universal Music Group y Warner Music Group. Estas corporaciones controlan la producción, distribución y el éxito comercial a nivel global. 
+   
  \end{enumerate}
 
 Para el análisis estadístico, esta base es crucial porque transforma
@@ -277,6 +277,20 @@ conceptos abstractos (influencia y control) en variables medibles. Lo
 que permite justificar por qué una baja dispersión o una alta
 correlación en los datos no son coincidencias técnicas, sino evidencia
 de una estrategia comercial dirigida a homogeneizar el gusto juvenil.
+
+\subsection{Sello Discogáfico (Label)}
+
+Un sello discográfico es una empresa o entidad comercial que se encarga
+de la producción, coordinación, distribución y promoción de grabaciones
+sonoras y videos musicales. Su función principal es actuar como el
+productor fonográfico, asumiendo la responsabilidad financiera y
+operativa de transformar el talento de un artista en un producto
+comercial listo para el mercado.
+
+Por otro lado es importante aclarar que los artistas independientes que
+crean sus obras y se caracterizan por la ausencia de contratos de
+exclusividad con multinacionales y el uso de canales de distribución de
+acceso abierto no son un sello discográfico.
 
 \subsection{Características Sonoras de una Canción}
 
@@ -321,13 +335,13 @@ interpretacion detallada y estructurada de su comportamiento. Para ello
 de aplicararn los siguientes indicadores :
 
 \begin{enumerate}
-  \item \textbf{Medidas de Tendencia Central:} Se utiliza para identificar el perfil promedio de las canciones pop. En las características técnicas (como loudness y duration), permiten establecer la duración y potencia estándar que la industria considera óptimas para la radiofusión. En las características sonoras (como tempo y danceability), definen el ritmo y la estructura melódica predominante, permitiendo observar si las discográficas convergen un modelo único diseñado para maximizar la aceptación del público juvenil.
+  \item \textbf{Medidas de Tendencia Central:} Se utiliza para identificar el perfil promedio de las canciones pop. En las características técnicas (sonoridad y energía), permiten establecer la intensidad y el estado de ánimo de la pieza musical. En las características sonoras (Tempo y bailabilidad), definen el ritmo y la estructura motora de una canción. En conjunto, definen qué tan "movible" es una pista para el cuerpo humano.
   
-  \textbf{Media Muestral}
-    $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+  \textbf{Media}
+    $$\bar{x} = \frac{\sum_{i=1}^{n} x_{i}}{n}$$
     \bigskip
  
- \item  \textbf{Medidas de Dispersión:} Mediante el coeficiente de variación, se analiza la dispersión en las características técnicas y sonoras, permitiendo analizar si los datos son homogéneos o heterogéneos en la estructura musical del pop.
+ \item  \textbf{Medidas de Dispersión:} Mediante el coeficiente de variación, se analiza la dispersión en las características técnicas y sonoras, para analizar si los datos son homogéneos o heterogéneos en la estructura musical del pop.
  
  
  \textbf{Coeficiente de Variación}
@@ -399,12 +413,12 @@ se consideran una discográfica.\\
 \end{verbatim}
 
 \begin{verbatim}
-## [1] "Registros totales del Dataset filtrado: 6231 | Cantidad de variables: 6"
+## [1] "Registros totales del Dataset filtrado: 6231 | Cantidad de variables: 7"
 \end{verbatim}
 
 Se puede observar cómo, inicialmente, el dataset cuenta con 85000
 registros y 19 variables, luego de la limpieza y filtrado, se obtiene un
-dataset con 6 variables y 6231 datos. Adicionalmente, se observa que no
+dataset con 7 variables y 6231 datos. Adicionalmente, se observa que no
 existen valores nulos en el dataset, lo que garantiza la integridad de
 los datos para el análisis posterior.\\
 
@@ -482,6 +496,8 @@ sus caracteristicas.\\
 
 \subsection{Loudness}
 
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Grafico de Loundness-1} \end{center}
+
 \begin{table}[H]
 \centering
 \caption{\label{tab:Cuadro Análisis 1}Análisis de Estandarización}
@@ -498,6 +514,8 @@ Coef. Variación (CV) & 55.61\% & Variabilidad detectada: Existe diversidad en l
 \end{table}
 
 \subsection{Energy}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Grafico de energia-1} \end{center}
 
 \begin{table}[H]
 \centering
@@ -518,6 +536,8 @@ Coef. Variación (CV) & 55.08\% & Variabilidad detectada: Existe diversidad en l
 
 \subsection{Tempo}
 
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Grfico de tempo-1} \end{center}
+
 \begin{table}[H]
 \centering
 \caption{\label{tab:cuadro análsis 3}Análisis de Estandarización}
@@ -535,6 +555,8 @@ Coef. Variación (CV) & 31.19\% & Variabilidad detectada: Existe diversidad en l
 
 \subsection{Danceability}
 
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Grafico energy-1} \end{center}
+
 \begin{table}[H]
 \centering
 \caption{\label{tab:cuadro análsis 4}Análisis de Estandarización}
@@ -550,11 +572,9 @@ Coef. Variación (CV) & 52.27\% & Variabilidad detectada: Existe diversidad en l
 \end{tabular}
 \end{table}
 
-\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-3-1} \end{center}
-
 \section{Mapa de calor de correlación}
 
-\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-4-1} \end{center}
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
 \section{Presentación de resultados}
 
@@ -610,6 +630,8 @@ canciones de las discográficas.\\
 \renewcommand{\thechapter}{\Alph{chapter}}
 
 \chapter{Anexo A}
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
 \chapter{Anexo B}
 

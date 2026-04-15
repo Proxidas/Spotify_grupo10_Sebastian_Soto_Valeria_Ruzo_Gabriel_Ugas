@@ -94,7 +94,7 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
  
 \subsection{Objetivo General}
 \begin{itemize}
-  \item{ Determinar el comportamiento de las características musicales en las canciones del género pop de los sellos discográficos de la plataforma de Spotify en el período de 2015 a 2025.}
+  \item{ Analizar el comportamiento de las características musicales en las canciones del género pop de los sellos discográficos de la plataforma de Spotify en el período de 2015 a 2025.}
 \end{itemize}
 
 \subsection{Objetivos Específicos}
@@ -135,7 +135,8 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 
 \section{Periodo de Referencia}
 
-Usando el Dataset Spotify 2015-2025, se toma en cuenta desde el 2015 al 2025.
+
+Se estaraá usando los datos del **Dataset Spotify 2015-2025** extraído del rerepositorio abierto de Kaggle, se toma en cuenta desde el 2015 al 2025.
 
 
 \chapter{Marco Teórico}
@@ -147,12 +148,18 @@ El marco teórico de esta investigación se construye sobre tres pilares fundame
 \begin{enumerate}
 \item \textbf{Naturaleza del Pop y Control Social:}Se define el Pop no solo como género, sino como un producto de consumo rápido diseñado para la masa juvenil. Su capacidad de absorción y repetición melódica actúa como un mecanismo que influye en la forma de pensar y sentir de los adolescentes, fomentando la imitación pasiva.
   
-  \item \textbf{Estructura de Mercado (Oligopolio):}La industria no es un campo diverso, sino un oligopolio dominado por tres grandes sellos (majors): Sony Music, Universal Music Group y Warner Music Group. Estas corporaciones controlan la producción, distribución y el éxito comercial a nivel global.
-  
-   \item \textbf{Estandarización y Limitación Cultural:} La relación entre el dominio de las majors y las características del Pop sugiere una estandarización sonora. Al imponer modelos métricos y rítmicos uniformes, las discográficas limitan el acceso a la diversidad musical, condicionando al público a un modelo único de consumo.
+  \item \textbf{Estructura de Mercado (Oligopolio):}La industria no es un campo diverso, sino un oligopolio dominado por tres grandes sellos (majors): Sony Music, Universal Music Group y Warner Music Group. Estas corporaciones controlan la producción, distribución y el éxito comercial a nivel global. 
+   
  \end{enumerate}
   
   Para el análisis estadístico, esta base es crucial porque transforma conceptos abstractos (influencia y control) en variables medibles. Lo que permite justificar por qué una baja dispersión o una alta correlación en los datos no son coincidencias técnicas, sino evidencia de una estrategia comercial dirigida a homogeneizar el gusto juvenil.
+
+\subsection{Sello Discogáfico (Label)}
+
+Un sello discográfico es una empresa o entidad comercial que se encarga de la producción, coordinación, distribución y promoción de grabaciones sonoras y videos musicales. Su función principal es actuar como el productor fonográfico, asumiendo la responsabilidad financiera y operativa de transformar el talento de un artista en un producto comercial listo para el mercado. 
+
+Por otro lado es importante aclarar que los artistas independientes que crean sus obras y se caracterizan por la ausencia de contratos de exclusividad con multinacionales y el uso de canales de distribución de acceso abierto no son un sello discográfico. 
+  
 
 \subsection{Características Sonoras de una Canción}
 Describen qué se siente o cómo suena la música y se definen por cuatro cualidades fundamentales del sonido:
@@ -174,13 +181,13 @@ Se refieren a los datos crudos, la calidad del archivo y los parámetros de prod
 La presente investigación emplea la estadística descriptiva para resumir, analizar y caracterizar un conjunto de datos, permitiendo una interpretacion detallada y estructurada de su comportamiento. Para ello de aplicararn los siguientes indicadores :
 
 \begin{enumerate}
-  \item \textbf{Medidas de Tendencia Central:} Se utiliza para identificar el perfil promedio de las canciones pop. En las características técnicas (como loudness y duration), permiten establecer la duración y potencia estándar que la industria considera óptimas para la radiofusión. En las características sonoras (como tempo y danceability), definen el ritmo y la estructura melódica predominante, permitiendo observar si las discográficas convergen un modelo único diseñado para maximizar la aceptación del público juvenil.
+  \item \textbf{Medidas de Tendencia Central:} Se utiliza para identificar el perfil promedio de las canciones pop. En las características técnicas (sonoridad y energía), permiten establecer la intensidad y el estado de ánimo de la pieza musical. En las características sonoras (Tempo y bailabilidad), definen el ritmo y la estructura motora de una canción. En conjunto, definen qué tan "movible" es una pista para el cuerpo humano.
   
-  \textbf{Media Muestral}
-    $$\bar{x} = \frac{1}{n} \sum_{i=1}^{n} x_i$$
+  \textbf{Media}
+    $$\bar{x} = \frac{\sum_{i=1}^{n} x_{i}}{n}$$
     \bigskip
  
- \item  \textbf{Medidas de Dispersión:} Mediante el coeficiente de variación, se analiza la dispersión en las características técnicas y sonoras, permitiendo analizar si los datos son homogéneos o heterogéneos en la estructura musical del pop.
+ \item  \textbf{Medidas de Dispersión:} Mediante el coeficiente de variación, se analiza la dispersión en las características técnicas y sonoras, para analizar si los datos son homogéneos o heterogéneos en la estructura musical del pop.
  
  
  \textbf{Coeficiente de Variación}
@@ -232,7 +239,7 @@ colSums(is.na(df_clean)) # verificO LOS valores nulos
 
 pop <- df_clean %>%
   filter(genre == "Pop" & label != "Independent") %>%
-  select(genre, label, loudness, energy, tempo, danceability)
+  select(genre, label, loudness, energy, tempo, danceability, release_date)
 
 lista2 <- paste("Registros totales del Dataset filtrado:", nrow(pop), 
       "| Cantidad de variables:", ncol(pop))
@@ -330,6 +337,21 @@ var_tecnicas <- c("energy", "loudness")
 
 \subsection{Loudness}
 
+```{r Grafico de Loundness}
+ggplot(numericas, 
+       aes(
+         x = label,
+         y = loudness,
+         fill = label)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribución de Volumen por Sello \nDiscográfico",
+    x = "Discográficas",
+    y= "Volumen"
+  )
+```
+
+
 ```{r Cuadro Análisis 1}
 var_objetivo <- "loudness"
 
@@ -369,6 +391,21 @@ kable(tabla_loudnes, format = "latex", booktabs = TRUE, caption = "Análisis de 
 ```
 
 \subsection{Energy}
+```{r Grafico de energia }
+ggplot(numericas, 
+       aes(
+         x = label,
+         y = energy,
+         fill = label)) +
+  geom_boxplot() +
+  labs(
+    title ="Distribución de Energía por Sello \nDiscográfico",
+    x = "Discográficas",
+    y= "Energía"
+  )
+   
+```
+
 
 ```{r cuadro análsis 2}
 
@@ -415,6 +452,21 @@ var_sonoras <- c("tempo", "danceability")
 
 \subsection{Tempo}
 
+```{r Grfico de tempo}
+ggplot(numericas, 
+       aes(
+         x = label,
+         y = tempo,
+         fill = label)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribución de Tempo por Sello \nDiscográfico",
+    x = "Discográficas",
+    y= "Tempo (MPB)"
+  )
+```
+
+
 ```{r cuadro análsis 3}
 
 var_objetivo <- "tempo"
@@ -454,6 +506,21 @@ kable(tabla_tempo, format = "latex", booktabs = TRUE, caption = "Análisis de Es
 
 \subsection{Danceability}
 
+```{r Grafico energy}
+ggplot(numericas, 
+       aes(
+         x = label,
+         y = danceability,
+         fill = label)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribución de Bailabilidad por Sello \nDiscográfico",
+    x = "Discográficas",
+    y = "Índice de Bailabilidad (0 - 1)"
+  )
+```
+
+
 ```{r cuadro análsis 4}
 
 var_objetivo <- "danceability"
@@ -491,21 +558,6 @@ kable(tabla_danceability, format = "latex", booktabs = TRUE, caption = "Análisi
   column_spec(3, width = "8cm")
 ```
 
-```{r}
-
-ggplot(numericas, 
-       aes(
-         x = label,
-         y = danceability,
-         fill = label)) +
-  geom_boxplot() +
-  labs(
-    title = "Distribución de Bailabilidad por Sello Discográfico",
-    x = "Discográficas",
-    y = "Índice de Bailabilidad (0 - 1)"
-  )
-
-```
 
 \section{Mapa de calor de correlación}
 
@@ -564,6 +616,31 @@ ggplot(cor_long,
 \renewcommand{\thechapter}{\Alph{chapter}}
 
 \chapter{Anexo A}
+
+```{r}
+
+
+evolucion_temporal <- df_clean %>%
+  mutate(release_year = as.numeric(format(as.Date(release_date), "%Y"))) %>% 
+  group_by(release_year, label) %>% 
+  summarise(total_canciones = n(), .groups = 'drop')
+
+ggplot(evolucion_temporal, aes(x = release_year, y = total_canciones, color = label)) +
+  geom_line(size = 1) +
+  geom_point() +
+  labs(
+    title = "Evolución de Lanzamientos por Sello Discográfico (2015-2025)",
+    x = "Año de Lanzamiento",
+    y = "Cantidad de Canciones",
+    color = "Discográfica"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(face = "bold"),
+    legend.position = "bottom"
+  )
+```
+
 
 \chapter{Anexo B}
 
