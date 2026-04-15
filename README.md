@@ -1,4 +1,4 @@
-# Spotify grupo 10 Sebastian Soto, Valeria Ruza, Gabriel Ugas
+#Comportamiento en las Características de las Canciones del Género Pop de Spotify  (2015 - 2025)
 
 ## Planteamiento del Problema':'
 
@@ -11,12 +11,6 @@ También, la industria musical es posiblemente uno de los mercados más competit
 “actualmente la industria de la música es controlada por tres grandes compañías discográficas multinacionales también llamadas majors, tanto a nivel internacional como a nivel nacional, siendo Sony Music, Universal Music Group y Warner Music Group los que lideran el mercado mundial de la industria de la música, como también a la gran mayoría de sus artistas.”
 
 Entonces tomando en cuenta el hecho que el género Pop influencia en la manera de pensar de los jóvenes y que las discográficas dominan el mercado, Podemos decir que las canciones con sellos discográficos pueden controlar la forma de pensar de los Jóvenes y por consiguiente si las grandes discográficas tienden a estandarizar las características sonoras y métricas de las canciones, están imponiendo al público Juvenil un modelo único de consumo, lo que los lleva a tener limitaciones en el acceso a la diversidad musical y a la imitación pasiva.
-
-### Bibliografía
-
-<https://www.santandersmusic.com/magazine/diccionario/que-es-el-pop>
-
-<https://apidspace.javeriana.edu.co/server/api/core/bitstreams/6ca5aa8b-7ec4-4bb5-b75e-4443f1dd53d6/content>
 
 ## Objetivo General
 
@@ -31,4 +25,11 @@ Observar el comportamiento de las canciones con sellos discográficos para deter
 5. Analizar las variables de estructura musical(sonoras): Mediante una gráfica de frecuencias para la variable mode y key, mediante el coeficiente de variación y un histograma con curva KDE  para tempo y danceability y un mapa de calor para ver la correlación entre todas.
 6. Analizar los resultados obtenidos y ver si son variables estandarizadas o no y el comportamiento que siguen.
 
-Enlace de Dashboard < >
+### Bibliografía
+
+<https://www.santandersmusic.com/magazine/diccionario/que-es-el-pop>
+
+<https://apidspace.javeriana.edu.co/server/api/core/bitstreams/6ca5aa8b-7ec4-4bb5-b75e-4443f1dd53d6/content>
+
+
+Enlace de Dashboard <https://investigacion-spotify.onrender.com>
