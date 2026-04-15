@@ -12,18 +12,19 @@ También, la industria musical es posiblemente uno de los mercados más competit
 
 Entonces tomando en cuenta el hecho que el género Pop influencia en la manera de pensar de los jóvenes y que las discográficas dominan el mercado, Podemos decir que las canciones con sellos discográficos pueden controlar la forma de pensar de los Jóvenes y por consiguiente si las grandes discográficas tienden a estandarizar las características sonoras y métricas de las canciones, están imponiendo al público Juvenil un modelo único de consumo, lo que los lleva a tener limitaciones en el acceso a la diversidad musical y a la imitación pasiva.
 
+## Justificación
+ Este problema, que relaciona dos temas diferentes nos permite como estadísticos aplicar el conocimiento del área de Estadística I, como lo es la estadística descriptiva (Gráficas, Histogramas, matices de correlación, coeficiente de variación), a través de los lenguajes estudiado en Computación I como lo es R, aplicando el filtrado y limpieza del dataset, aplicación de funciones matemáticas y creación de gráficas, todo en una investigación que se puede adaptar a la realidad.
+
 ## Objetivo General
 
-Observar el comportamiento de las canciones con sellos discográficos para determinar si tieneden a estandrizar sus características musicales.
+Analizar el comportamiento de las características musicales en las canciones del género pop de los sellos discográficos de la plataforma de Spotify en el período de 2015 a 2025.
 
 ## Objetivos Específicos
 
-1. Analizar qué discográficas son más exitosas: Con la variable Label y Stream_count.
-2. Adaptar el dataset con los datos de las tres primeras discográficas más exitosas.
-3. Categorizar las variables: Para intuir con qué método analizar cada variable, se diferencian por categorías.(Técnicas y sonoras)
-4. Analizar las variables técnicas y de producción: Mediante una gráfica de frecuencias para la variable explicit, mediante el coeficiente de variación y un histograma con curva KDE  para loudness, energy, duration, instrumentalness y un mapa de calor para ver la correlación entre todas.
-5. Analizar las variables de estructura musical(sonoras): Mediante una gráfica de frecuencias para la variable mode y key, mediante el coeficiente de variación y un histograma con curva KDE  para tempo y danceability y un mapa de calor para ver la correlación entre todas.
-6. Analizar los resultados obtenidos y ver si son variables estandarizadas o no y el comportamiento que siguen.
+1. Identificar las discográficas con mayor cantidad de canciones publicadas del género Pop por entre 2015 y 2025.
+2. Describir la metricas de las variables técnicas y sonoras de las canciones pop de los sellos discograficos.
+3. Observar el comportamiento de las características entre las discográficas.}
+4. Establecer las correlaciones entre las caracteristicas sonoras y técnicas de las canciones del género Pop.
 
 ### Bibliografía
 
