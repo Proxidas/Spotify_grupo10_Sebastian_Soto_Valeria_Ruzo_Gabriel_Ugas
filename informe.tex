@@ -105,15 +105,14 @@ negativamente a la nueva generación, enfocados en la parte estadística
 del mismo, analizando las características de las canciones del género
 Pop usando como referencia el dataset (Spotify 2015-2025) El objetivo es
 comprobar que existe las estandarización en las características tecnicas
-y sonoras de las canciones con sello de grandes discográficas del género
-Pop. Se toman en cuenta varias variables en este caso:(loudness, energy,
-duration\_ms, instrumentales, explicit, tempo, danceability, key y
-mode), se dividen en dos categorías sonoras y tecnicas, se analizan las
-variables de cada categoría aparte usando cuadros que muestren su
-coeficiente de variacion, media y curtos, se refelja en un grafico de
-violin y por último gráficas de calor para contemplar la correlación y
-ver si es alta o baja. Por último se analizan todos los resultados y se
-determinaría si son o no estandarizadas las
+y sonoras de las canciones con sello discográficos del género Pop. Se
+toman en cuenta varias variables en este caso:(loudness, energy, tempo,
+danceability), se dividen en dos categorías sonoras y tecnicas, se
+analizan las variables de cada categoría aparte usando cuadros que
+muestren su coeficiente de variacion, media y curtos, se refelja en un
+grafico de violin y por último gráficas de calor para contemplar la
+correlación y ver si es alta o baja. Por último se analizan todos los
+resultados y se determinaría si son o no estandarizadas las
 canciones.             % Aquí se pega el texto que escribiste en el YAML
   
   \cleardoublepage
@@ -136,12 +135,11 @@ juvenil.
 
 A través del análisis estadístico descriptivo del dataset
 \textbf{\emph{Spotify 2015-2025}}, se examinan variables técnicas
-(loudness, energy, duration) y sonoras (tempo, danceability, key, mode)
-de canciones pop con sello de discográficas. El objetivo es determinar,
-mediante análisis de dispersión, distribución y correlación, si existe
-una homogeneización sistemática en las producciones comerciales que
-pudiera condicionar los patrones de consumo y la creatividad musical
-actual.
+(loudness, energy) y sonoras (tempo, danceability) de canciones pop con
+sello de discográficas. El objetivo es determinar, mediante análisis de
+dispersión, distribución y correlación, si existe una homogeneización
+sistemática en las producciones comerciales que pudiera condicionar los
+patrones de consumo y la creatividad musical actual.
 
 \chapter{Planteamiento del Problema}
 
@@ -181,14 +179,14 @@ manera de pensar de los jóvenes y que las discográficas dominan el
 mercado, Podemos decir que las canciones con sellos de discográficas
 pueden controlar la forma de pensar de los Jóvenes y por consiguiente si
 las discográficas tienden a estandarizar las características sonoras y
-métricas de las canciones, están imponiendo al público Juvenil un modelo
+técnicas de las canciones, están imponiendo al público Juvenil un modelo
 único de consumo, lo que los lleva a tener limitaciones en el acceso a
 la diversidad musical y a la imitación pasiva.\\
 
 Argumento final. Debido a esto, se plantea las siguientes preguntas de
 investigación:\\
 
-\textbf{1.} ¿Cuantas canciones hay por discográfica?\\
+\textbf{1.} ¿Qué cantidad de canciones hay por discográfica?\\
 
 \textbf{2.} ¿Las variables analizadas demuestran un comportamiento
 similar a lo largo del tiempo, con lo que podemos determinar que las
@@ -244,16 +242,10 @@ canciones, y las caracterísitcas de todas las canciones, de 2015 a 2025.
 \textbf{Tipo} &\textbf{Variable} &\textbf{Definición} \\ 
   \hline
   Categórica & Label &  Sello discográfico de cada canción \\
-  Numérica  & Stream\_count & visualizaciones en la plataforma \\
   Numérica  & Loudness &  Medida de presión sonora \\
   Numérica & Energy & Intensidad perceptiva, el ruido espectral y la tasa de entropía \\
-  Numérica  & Duration & Duración de la canción \\
-  Numérica  & Instrumentallness & Mide la relación entre señal de voz y ruido/instrumentos. \\
-  Dicotómica & Explicit & Contenido explícito \\
   Numérica  & Tempo & Velocidad del pulso \\
   Numérica  & Danceability & Regularidad del ritmo y la fuerza del pulso \\
-  Categórica & Key &  Escala musical principal de la canción \\
-  Dicotómica & Mode &  Define si la escala es Mayor o Menor  \\
    \hline
 \end{tabular}
 }
@@ -301,17 +293,6 @@ cualidades fundamentales del sonido:
   \textbf{Danceability (Bailabilidad):} Es una métrica compuesta que
   describe qué tan adecuada es una pista para bailar basándose en una
   combinación de elementos musicales.
-\item
-  \textbf{Key (Tonalidad):} Es la organización jerárquica de las notas y
-  acordes en torno a una nota central llamada tónica. Indica el conjunto
-  de sonidos que conforman la estructura armónica principal de la
-  canción.
-\item
-  \textbf{Mode (Modo):} Es un clasificador binario que indica el tipo de
-  escala (la modalidad) de la cual se deriva el contenido melódico y
-  armónico. El modo Mayor suele asociarse con sonoridades abiertas o
-  alegres, mientras que el Menor se vincula con estructuras más
-  complejas, melancólicas o tensas.
 \end{itemize}
 
 \subsection{Características Técnicas y de Producción de una Canción.}
@@ -330,21 +311,6 @@ de producción.
   actividad dinámica de una pieza musical. Se fundamenta en atributos
   como el rango dinámico, la tasa de ruido espectral y el entusiasmo
   auditivo que transmite la composición.
-\item
-  \textbf{Duration (Duración):} Extensión temporal total de una pista de
-  audio, contabilizada con precisión desde el inicio hasta la
-  finalización de la señal sonora, generalmente expresada en
-  milisegundos.
-\item
-  \textbf{Instrumentalness (Instrumentalidad):} Índice que determina la
-  presencia de componentes exclusivamente instrumentales frente a los
-  vocales. Representa la probabilidad de que una obra carezca de voz
-  humana o contenido lírico relevante.
-\item
-  \textbf{Explicit (Contenido Explícito):} Clasificación de seguridad
-  que identifica grabaciones que contienen lenguaje soez, temáticas
-  adultas o referencias sensibles, de acuerdo con los criterios de
-  etiquetado de la industria fonográfica.
 \end{itemize}
 
 \subsection{Estadística Descriptiva}
@@ -436,8 +402,8 @@ se consideran una discográfica.\\
 ## [1] "Registros totales del Dataset filtrado: 6231 | Cantidad de variables: 6"
 \end{verbatim}
 
-Se puede observar cómo, inicialmente, el dataset cuenta con 85.000
-registros y 18 variables, luego de la limpieza y filtrado, se obtiene un
+Se puede observar cómo, inicialmente, el dataset cuenta con 85000
+registros y 19 variables, luego de la limpieza y filtrado, se obtiene un
 dataset con 6 variables y 6231 datos. Adicionalmente, se observa que no
 existen valores nulos en el dataset, lo que garantiza la integridad de
 los datos para el análisis posterior.\\
@@ -458,43 +424,9 @@ donde se especifican los objetivos específicos, junto con las variables
 utilizadas en cada una. Además, de los indicadores y su instrumento de
 análisis.
 
-Objetivo de estudio: Comparar el comportamiento de las variables entre
-las discográficas. Loudness,Medida que cuantifica la presión sonora
-promedio de una señal en decibelios (dB). Indica la amplitud física y el
-nivel de volumen relativo de la pista bajo una escala técnica.\\
-
-\chapter{Análisis de Resultados}
-
-\{\small Este capítulo presenta los resultados obtenidos al aplicar las
-metodologías descritas en el capítulo anterior, así como del análisis
-estadístico descriptivo de las variables estudiadas y las ventajas y
-desventajas al aplicar dichos tests.\}
-
-\section{Cantidad de Streams por discográfica}
-
-En el análisis nos enfocammos en calcular el total de canciones por
-discograficas, para saber si existe diferencia entre quienes son los que
-publican mayor cantidad de canciones y utilizarlos para ver el
-comportamiento de sus caracteristicas\\
-A continuación, se presenta el gráfico con las siete Discograficas y sus
-reproducciones totales.\\
-
-\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Total de canciones por discograficas-1} \end{center}
-
-Se observa como la cantidad de publicaciones de canciones de las
-discográficas del género Pop entre 2015 y 2025 estan entre las 855 y 934
-canciones. Lo que nos hace referencia de que no existe mucha diferencia
-entre ellas, y se utilizaran todas para verificar el comportamiento de
-sus caracteristicas.\\
-
-\section{Clasificación de variables}
-
-Para visualizar las estadisticas descriptivas de las variable se crea
-una tabla en base a las caracteristicas tecnicas y sonoras\\
-
 \begin{table}[!h]
 \centering
-\caption{\label{tab:Clasificación de variables}Estadisticas Descriptivas de las variables numéricas}
+\caption{\label{tab:operacionalizacion de variable}Estadisticas Descriptivas de las variables numéricas}
 \centering
 \fontsize{10}{12}\selectfont
 \begin{tabular}[t]{lrrrr}
@@ -513,7 +445,38 @@ danceability & 0.05 & 0.99 & 0.52 & 0.27\\
 estas son: Energy, Loudness. Mientras que las variables sonoras en este
 estudio son: Danceability y Tempo. Con esto se puede analizar cada
 categoría por separado y aplicar los métodos de análisis
-correspondientes a cada una.~
+correspondientes a cada una.
+
+Objetivo de estudio: Comparar el comportamiento de las variables entre
+las discográficas. Loudness,Medida que cuantifica la presión sonora
+promedio de una señal en decibelios (dB). Indica la amplitud física y el
+nivel de volumen relativo de la pista bajo una escala técnica.\\
+
+\chapter{Análisis de Resultados}
+
+\{\small Este capítulo presenta los resultados obtenidos al aplicar las
+metodologías descritas en el capítulo anterior, así como del análisis
+estadístico descriptivo de las variables estudiadas y las ventajas y
+desventajas al aplicar dichos tests.\}
+
+\section{Cantidad de Canciones por discográfica}
+
+En el análisis nos enfocammos en calcular el total de canciones por
+discograficas, para saber si diferencia entre quienes son los que
+publican mayor cantidad de canciones y utilizarlos para ver el
+comportamiento de sus caracteristicas\\
+A continuación, se presenta el gráfico con las siete Discograficas y sus
+reproducciones totales.\\
+
+\begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/Total de canciones por discograficas-1} \end{center}
+
+Se observa como la cantidad de publicaciones de canciones de las
+discográficas del género Pop entre 2015 y 2025 estan entre las 855 y 934
+canciones. Lo que nos hace referencia de que no existe mucha diferencia
+entre ellas, y se utilizaran todas para verificar el comportamiento de
+sus caracteristicas.\\
+
+\section{Clasificación de variables}
 
 \section{Análisis de las variables Técnicas}
 
@@ -587,31 +550,61 @@ Coef. Variación (CV) & 52.27\% & Variabilidad detectada: Existe diversidad en l
 \end{tabular}
 \end{table}
 
-\section{Mapa de calor de correlación}
-
 \begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-3-1} \end{center}
 
-\section{Comportamiento de Danceability en cada discografica}
+\section{Mapa de calor de correlación}
 
 \begin{center}\includegraphics[width=0.9\linewidth,]{informe_files/figure-latex/unnamed-chunk-4-1} \end{center}
 
-\section{Presentación de resultados n}
+\section{Presentación de resultados}
 
-Descripción\\
+Al observar los datos limpios nos damos cuenta que de 85000 datos del
+dataset de espotify, nos quedamos con unos 6231 datos pertenecientes al
+género pop, de los cuales el 87.82\% de los datos son de canciones con
+sellos discográficos, y el número de canciones por discográfica son
+parecidos con un rango de 79.
+
+Seguidamente al observar el comportamento de las características
+técnicas Loudness y Energy tienen un coeficiente de variación de 55.61\%
+y 55.08\% respectivamente lo que indica que los datos tienen una
+disperción baja con respecto a la media, osea son muy variados y una
+curtosis de -1.19 y -1.18 respectivamente lo que indica que la gráfica
+sigue una distribución platocurtica, osea no tiene ninguna tendencia
+notable.
+
+Al observar el comportamento de las características Sonoras Tempo y
+Danceability tienen un coeficiente de variación de 31.19\% y 52.27\%
+respectivamente lo que indica que los datos tienen una disperción baja
+con respecto a la media, aunque el coeficiente de variación de Tempo es
+menor a los otrrso al ser \textgreater{} 30 los dos son muy variados y
+una curtosis de -1.22 y -1.19 respectivamente lo que indica que la
+gráfica sigue una distribución platocurtica, osea no tiene ninguna
+tendencia notable.
+
+Por último al análizar la correlación de las variables con el mapa de
+calor aparece una correlación muy cercana a 0 para todas las
+correlaciones, lo que indica que las variables no dependen una de la
+otra. las correlaciones están entre -0.02, -0.01, 0.00, 0.01 y 0.02.
 
 \chapter{Conclusiones y Recomendaciones}
 
-\textbf{1.-} Conclusion 1 del trabajo de investigación.\\
+\textbf{1.-} La primera conclusión es que al contar la cantidad de
+canciones por discógrafica, como no salieron cantidades muy similares
+por discográfica, la opción más sensata es usar todas las discográficas
+para el análisis de los datos y no perderse datos importantes.\\
 
-\textbf{Recomendación} Recomendación 1 del trabajo de investigación.\\
+\textbf{2.-} La segunda conclusión que sacamos es que al tener una alta
+variabilidad al analizar las características de las canciones como
+demuestra el coeficiente de variación y la forma de la gráfica
+platocúrtica, son datos que no tienen ninguna tendencia significativa,
+aparte de que no tienen correlaciones las variables, osea que no depende
+una de otra, se puede decir que no hay una característica en común y no
+hay estandarización.\\
 
-\textbf{2.-} Conclusion 2 del trabajo de investigación.\\
-
-\textbf{Recomendación} Recomendación 2 del trabajo de investigación.\\
-
-\textbf{n.-} Conclusion n del trabajo de investigación.\\
-
-\textbf{Recomendación} Recomendación n del trabajo de investigación.\\
+\textbf{n.-} La última conclusión es que al no haber estandarización
+visible y un comportamiento de los datos tan variado no se puede
+determinar con exactitud el comportamiento de las características de las
+canciones de las discográficas.\\
 
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}

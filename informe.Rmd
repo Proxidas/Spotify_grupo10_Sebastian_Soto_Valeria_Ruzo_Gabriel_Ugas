@@ -23,10 +23,10 @@ facultad:
 - Escuela de Estadistica y Ciencias Actuariales
 escudo: Latex/Classes/Escudos/faces
 bibliography: bibliografia.bib
-header-includes: \newcommand{\tightlist}{}
+header-includes: \newcommand{\tightlist}
 degree: Computación I
 abstract: "El proyecto pretende atender al problema de la estandarización en las canciones con sello de  discográficas del género Pop, que afectan negativamente a la nueva generación, enfocados en la parte estadística del mismo, analizando las características de las canciones del género Pop usando como referencia el dataset (Spotify 2015-2025)
-    El objetivo es comprobar que existe las estandarización en las características tecnicas y sonoras de las canciones con sello de grandes discográficas del género Pop. Se toman en cuenta varias variables en este caso:(loudness, energy, duration_ms, instrumentales, explicit, tempo, danceability, key y mode), se dividen en dos categorías sonoras y tecnicas, se analizan las variables de cada categoría aparte usando cuadros que muestren su coeficiente de variacion, media y curtos, se refelja en un grafico de violin y por último gráficas de calor para contemplar la correlación y ver si es alta o baja. Por último se analizan todos los resultados y se determinaría si son o no estandarizadas las canciones."
+    El objetivo es comprobar que existe las estandarización en las características tecnicas y sonoras de las canciones con sello discográficos del género Pop. Se toman en cuenta varias variables en este caso:(loudness, energy, tempo, danceability), se dividen en dos categorías sonoras y tecnicas, se analizan las variables de cada categoría aparte usando cuadros que muestren su coeficiente de variacion, media y curtos, se refelja en un grafico de violin y por último gráficas de calor para contemplar la correlación y ver si es alta o baja. Por último se analizan todos los resultados y se determinaría si son o no estandarizadas las canciones."
 editor_options: 
   chunk_output_type: inline
 ---
@@ -63,7 +63,7 @@ theme_set(theme_gray(base_size = 14) +
 
   La industria musical contemporánea se caracteriza por el dominio oligopólico de grandes discográficas, que controlan la mayoría del mercado pop global. Este proyecto investiga la hipótesis de que estas "majors" promueven una estandarización de las características musicales, limitando la diversidad sonora disponible para el público juvenil.
 
-  A través del análisis estadístico descriptivo del dataset ***Spotify 2015-2025***, se examinan variables técnicas (loudness, energy, duration) y sonoras (tempo, danceability, key, mode) de canciones pop con sello de discográficas. El objetivo es determinar, mediante análisis de dispersión, distribución y correlación, si existe una homogeneización sistemática en las producciones comerciales que pudiera condicionar los patrones de consumo y la creatividad musical actual.
+  A través del análisis estadístico descriptivo del dataset ***Spotify 2015-2025***, se examinan variables técnicas (loudness, energy) y sonoras (tempo, danceability) de canciones pop con sello de discográficas. El objetivo es determinar, mediante análisis de dispersión, distribución y correlación, si existe una homogeneización sistemática en las producciones comerciales que pudiera condicionar los patrones de consumo y la creatividad musical actual.
 
 \chapter{Planteamiento del Problema}
  Desde finales de los sesenta, cuando se habla de “Pop” se refiere, sobre todo, a la música orientada al consumo rápido y dirigida a los jóvenes. Canciones de duración corta con ritmos contagiosos, para alcanzar un éxito popular y comercial dirigido a la mayor cantidad de público posible y jóvenes. Como escribe John Seabrook “La fábrica de canciones. Cómo se hacen los hits”.
@@ -74,12 +74,12 @@ theme_set(theme_gray(base_size = 14) +
 
 “Actualmente la industria de la música es controlada por tres grandes compañías discográficas multinacionales también llamadas majors, tanto a nivel internacional como a nivel nacional, siendo Sony Music, Universal Music Group y Warner Music Group los que lideran el mercado mundial de la industria de la música, como también a la gran mayoría de sus artistas.”
     
-  Entonces tomando en cuenta el hecho que el género Pop influencia en la manera de pensar de los jóvenes y que las discográficas dominan el mercado, Podemos decir que las canciones con sellos de discográficas pueden controlar la forma de pensar de los Jóvenes y por consiguiente si las discográficas tienden a estandarizar las características sonoras y métricas de las canciones, están imponiendo al público Juvenil un modelo único de consumo, lo que los lleva a tener limitaciones en el acceso a la diversidad musical y a la imitación pasiva.\
+  Entonces tomando en cuenta el hecho que el género Pop influencia en la manera de pensar de los jóvenes y que las discográficas dominan el mercado, Podemos decir que las canciones con sellos de discográficas pueden controlar la forma de pensar de los Jóvenes y por consiguiente si las discográficas tienden a estandarizar las características sonoras y técnicas de las canciones, están imponiendo al público Juvenil un modelo único de consumo, lo que los lleva a tener limitaciones en el acceso a la diversidad musical y a la imitación pasiva.\
 
 Argumento final. Debido a esto, se plantea las siguientes preguntas de investigación:\
 
 
-\textbf{1.}	¿Cuantas canciones hay por discográfica?\
+\textbf{1.}	¿Qué cantidad de canciones hay por discográfica?\
 
 \textbf{2.}	¿Las variables analizadas demuestran un comportamiento similar a lo largo del tiempo, con lo que podemos determinar que las disqueras musicales comercializan canciones estandarizadas?\
 
@@ -123,16 +123,10 @@ Argumento final. Debido a esto, se plantea las siguientes preguntas de investiga
 \textbf{Tipo} &\textbf{Variable} &\textbf{Definición} \\ 
   \hline
   Categórica & Label &  Sello discográfico de cada canción \\
-  Numérica  & Stream\_count & visualizaciones en la plataforma \\
   Numérica  & Loudness &  Medida de presión sonora \\
   Numérica & Energy & Intensidad perceptiva, el ruido espectral y la tasa de entropía \\
-  Numérica  & Duration & Duración de la canción \\
-  Numérica  & Instrumentallness & Mide la relación entre señal de voz y ruido/instrumentos. \\
-  Dicotómica & Explicit & Contenido explícito \\
   Numérica  & Tempo & Velocidad del pulso \\
   Numérica  & Danceability & Regularidad del ritmo y la fuerza del pulso \\
-  Categórica & Key &  Escala musical principal de la canción \\
-  Dicotómica & Mode &  Define si la escala es Mayor o Menor  \\
    \hline
 \end{tabular}
 }
@@ -167,9 +161,6 @@ Describen qué se siente o cómo suena la música y se definen por cuatro cualid
 
 * **Danceability (Bailabilidad):** Es una métrica compuesta que describe qué tan adecuada es una pista para bailar basándose en una combinación de elementos musicales. 
 
-* **Key (Tonalidad):** Es la organización jerárquica de las notas y acordes en torno a una nota central llamada tónica. Indica el conjunto de sonidos que conforman la estructura armónica principal de la canción.
-
-* **Mode (Modo):** Es un clasificador binario que indica el tipo de escala (la modalidad) de la cual se deriva el contenido melódico y armónico. El modo Mayor suele asociarse con sonoridades abiertas o alegres, mientras que el Menor se vincula con estructuras más complejas, melancólicas o tensas.
 
 \subsection{Características Técnicas y de Producción de una Canción.}
 Se refieren a los datos crudos, la calidad del archivo y los parámetros de producción.
@@ -177,12 +168,6 @@ Se refieren a los datos crudos, la calidad del archivo y los parámetros de prod
 * **Loudness (Sonoridad):** Magnitud que cuantifica la presión sonora promedio de una señal de audio, expresada en decibelios (dB). Refleja la amplitud física del sonido y su nivel de volumen relativo dentro de una escala técnica.
 
 * **Energy (Energía):** Medida de la intensidad perceptiva y la actividad dinámica de una pieza musical. Se fundamenta en atributos como el rango dinámico, la tasa de ruido espectral y el entusiasmo auditivo que transmite la composición.
-
-*  **Duration (Duración):** Extensión temporal total de una pista de audio, contabilizada con precisión desde el inicio hasta la finalización de la señal sonora, generalmente expresada en milisegundos.
-
-* **Instrumentalness (Instrumentalidad):** Índice que determina la presencia de componentes exclusivamente instrumentales frente a los vocales. Representa la probabilidad de que una obra carezca de voz humana o contenido lírico relevante.
-
-* **Explicit (Contenido Explícito):** Clasificación de seguridad que identifica grabaciones que contienen lenguaje soez, temáticas adultas o referencias sensibles, de acuerdo con los criterios de etiquetado de la industria fonográfica.
 
 \subsection{Estadística Descriptiva}
 
@@ -213,8 +198,6 @@ $$g_2 = \frac{\sum (x_i - \bar{x})^4}{n \cdot s^4} - 3$$
 \end{enumerate}
 
 
-
-
 \chapter{Marco Metódico}
 En esta sección se presentan las metodologías y las pruebas estadísticas implementadas para validar el planteamiento inicial.\
 Se especifica el procesamiento de la fuente de datos 18. Spotify 2015-2025.csv, las técnicas para verificar la presencia de datos nulos, de limpieza (de ser necesario) y los análisis de estadística descripitiva para las variables de interés en el estudio.\
@@ -232,20 +215,20 @@ La calidad de los resultados depende directamente de la entrada de datos de la m
 Adicionalmente, se filtran los datos para enfocarnos en el comportamiento de las características del género Pop y se seleccionaron las columnas de interés. También los registros **Independent** de la columna **label** se descartan, ya que en esta investigación no se consideran una discográfica.\
 
 ```{r Carga de datos}
-df <- read_csv("18. Spotify 2015-2025.csv") # carga del dataset
+df <- read_csv("18. Spotify 2015-2025.csv") # cargo el dataset
 
 df_clean <- df %>%
   clean_names() %>% 
   mutate(
     genre = as.factor(genre),
     artist_name = as.factor(artist_name),
-    label = as.factor(label))# cambio a factor para mejor analisis
+    label = as.factor(label)) # cambio a factor para mejor analisis
   
 lista1 <- paste("Registros totales del Dataset:", nrow(df_clean), 
       "| Cantidad de variables:", ncol(df_clean))
 print(lista1)
 print("Valores nulos por variable:")
-colSums(is.na(df_clean))# vericacion de valores nulos
+colSums(is.na(df_clean)) # verificO LOS valores nulos
 
 pop <- df_clean %>%
   filter(genre == "Pop" & label != "Independent") %>%
@@ -258,7 +241,7 @@ print(lista2)
 write_csv(pop, "pop.csv") #guardado del dataset limpio
 
 ```
-Se puede observar cómo, inicialmente, el dataset cuenta con 85.000 registros y 18 variables, luego de la limpieza y filtrado, se obtiene un dataset con 6 variables y 6231 datos. Adicionalmente, se observa que no existen valores nulos en el dataset, lo que garantiza la integridad de los datos para el análisis posterior.\
+Se puede observar cómo, inicialmente, el dataset cuenta con `r nrow(df)` registros y `r ncol(df)` variables, luego de la limpieza y filtrado, se obtiene un dataset con `r ncol(pop)` variables y  `r nrow(pop)` datos. Adicionalmente, se observa que no existen valores nulos en el dataset, lo que garantiza la integridad de los datos para el análisis posterior.\
 
 \subsection{Fuente de datos y Período de Referencia}
 
@@ -269,8 +252,32 @@ A continuación se presenta el cuadro de operacionalización de variables, donde
 
 ```{r operacionalizacion de variable}
 
-```
+numericas<-pop %>%
+    select(label, loudness, energy, tempo, danceability) 
+  
+variable <- c("loudness", "energy", "tempo", "danceability") 
 
+tabla_variable <- data.frame(
+  Variables     = variable,
+  Min           = sapply(numericas[variable], min),
+  Max           = sapply(numericas[variable], max),
+  Promedio      = sapply(numericas[variable], mean),
+  Desv_Estandar = sapply(numericas[variable], sd)
+ )
+rownames(tabla_variable) <- NULL
+
+
+options(scipen = 999) 
+kable(tabla_variable,
+      format = "latex",
+      booktabs = TRUE,
+      digits = 2,
+      col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desv. Estandar"),
+      caption = "Estadisticas Descriptivas de las variables numéricas") %>%
+  kable_styling(latex_options = c("striped", "hold_position"), font_size = 10, full_width = FALSE)
+
+```
+*analisis* Se observa a las variables técnicas en este etudio, estas son: Energy, Loudness. Mientras que las variables sonoras en este estudio son: Danceability y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.
 
 Objetivo de estudio: Comparar el comportamiento de las variables entre las discográficas. Loudness,Medida que cuantifica la presión sonora promedio de una señal en decibelios (dB). Indica la amplitud física y el nivel de volumen relativo de la pista bajo una escala técnica. \
 
@@ -279,12 +286,13 @@ Objetivo de estudio: Comparar el comportamiento de las variables entre las disco
 
 {\small Este capítulo presenta los resultados obtenidos al aplicar las metodologías descritas en el capítulo anterior, así como del análisis estadístico descriptivo de las variables estudiadas y las ventajas y desventajas al aplicar dichos tests.}
 
-\section{Cantidad de Streams por discográfica}
+\section{Cantidad de Canciones por discográfica}
 
-En el análisis nos enfocammos en calcular el total de canciones por discograficas, para saber si existe diferencia entre quienes son los que publican mayor cantidad de canciones y utilizarlos para ver el comportamiento de sus caracteristicas\
+En el análisis nos enfocammos en calcular el total de canciones por discograficas, para saber si diferencia entre quienes son los que publican mayor cantidad de canciones y utilizarlos para ver el comportamiento de sus caracteristicas\
 A continuación, se presenta el gráfico con las siete Discograficas y sus reproducciones totales.\
 
 ```{r Total de canciones por discograficas}
+
 pop_label <- pop %>%
   group_by(label) %>%
   summarise(total_canciones = n()) %>%
@@ -306,44 +314,13 @@ ggplot(pop_label,
     y = "Cantidad de canciones"
   )
 
+max <- max(pop_label$total_canciones)
+min <- min(pop_label$total_canciones)
 ```
 
-Se observa como la cantidad de publicaciones de canciones de las discográficas del género Pop entre 2015 y 2025 estan entre las 855 y 934 canciones. Lo que nos hace referencia de que no existe mucha diferencia entre ellas, y se utilizaran todas para verificar el comportamiento de sus caracteristicas.\
+Se observa como la cantidad de publicaciones de canciones de las discográficas del género Pop entre 2015 y 2025 estan entre las `r min` y `r max` canciones. Lo que nos hace referencia de que no existe mucha diferencia entre ellas, y se utilizaran todas para verificar el comportamiento de sus caracteristicas.\
 
 \section{Clasificación de variables}
-
-Para visualizar las estadisticas descriptivas de las variable se crea una tabla en base a las caracteristicas tecnicas y sonoras\
-
-```{r Clasificación de variables}
-
-numericas<-pop %>%
-    select(label, loudness, energy, tempo, danceability) #variables
-  
-variable <- c("loudness", "energy", "tempo", "danceability") # nueva columna
-
-tabla_variable <- data.frame(
-  Variables     = variable,
-  Min           = sapply(numericas[variable], min),
-  Max           = sapply(numericas[variable], max),
-  Promedio      = sapply(numericas[variable], mean),
-  Desv_Estandar = sapply(numericas[variable], sd)
- )
-rownames(tabla_variable) <- NULL
-
-
-options(scipen = 999)#tabulacion de datos
-kable(tabla_variable,
-      format = "latex",
-      booktabs = TRUE,
-      digits = 2,
-      col.names = c("Variables", "Valor Minimo", "Valor Maximo", "Media", "Desv. Estandar"),
-      caption = "Estadisticas Descriptivas de las variables numéricas") %>%
-  kable_styling(latex_options = c("striped", "hold_position"), font_size = 10, full_width = FALSE)
-
-
-```
-*analisis* Se observa a las variables técnicas en este etudio, estas son: Energy, Loudness. Mientras que las variables sonoras en este estudio son: Danceability y Tempo. Con esto se puede analizar cada categoría por separado y aplicar los métodos de análisis correspondientes a cada una.\ 
-
 
 \section{Análisis de las variables Técnicas}
 
@@ -359,14 +336,14 @@ var_objetivo <- "loudness"
 resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
-    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    CV1 = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
     Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
   )
 
-#mensajes de interpretación
+
 msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
 
-msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+msg_cv <- if(abs(resumen$CV1) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
 } else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
 
 if (resumen$Curtosis > 0.5) {
@@ -380,7 +357,7 @@ if (resumen$Curtosis > 0.5) {
 tabla_loudnes <- data.frame(
   Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
   Valor = c(round(resumen$Media, 2), 
-            paste0(round(resumen$CV, 2), "%"), 
+            paste0(round(resumen$CV1, 2), "%"), 
             round(resumen$Curtosis, 2)),
   Interpretación = c(msg_media, msg_cv, msg_curtosis)
 )
@@ -400,14 +377,13 @@ var_objetivo <- "energy"
 resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
-    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    CV2 = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
     Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
   )
 
-#mensajes de interpretación
 msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
 
-msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+msg_cv <- if(abs(resumen$CV2) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
 } else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
 
 if (resumen$Curtosis > 0.5) {
@@ -421,7 +397,7 @@ if (resumen$Curtosis > 0.5) {
 tabla_energy <- data.frame(
   Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
   Valor = c(round(resumen$Media, 2), 
-            paste0(round(resumen$CV, 2), "%"), 
+            paste0(round(resumen$CV2, 2), "%"), 
             round(resumen$Curtosis, 2)),
   Interpretación = c(msg_media, msg_cv, msg_curtosis)
 )
@@ -446,14 +422,13 @@ var_objetivo <- "tempo"
 resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
-    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    CV3 = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
     Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
   )
 
-#mensajes de interpretación
 msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
 
-msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+msg_cv <- if(abs(resumen$CV3) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
 } else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
 
 if (resumen$Curtosis > 0.5) {
@@ -467,7 +442,7 @@ if (resumen$Curtosis > 0.5) {
 tabla_tempo <- data.frame(
   Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
   Valor = c(round(resumen$Media, 2), 
-            paste0(round(resumen$CV, 2), "%"), 
+            paste0(round(resumen$CV3, 2), "%"), 
             round(resumen$Curtosis, 2)),
   Interpretación = c(msg_media, msg_cv, msg_curtosis)
 )
@@ -486,14 +461,13 @@ var_objetivo <- "danceability"
 resumen <- numericas %>%
   summarise(
     Media = mean(.data[[var_objetivo]], na.rm = TRUE),
-    CV = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
+    CV4 = abs((sd(.data[[var_objetivo]], na.rm = TRUE) / mean(.data[[var_objetivo]],na.rm = TRUE)) * 100),
     Curtosis = kurtosis(.data[[var_objetivo]], na.rm = TRUE) - 3
   )
 
-#mensajes de interpretación
 msg_media <- paste("El valor central es", round(resumen$Media, 2), ". Es el punto de referencia industrial.")
 
-msg_cv <- if(abs(resumen$CV) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
+msg_cv <- if(abs(resumen$CV4) < 15) {"Estandarización detectada: La baja dispersión indica una producción uniforme y repetitiva."
 } else {"Variabilidad detectada: Existe diversidad en los parámetros técnicos de las canciones."}
 
 if (resumen$Curtosis > 0.5) {
@@ -507,7 +481,7 @@ if (resumen$Curtosis > 0.5) {
 tabla_danceability <- data.frame(
   Métrica = c("Media", "Coef. Variación (CV)", "Curtosis"),
   Valor = c(round(resumen$Media, 2), 
-            paste0(round(resumen$CV, 2), "%"), 
+            paste0(round(resumen$CV4, 2), "%"), 
             round(resumen$Curtosis, 2)),
   Interpretación = c(msg_media, msg_cv, msg_curtosis)
 )
@@ -517,6 +491,21 @@ kable(tabla_danceability, format = "latex", booktabs = TRUE, caption = "Análisi
   column_spec(3, width = "8cm")
 ```
 
+```{r}
+
+ggplot(numericas, 
+       aes(
+         x = label,
+         y = danceability,
+         fill = label)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribución de Bailabilidad por Sello Discográfico",
+    x = "Discográficas",
+    y = "Índice de Bailabilidad (0 - 1)"
+  )
+
+```
 
 \section{Mapa de calor de correlación}
 
@@ -553,41 +542,23 @@ ggplot(cor_long,
 ```
 
 
-\section{Comportamiento de Danceability en cada discografica}
+\section{Presentación de resultados}
 
-```{r}
-ggplot(numericas, 
-       aes(
-         x = label,
-         y = danceability,
-         fill = label)) +
-  geom_boxplot() +
-  labs(
-    title = "Distribución de Bailabilidad por Sello Discográfico",
-    x = "Discográficas",
-    y = "Índice de Bailabilidad (0 - 1)"
-  )
-```
-
-\section{Presentación de resultados n}
-
-Descripción\
+  Al observar los datos limpios nos damos cuenta que de `r nrow(df)` datos del dataset de espotify, nos quedamos con unos `r nrow(pop)` datos pertenecientes al género pop, de los cuales el 87.82% de los datos son de canciones con sellos discográficos, y el número de canciones por discográfica son parecidos con un rango de `r max-min`.
+  
+  Seguidamente al observar el comportamento de las características técnicas Loudness y Energy tienen un coeficiente de variación de 55.61% y 55.08% respectivamente lo que indica que los datos tienen una disperción baja con respecto a la media, osea son muy variados y una curtosis de -1.19 y -1.18 respectivamente lo que indica que la gráfica sigue una distribución platocurtica, osea no tiene ninguna tendencia notable.
+  
+  Al observar el comportamento de las características Sonoras Tempo y Danceability tienen un coeficiente de variación de 31.19% y 52.27% respectivamente lo que indica que los datos tienen una disperción baja con respecto a la media, aunque el coeficiente de variación de Tempo es menor a los otrrso al ser > 30 los dos son muy variados y una curtosis de -1.22 y -1.19 respectivamente lo que indica que la gráfica sigue una distribución platocurtica, osea no tiene ninguna tendencia notable.
+  
+  Por último al análizar la correlación de las variables con el mapa de calor aparece una correlación muy cercana a 0 para todas las correlaciones, lo que indica que las variables no dependen una de la otra. las correlaciones están entre -0.02, -0.01, 0.00, 0.01 y 0.02.
 
 \chapter{Conclusiones y Recomendaciones}
 
-\textbf{1.-} Conclusion 1 del trabajo de investigación.\
+\textbf{1.-} La primera conclusión es que al contar la cantidad de canciones por discógrafica, como no salieron cantidades muy similares por discográfica, la opción más sensata es usar todas las discográficas para el análisis de los datos y no perderse datos importantes.\
 
-\textbf{Recomendación} 
-Recomendación 1 del trabajo de investigación.\
+\textbf{2.-} La segunda conclusión que sacamos es que al tener una alta variabilidad al analizar las características de las canciones como demuestra el coeficiente de variación y la forma de la gráfica platocúrtica, son datos que no tienen ninguna tendencia significativa, aparte de que no tienen correlaciones las variables, osea que no depende una de otra, se puede decir que no hay una característica en común y no hay estandarización.\
 
-\textbf{2.-} Conclusion 2 del trabajo de investigación.\
-
-\textbf{Recomendación} 
-Recomendación 2 del trabajo de investigación.\
-
-\textbf{n.-} Conclusion n del trabajo de investigación.\
-
-\textbf{Recomendación} Recomendación n del trabajo de investigación.\
+\textbf{n.-} La última conclusión es que al no haber estandarización visible y un comportamiento de los datos tan variado no se puede determinar con exactitud el comportamiento de las características de las canciones de las discográficas.\
 
 \appendix
 \renewcommand{\thechapter}{\Alph{chapter}}

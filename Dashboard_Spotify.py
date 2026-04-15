@@ -7,7 +7,6 @@ import numpy as np
 import seaborn as sns
 import plotly.figure_factory as ff
 import os
-import matplotlib.pyplot as plt
 
 
 
@@ -58,12 +57,9 @@ conteo_na = df.isna().sum()
 
 df = df.dropna(subset=['track_name', 'album_name']) # borro los track name y artist name que tengan NA
 
-### contar y corregir negativos
+### contar negativos
 conteo_negativos = (df[['duration_ms', 'popularity', 'danceability', 'energy', 'key', 'mode', 'stream_count', 'explicit', 'loudness', 'instrumentalness', 'tempo']] < 0).sum()
 #st.table(conteo_negativos)
-
-##DATASET FILTRADA POR GENERO POP
-df_pop = df[df['genre'] == 'Pop']
 
 ### DATASET FILTRADO POR GENERO POP Y DISCOGRÁFICAS QUE ESTAN EN SPOTIFY (SIN INDEPENDENT)
 df_pop_discograficas = df[(df['label'] != 'Independent') & (df['genre'] == 'Pop')]
@@ -102,7 +98,7 @@ with st.sidebar:
 
 ## Titulo
 st.markdown(f"<h1 style='display: flex; align-items: center;'>\
-            {logo_spotify} Comportamiento en las Características de las Canciones del Género Pop de Spotify  (2015 - 2025)</h1>", unsafe_allow_html=True) # La fila arriba es la configuración del título.
+            {logo_spotify} Estandarización en las Características de las Canciones del Género Pop de Spotify  (2015 - 2025)</h1>", unsafe_allow_html=True) # La fila arriba es la configuración del título.
 st.markdown("Se presenta Gráficamente el estudio del Dataset de Spotify")
 
 
@@ -115,14 +111,15 @@ top_discograficas = st.selectbox("Cantidad de discográficas a ver",
                                     index=0)
 
 ### filtramos por label y contamos stream_count
+df_count_musicas = df_filtrado['label'].value_counts().reset_index()
+df_count_musicas.columns = ['Discográfica', 'Cantidad de Canciones']
 
-###DATA SIN INDEPENDENT (los quitamos porque no son una discografica)
-df_count_musicas_sin_indie = df_filtrado['label'].value_counts().reset_index()
-df_count_musicas_sin_indie.columns = ['Discográfica', 'Cantidad de Canciones']
 
-df_count_musicas_con_indie = df_pop['label'].value_counts().reset_index()
-df_count_musicas_con_indie.columns = ['Discográfica', 'Cantidad de Canciones']
+### quitámos los datos independent pues no son una discográfica
+condicion_indie = df_count_musicas['Discográfica'].str.contains('Independent|Indie', case=False, na=False)
 
+# Creamos el dataframe SIN esas filas
+df_count_musicas_sin_indie = df_count_musicas[~condicion_indie].copy()
 
 ### Lógica para el Top (3, 5 o Todas)
 if top_discograficas == "Todas":
@@ -175,19 +172,21 @@ fig_label.update_layout(
     )
 st.plotly_chart(fig_label, use_container_width=True)
 
-# Sumamos el total de canciones con y sin indie para calcular el porcentaje
-total_global = df_count_musicas_con_indie['Cantidad de Canciones'].sum()   # Total de canciones pop (con indie)
-total_sin_indie = df_count_musicas_sin_indie['Cantidad de Canciones'].sum() # Total de canciones pop de las discograficas (sin indie)
-    
-# Calculo del porcentaje que representan las discográficas sobre el total
-porc_total_discografica = (total_sin_indie / total_global) * 100
-    
+total_con_indies = df_count_musicas['Cantidad de Canciones'].sum()
+total_sin_indies = df_count_musicas_sin_indie['Cantidad de Canciones'].sum()
+
+porc_discograficas = ((total_sin_indies / total_con_indies) * 100).round(2)
+
 col1, col2 = st.columns(2)
 with col1:
-    st.metric("Cantidad Total de Canciones Pop con Sellos Discográficos", f"{total_sin_indie}")
+    st.metric("Cantidad Total de Canciones con Sellos Discográficos", f"{total_sin_indies}")
 with col2:
-    st.metric("Porcentaje de Canciones Pop con Sellos Discográficos en Spotify", f"{porc_total_discografica:.2f}%")
+        st.metric("Porcentaje de Canciones con Sellos Discográficos en Spotify", f"{porc_discograficas}%")
+if total_con_indies == total_sin_indies:
+    st.error(f"⚠️ Sigue dando 100%. Nombres encontrados: {df_count_musicas['Discográfica'].unique()[:5]}")
 
+
+    
 
 #Seccion del Analisis de las Variables Tecnicas y de Produción 
 st.markdown("### Análisis de las Características Técnicas y de  Poducción")
@@ -224,17 +223,14 @@ for i, (nombre_visual, columna ) in enumerate(var_tecnicas.items()):
 
         st.plotly_chart(fig_tecnicas, use_container_width=True)
 
-        # Estadísticas de soporte
-        col1, col2, col3, col4 = st.columns(4)
+        # 7. Estadísticas de soporte
+        col1, col2, col3 = st.columns(3)
         with col1:
             st.metric("Media", f"{df_filtrado[columna].mean():.2f}")
         with col2:
             st.metric("Desviación Estándar", f"{df_filtrado[columna].std():.2f}")
         with col3:
             st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
-        with col4:
-            st.metric("Coeficiente de Variación", f"{(df_filtrado[columna].std() / df_filtrado[columna].mean() * 100):.2f}%")
-            
 
 # Variable Explicit
 
@@ -292,6 +288,7 @@ with col2:
 
 st.markdown("### Análisis de las Características Sonoras")
 
+#variables sonoras
 var_sonoras = {
     "Clave Musical": "key",
     "Bailabilidad": "danceability",
@@ -325,17 +322,16 @@ for i, (nombre_visual, columna) in enumerate(var_sonoras.items()):
 
         st.plotly_chart(fig_sonoras, use_container_width=True)
 
-        #  Estadísticas 
-        col1, col2, col3, col4 = st.columns(4)
+        # 7. Estadísticas de soporte
+        col1, col2, col3 = st.columns(3)
         with col1:
             st.metric("Media", f"{df_filtrado[columna].mean():.2f}")
         with col2:
             st.metric("Desviación Estándar", f"{df_filtrado[columna].std():.2f}")
         with col3:
             st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
-        with col4:
-            st.metric("Coeficiente de Variación", f"{(df_filtrado[columna].std() / df_filtrado[columna].mean() * 100):.2f}%")
 
+# Analisis de la var mode
 
 st.subheader("Análisis de la Modalidad Musical")
 
@@ -385,19 +381,5 @@ with col1:
 with col2:
     st.metric("El porcentaje de Canciones en Modo Menor", f"{porc_menor}%")
 
-#correlacion estre las variables 
-st.markdown("### Correlación entre las Variables Técnicas y Sonoras")
 
-caracteristicas = ['tempo', 'loudness', 'instrumentalness', 'energy', 'duration_ms', 'danceability']
-matriz_correlacion = df_filtrado[caracteristicas].corr()
 
-#grafico
-fig_correlacion= px.imshow(
-    matriz_correlacion,
-    text_auto=".2f",      
-    aspect="auto",        
-    color_continuous_scale='RdBu_r', 
-    labels=dict(color="Correlación"),
-)
-st.plotly_chart(fig_correlacion, use_container_width=True)
-st.dataframe(matriz_correlacion)
