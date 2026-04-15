@@ -113,7 +113,6 @@ st.markdown("Se presenta Gráficamente el estudio del Dataset de Spotify")
 top_discograficas = st.selectbox("Cantidad de discográficas a ver",
                                     options=["3", "5", "Todas"],
                                     index=0)
-
 ### filtramos por label y contamos stream_count
 
 ###DATA SIN INDEPENDENT (los quitamos porque no son una discografica)
@@ -189,6 +188,7 @@ with col2:
     st.metric("Porcentaje de Canciones Pop con Sellos Discográficos en Spotify", f"{porc_total_discografica:.2f}%")
 
 
+
 #Seccion del Analisis de las Variables Tecnicas y de Produción 
 st.markdown("### Análisis de las Características Técnicas y de  Poducción")
 
@@ -231,10 +231,9 @@ for i, (nombre_visual, columna ) in enumerate(var_tecnicas.items()):
         with col2:
             st.metric("Desviación Estándar", f"{df_filtrado[columna].std():.2f}")
         with col3:
-            st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
-        with col4:
             st.metric("Coeficiente de Variación", f"{(df_filtrado[columna].std() / df_filtrado[columna].mean() * 100):.2f}%")
-            
+        with col4:
+            st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
 
 # Variable Explicit
 
@@ -332,9 +331,10 @@ for i, (nombre_visual, columna) in enumerate(var_sonoras.items()):
         with col2:
             st.metric("Desviación Estándar", f"{df_filtrado[columna].std():.2f}")
         with col3:
-            st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
-        with col4:
             st.metric("Coeficiente de Variación", f"{(df_filtrado[columna].std() / df_filtrado[columna].mean() * 100):.2f}%")
+        with col4:
+            st.metric("Índice de Estandarización (Curtosis)", f"{df_filtrado[columna].kurt():.2f}")
+            
 
 
 st.subheader("Análisis de la Modalidad Musical")
@@ -385,6 +385,7 @@ with col1:
 with col2:
     st.metric("El porcentaje de Canciones en Modo Menor", f"{porc_menor}%")
 
+
 #correlacion estre las variables 
 st.markdown("### Correlación entre las Variables Técnicas y Sonoras")
 
@@ -400,4 +401,7 @@ fig_correlacion= px.imshow(
     labels=dict(color="Correlación"),
 )
 st.plotly_chart(fig_correlacion, use_container_width=True)
-st.dataframe(matriz_correlacion)
+
+
+
+
